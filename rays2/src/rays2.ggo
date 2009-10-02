@@ -1,0 +1,22 @@
+# GenGetOpt file
+#
+# The following command line was used to generate the file
+# cmdline.c and cmdline.h
+#
+# gengetopt < rays2.ggo --file-name=cmdline
+
+package "rays2"
+version "0.4"
+
+purpose "Given a file lu1.dat (as stdin) from Seis88, it generates a
+Grace project file showing the rays and interfaces."
+
+option "xmin" - "x left box coordinate" float no
+option "zmin" - "z top box coordinate" float no
+option "xmax" - "x right box coordinate" float yes
+option "zmax" - "z top box coordinate" float no
+option "nofill" - "turn off filling in of layers" flag off
+option "palette" p "custom palette" string no
+option "land" l "land color profile" flag off
+option "blackrays" b "rays in black" flag off
+option "norays" - "do not generate rays" flag off
