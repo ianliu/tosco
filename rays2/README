@@ -1,5 +1,5 @@
-  rays2 - Draw seismic rays using grace
-  Copyright (C) 2009 Ricardo Biloti
+  rays2 - Depict rays and velocity model from Seis88 and S88modeling
+  Copyright (C) 1999-2009 Ricardo Biloti
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
