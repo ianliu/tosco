@@ -6,10 +6,10 @@
 # gengetopt < rays2.ggo --file-name=cmdline
 
 package "rays2"
-version "0.4"
+version "1.0.0"
 
 purpose "Given a file lu1.dat (as stdin) from Seis88, it generates a
-Grace project file showing the rays and interfaces."
+Grace project file showing rays and interfaces."
 
 option "xmin" - "x left box coordinate" float no
 option "zmin" - "z top box coordinate" float no

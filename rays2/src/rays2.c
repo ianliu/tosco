@@ -28,7 +28,7 @@ int main(int argc, char ** argv){
 		  16, 17, 18, 19, 20, 21, 22, 23, 24,
 		  25, 26, 27, 28, 32, 33, 34, 35,  0};
 
-   int i, icont, nint, nrays, ninterf, ns[MAX_CODEWAVES];
+   int i, icont, nint, nrays, nwavecode, ns[MAX_CODEWAVES];
    ray_t ray[MAX_NRAYS];
    interface_t interf[MAX_CODEWAVES];
    float tmax;
@@ -53,7 +53,7 @@ int main(int argc, char ** argv){
    }
 
    nrays =   0;
-   ninterf = 0;
+   nwavecode = 0;
    nint = 0;
 
    /*--------------------------------------------------------------*
@@ -82,13 +82,13 @@ int main(int argc, char ** argv){
 	    return EXIT_FAILURE;
 	 }
 
-	 if (ninterf == 0){
+	 if (nwavecode == 0){
 	    interface_alloc(&(interf[i]), npts);
 	 }
       }
 
       /* Read interfaces only once */
-      if (ninterf == 0){
+      if (nwavecode == 0){
 	 for (i=0; i<nint; i++){
 	    interface_read(stdin, &(interf[i]));
 	 }
@@ -127,10 +127,10 @@ int main(int argc, char ** argv){
 	 return EXIT_FAILURE;
       }
       
-      ns[ninterf] = 0;
+      ns[nwavecode] = 0;
       while (n>0){
 	 nrays++;
-	 ns[ninterf]++;
+	 ns[nwavecode]++;
 	 ray_read(stdin, n, ind, &(ray[nrays]));
 	 
 	 line++;
@@ -154,7 +154,7 @@ int main(int argc, char ** argv){
       namp = abs(namp);
      
       fprintf(stderr,"%3i rays corresponding to the code wave %2i (%5i)\n",
-	      ns[ninterf], ninterf+1, nrays);
+	      ns[nwavecode], nwavecode+1, nrays);
 
       /* Other kinematic and dynamic quantities associated to each ray */
       for (i=0;i<namp;i++){
@@ -188,7 +188,7 @@ int main(int argc, char ** argv){
 	 if (status == EOF)
 	    icont = 0;
       }
-      ninterf++;
+      nwavecode++;
    }
 
    fprintf(stderr, "Maximum traveltime: %.3fs\n", tmax);
@@ -227,8 +227,8 @@ int main(int argc, char ** argv){
    sprintf(AGR_yaxesinvert, "on");
    sprintf(AGR_title, "Rays2");
    sprintf(AGR_subtitle, "(Seis88)");
-   sprintf(AGR_xaxislabel, "Distância (km)");
-   sprintf(AGR_yaxislabel, "Profundidade (km)");
+   sprintf(AGR_xaxislabel, "Distance [km]");
+   sprintf(AGR_yaxislabel, "Depth [km]");
    AGR_xaxislabelcharsize = 1.4;
    AGR_yaxislabelcharsize = 1.4;
 
@@ -250,7 +250,7 @@ int main(int argc, char ** argv){
 
       naux = 0;
       AGR_filltype = 0;
-      for (ni=ninterf-1; ni>=0; ni--){
+      for (ni=nwavecode-1; ni>=0; ni--){
 
 	 AGR_linecolor = (arg.blackrays_flag ? 1 : cor[ni]);
 

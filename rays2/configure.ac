@@ -19,7 +19,7 @@ dnl Process this file with autoconf to produce a configure script.
 AC_INIT(src/rays2.c)
 
 dnl Every other copy of the package version number gets its value from here
-AM_INIT_AUTOMAKE(rays2,0.1.0)
+AM_INIT_AUTOMAKE(rays2,1.0.0)
 
 AC_SUBST(VERSION)
 

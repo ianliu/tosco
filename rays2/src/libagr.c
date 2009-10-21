@@ -147,7 +147,7 @@ void WriteAGRHeader (FILE *fp)
   fprintf(fp,
 	  "\n# Grace project file"
 	  "\n#"
-	  "\n@version 50118"
+	  "\n@version 50122"
 	  "\n@page size 792, 612"
 	  "\n@page scroll 5%%"
 	  "\n@page inout 5%%"
