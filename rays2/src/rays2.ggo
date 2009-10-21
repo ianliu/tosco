@@ -9,7 +9,11 @@ package "rays2"
 version "1.0.0"
 
 purpose "Given a file lu1.dat (as stdin) from Seis88, it generates a
-Grace project file showing rays and interfaces."
+Grace project file showing rays and interfaces.
+
+Ricardo Biloti <biloti@ime.unicamp.br>
+Department of Applied Mathematics
+State University of Campinas"
 
 option "xmin" - "x left box coordinate" float no
 option "zmin" - "z top box coordinate" float no

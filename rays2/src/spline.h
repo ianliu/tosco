@@ -1,5 +1,5 @@
 /*  rays2 - Draw seismic rays using grace
- *  Copyright (C) 2009 Ricardo Biloti <biloti@ime.unicamp.br>
+ *  Copyright (C) 2002-2009 Ricardo Biloti <biloti@ime.unicamp.br>
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,11 +16,11 @@
  */
 
 int spline(int *n, float *x, float *y, float *b,
-	   float *c__, float *d__);
+	   float *c, float *d);
 
 double seval(int *n, float *u, float *x, float *y,
-	     float *b, float *c__, float *d__);
+	     float *b, float *c, float *d);
 
 int sgheval(int *n, float *u, float *x, float *y,
-	   float *b, float *c__, float *d__,
+            float *b, float *c, float *d,
 	    float *s, float *g, float *h);

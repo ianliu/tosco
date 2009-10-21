@@ -1,5 +1,9 @@
 /*  rays2 - Draw seismic rays using grace
- *  Copyright (C) 2009 Ricardo Biloti <biloti@ime.unicamp.br>
+ *  Copyright (C) 2002-2009 Ricardo Biloti <biloti@ime.unicamp.br>
+ *
+ *  Based on spline.f and seval.f from the book Computer Methods for
+ *  Mathematical Computations, by George Forsythe, Mike Malcolm, and
+ *  Cleve Moler.
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,15 +19,16 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 int spline(int *n, float *x, float *y, float *b,
-	   float *c__, float *d__)
+	   float *c, float *d)
 {
     /* System generated locals */
-    int i__1;
-    float d__1;
+    int i1;
+    float d1;
 
     /* Local variables */
-    static int i__;
+    static int i;
     static float t;
     static int ib, nm1;
 
@@ -51,8 +56,8 @@ int spline(int *n, float *x, float *y, float *b,
     *************************************************************************/
 
     /* Parameter adjustments */
-    --d__;
-    --c__;
+    --d;
+    --c;
     --b;
     --y;
     --x;
@@ -69,55 +74,55 @@ int spline(int *n, float *x, float *y, float *b,
     /*  set up tridiagonal system */
     /*  b = diagonal, d = offdiagonal, c = right hand side. */
 
-    d__[1] = x[2] - x[1];
-    c__[2] = (y[2] - y[1]) / d__[1];
-    i__1 = nm1;
-    for (i__ = 2; i__ <= i__1; ++i__) {
-      d__[i__] = x[i__ + 1] - x[i__];
-      b[i__] = (d__[i__ - 1] + d__[i__]) * (float)2.;
-      c__[i__ + 1] = (y[i__ + 1] - y[i__]) / d__[i__];
-      c__[i__] = c__[i__ + 1] - c__[i__];
+    d[1] = x[2] - x[1];
+    c[2] = (y[2] - y[1]) / d[1];
+    i1 = nm1;
+    for (i = 2; i <= i1; ++i) {
+      d[i] = x[i + 1] - x[i];
+      b[i] = (d[i - 1] + d[i]) * (float)2.;
+      c[i + 1] = (y[i + 1] - y[i]) / d[i];
+      c[i] = c[i + 1] - c[i];
       /* L10: */
     }
 
     /*  end conditions.  third derivatives at  x(1)  and  x(n) */
     /*  obtained from divided differences */
 
-    b[1] = -d__[1];
-    b[*n] = -d__[*n - 1];
-    c__[1] = (float)0.;
-    c__[*n] = (float)0.;
+    b[1] = -d[1];
+    b[*n] = -d[*n - 1];
+    c[1] = (float)0.;
+    c[*n] = (float)0.;
     if (*n == 3) {
       goto L15;
     }
-    c__[1] = c__[3] / (x[4] - x[2]) - c__[2] / (x[3] - x[1]);
-    c__[*n] = c__[*n - 1] / (x[*n] - x[*n - 2]) -
-              c__[*n - 2] / (x[*n - 1] -  x[*n - 3]);
+    c[1] = c[3] / (x[4] - x[2]) - c[2] / (x[3] - x[1]);
+    c[*n] = c[*n - 1] / (x[*n] - x[*n - 2]) -
+              c[*n - 2] / (x[*n - 1] -  x[*n - 3]);
     /* Computing 2nd power */
-    d__1 = d__[1];
-    c__[1] = c__[1] * (d__1 * d__1) / (x[4] - x[1]);
+    d1 = d[1];
+    c[1] = c[1] * (d1 * d1) / (x[4] - x[1]);
     /* Computing 2nd power */
-    d__1 = d__[*n - 1];
-    c__[*n] = -c__[*n] * (d__1 * d__1) / (x[*n] - x[*n - 3]);
+    d1 = d[*n - 1];
+    c[*n] = -c[*n] * (d1 * d1) / (x[*n] - x[*n - 3]);
 
     /*  forward elimination */
 
    L15:
-    i__1 = *n;
-    for (i__ = 2; i__ <= i__1; ++i__) {
-      t = d__[i__ - 1] / b[i__ - 1];
-      b[i__] -= t * d__[i__ - 1];
-      c__[i__] -= t * c__[i__ - 1];
+    i1 = *n;
+    for (i = 2; i <= i1; ++i) {
+      t = d[i - 1] / b[i - 1];
+      b[i] -= t * d[i - 1];
+      c[i] -= t * c[i - 1];
       /* L20: */
     }
 
     /*  back substitution */
 
-    c__[*n] /= b[*n];
-    i__1 = nm1;
-    for (ib = 1; ib <= i__1; ++ib) {
-      i__ = *n - ib;
-      c__[i__] = (c__[i__] - d__[i__] * c__[i__ + 1]) / b[i__];
+    c[*n] /= b[*n];
+    i1 = nm1;
+    for (ib = 1; ib <= i1; ++ib) {
+      i = *n - ib;
+      c[i] = (c[i] - d[i] * c[i + 1]) / b[i];
       /* L30: */
     }
 
@@ -125,38 +130,37 @@ int spline(int *n, float *x, float *y, float *b,
 
     /*  compute polynomial coefficients */
 
-    b[*n] = (y[*n] - y[nm1]) / d__[nm1] +
-            d__[nm1] * (c__[nm1] + c__[*n] * (float)2.);
-    i__1 = nm1;
-    for (i__ = 1; i__ <= i__1; ++i__) {
-      b[i__] = (y[i__ + 1] - y[i__]) / d__[i__] - d__[i__] *
-               (c__[i__ + 1] + c__[i__] * (float)2.);
-      d__[i__] = (c__[i__ + 1] - c__[i__]) / d__[i__];
-      c__[i__] *= (float)3.;
+    b[*n] = (y[*n] - y[nm1]) / d[nm1] +
+            d[nm1] * (c[nm1] + c[*n] * (float)2.);
+    i1 = nm1;
+    for (i = 1; i <= i1; ++i) {
+      b[i] = (y[i + 1] - y[i]) / d[i] - d[i] *
+               (c[i + 1] + c[i] * (float)2.);
+      d[i] = (c[i + 1] - c[i]) / d[i];
+      c[i] *= (float)3.;
       /* L40: */
     }
-    c__[*n] *= (float)3.;
-    d__[*n] = d__[*n - 1];
+    c[*n] *= (float)3.;
+    d[*n] = d[*n - 1];
     return 0;
 
    L50:
     b[1] = (y[2] - y[1]) / (x[2] - x[1]);
-    c__[1] = (float)0.;
-    d__[1] = (float)0.;
+    c[1] = (float)0.;
+    d[1] = (float)0.;
     b[2] = b[1];
-    c__[2] = (float)0.;
-    d__[2] = (float)0.;
+    c[2] = (float)0.;
+    d[2] = (float)0.;
     return 0;
 } /* spline */
 
 /***************************************************************/
 
 double seval(int *n, float *u, float *x, float *y,
-	     float *b, float *c__, float *d__)
+	     float *b, float *c, float *d)
 {
     /* Initialized data */
-
-    static int i__ = 1;
+    static int i = 1;
 
     /* System generated locals */
     float ret_val;
@@ -188,57 +192,56 @@ double seval(int *n, float *u, float *x, float *y,
     ***********************************************************************/
 
     /* Parameter adjustments */
-    --d__;
-    --c__;
+    --d;
+    --c;
     --b;
     --y;
     --x;
 
     /* Function Body */
-    if (i__ >= *n) {
-      i__ = 1;
+    if (i >= *n) {
+      i = 1;
     }
-    if (*u < x[i__]) {
+    if (*u < x[i]) {
       goto L10;
     }
-    if (*u <= x[i__ + 1]) {
+    if (*u <= x[i + 1]) {
       goto L30;
     }
 
     /*  binary search */
 
    L10:
-    i__ = 1;
+    i = 1;
     j = *n + 1;
    L20:
-    k = (i__ + j) / 2;
+    k = (i + j) / 2;
     if (*u < x[k]) {
       j = k;
     }
     if (*u >= x[k]) {
-      i__ = k;
+      i = k;
     }
-    if (j > i__ + 1) {
+    if (j > i + 1) {
       goto L20;
     }
 
     /*  evaluate spline */
 
    L30:
-    dx = *u - x[i__];
-    ret_val = y[i__] + dx * (b[i__] + dx * (c__[i__] + dx * d__[i__]));
+    dx = *u - x[i];
+    ret_val = y[i] + dx * (b[i] + dx * (c[i] + dx * d[i]));
     return ret_val;
 } /* seval */
 
 /***************************************************************/
 
 int sgheval(int *n, float *u, float *x, float *y,
-	   float *b, float *c__, float *d__,
+	   float *b, float *c, float *d,
 	    float *s, float *g, float *h)
 {
     /* Initialized data */
-
-    static int i__ = 1;
+    static int i = 1;
 
     /* Local variables */
     static int j, k;
@@ -270,47 +273,47 @@ int sgheval(int *n, float *u, float *x, float *y,
     ***********************************************************************/
 
     /* Parameter adjustments */
-    --d__;
-    --c__;
+    --d;
+    --c;
     --b;
     --y;
     --x;
 
     /* Function Body */
-    if (i__ >= *n) {
-      i__ = 1;
+    if (i >= *n) {
+      i = 1;
     }
-    if (*u < x[i__]) {
+    if (*u < x[i]) {
       goto L10;
     }
-    if (*u <= x[i__ + 1]) {
+    if (*u <= x[i + 1]) {
       goto L30;
     }
 
     /*  binary search */
 
    L10:
-    i__ = 1;
+    i = 1;
     j = *n + 1;
    L20:
-    k = (i__ + j) / 2;
+    k = (i + j) / 2;
     if (*u < x[k]) {
       j = k;
     }
     if (*u >= x[k]) {
-      i__ = k;
+      i = k;
     }
-    if (j > i__ + 1) {
+    if (j > i + 1) {
       goto L20;
     }
 
     /*  evaluate spline */
 
    L30:
-    dx = *u - x[i__];
-    *s = y[i__] + dx * (b[i__] + dx * (c__[i__] + dx * d__[i__]));
-    *g = b[i__] + dx * (2 * c__[i__] + 3 * dx * d__[i__]);
-    *h = 2 * c__[i__] + 6 * dx * d__[i__];
+    dx = *u - x[i];
+    *s = y[i] + dx * (b[i] + dx * (c[i] + dx * d[i]));
+    *g = b[i] + dx * (2 * c[i] + 3 * dx * d[i]);
+    *h = 2 * c[i] + 6 * dx * d[i];
 
     return 0;
 } /* seval */

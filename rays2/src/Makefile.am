@@ -16,7 +16,6 @@
 
 bin_PROGRAMS=rays2
 rays2_SOURCES= rays2.c    \
-               rays2.h    \
                libagr.c   \
                libagr.h   \
                spline.c   \

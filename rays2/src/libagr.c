@@ -1,5 +1,5 @@
 /*  rays2 - Draw seismic rays using grace
- *  Copyright (C) 2009 Ricardo Biloti <biloti@ime.unicamp.br>
+ *  Copyright (C) 2002-2009 Ricardo Biloti <biloti@ime.unicamp.br>
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

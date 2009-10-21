@@ -21,7 +21,7 @@
 
 #include "cmdline.h"
 
-const char *gengetopt_args_info_purpose = "Given a file lu1.dat (as stdin) from Seis88, it generates a\nGrace project file showing rays and interfaces.";
+const char *gengetopt_args_info_purpose = "Given a file lu1.dat (as stdin) from Seis88, it generates a\nGrace project file showing rays and interfaces.\n\nRicardo Biloti <biloti@ime.unicamp.br>\nDepartment of Applied Mathematics\nState University of Campinas";
 
 const char *gengetopt_args_info_usage = "Usage: rays2 [OPTIONS]...";
 
