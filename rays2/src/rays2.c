@@ -31,6 +31,7 @@ int main(int argc, char ** argv){
    int i, icont, nint, nrays, ninterf, ns[MAX_CODEWAVES];
    ray_t ray[MAX_NRAYS];
    interface_t interf[MAX_CODEWAVES];
+   float tmax;
    if (cmdline_parser(argc, argv, &arg) != 0)
       exit(EXIT_FAILURE);
 
@@ -170,7 +171,7 @@ int main(int argc, char ** argv){
 		    "Aborting.\n", (int) line);
 	    return EXIT_FAILURE;
 	 }
-
+         tmax = max(tmax, faux[1]);
       }
       
       {
@@ -189,6 +190,8 @@ int main(int argc, char ** argv){
       }
       ninterf++;
    }
+
+   fprintf(stderr, "Maximum traveltime: %.3fs\n", tmax);
 
    if (!arg.xmin_given){
       arg.xmin_arg = interf[0].x[0];
