@@ -192,7 +192,7 @@ int main(int argc, char ** argv){
 
    if (!arg.xmin_given){
       arg.xmin_arg = interf[0].x[0];
-      for (i=1; i<ninterf; i++)
+      for (i=1; i<nint; i++)
 	 arg.xmin_arg = min(arg.xmin_arg, interf[i].x[0]);
    }
 
@@ -265,7 +265,7 @@ int main(int argc, char ** argv){
       ray_free(&(ray[i]));
    }
 
-   for (i=0; i<ninterf; i++){
+   for (i=0; i<nint; i++){
       interface_free(&(interf[i]));
    }
 
