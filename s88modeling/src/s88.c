@@ -462,7 +462,7 @@ void synt2bin (struct s88 *p)
         fclose(fp);
 
         if (p->debug){
-                fprintf(stderr, "%lu floats written\n", nwritten);
+                fprintf(stderr, "%lu floats written\n", (long unsigned int)nwritten);
         }
 
         return;
