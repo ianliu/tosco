@@ -1,5 +1,5 @@
-# tosco - Tools for Scientific Computing
-# Copyright (C) 2009 GeBR core team (http://www.gebrproject.com/)
+# ToSCo - Tools for Scientific Computing
+# Copyright (C) 2009 Luis D'Afonseca <luis.dafonseca@gebrproject.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

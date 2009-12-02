@@ -1,5 +1,5 @@
-# ToSCo - Tools for Scientific Computing
-# Copyright (C) 2009 Luis D'Afonseca <luis.dafonseca@gebrproject.com>
+# seis88 - Rays tracing tool
+# Copyright (C) 2009 Ivan Psencik <ip@ig.cas.cz>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,6 +14,4 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = rays2       \
-          s88modeling \
-	  seis88
+SUBDIRS = src

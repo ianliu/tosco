@@ -1,0 +1,577 @@
+C  seis88 - Rays tracing tool
+C  Copyright (C) 2009 Ivan Psencik <ip@ig.cas.cz>
+C 
+C  This program is free software: you can redistribute it and/or modify
+C  it under the terms of the GNU General Public License as published by
+C  the Free Software Foundation, either version 3 of the License, or
+C  (at your option) any later version.
+C 
+C  This program is distributed in the hope that it will be useful,
+C  but WITHOUT ANY WARRANTY; without even the implied warranty of
+C  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+C  GNU General Public License for more details.
+C 
+C  You should have received a copy of the GNU General Public License
+C  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+C
+C     **************************************************************
+C
+      SUBROUTINE MODEL(LU,lou,MM,MTEXT)
+C
+C     APPROXIMATION OF INTERFACES AND VELOCITY DISTRIBUTION
+C     IN INDIVIDUAL LAYERS (BICUBIC SPLINE APPROXIMATION OF VELOCITY)
+C
+      DIMENSION IPR(101),X(100),FX(100),AUX(12),VEL(6),Y(4),MTEXT(17)
+      COMMON/MEDIM/V(1000),SX(350),SY(350),NX(20),NY(20),NVS(19),
+     1PTOS(19)
+      COMMON/INTRF/A1(30,20),B1(29,20),C1(30,20),D1(29,20),X1(30,20),
+     1BRD(2),III(30,20),NPNT(20),NINT
+      COMMON/AUXI/INTR,INT1,IOUT,KRE,IREFR,LAY,ITYPE,NDER,IPRINT,MPRINT,
+     1NTR
+      COMMON/DEN/RHO1(19),RHO2(19),NRHO
+      COMMON/AUXX/MMX(20),MMY(20),MMXY(20),MAUX
+      COMMON/ABSR/QP1(19),QP2(19),QP3(19),QS1(19),QS2(19),QS3(19),
+     1NQP(19),NQS(19),NABS
+C
+      MI=0
+      IF(MM.NE.MI)MM=-1
+      IF(MM.LT.0)RETURN
+C
+C     INPUT DATA - INTERFACES
+C
+      READ(LU,102)NINT,(NPNT(I),I=1,NINT)
+      IF(MPRINT.GE.0)WRITE(LOU,102)NINT,(NPNT(I),I=1,NINT)
+      DO 11 I=1,NINT
+      NC=NPNT(I)
+      READ(LU,103)(X(J),FX(J),III(J,I),J=1,NC)
+      IF(MPRINT.GE.0)WRITE(LOU,103)(X(J),FX(J),III(J,I),J=1,NC)
+C
+C     DETERMINATION OF COEFFICIENTS OF CUBIC PARABOLAS
+C     APPROXIMATING INTERFACES
+C
+      DO 1 J=1,NC
+      X1(J,I)=X(J)
+    1 A1(J,I)=FX(J)
+      J1=1
+      NMIN=1
+    2 DO 3 J=J1,NC
+      J2=J
+      IF(III(J,I))4,3,6
+    3 CONTINUE
+    4 IF(NMIN.EQ.J2)GO TO 5
+      FX(NMIN)=A1(NMIN,I)
+      CALL SPLIN(X,FX,NMIN,J2)
+      KEY=0
+      GO TO 8
+    5 IF(J2.EQ.NC)GO TO 11
+      J1=J2+1
+      NMIN=J2
+      GO TO 2
+    6 IF(NMIN.EQ.J2)GO TO 7
+      FX(NMIN)=A1(NMIN,I)
+      CALL SPLIN(X,FX,NMIN,J2)
+      KEY=1
+      GO TO 8
+    7 IN=III(J2,I)
+      X1(J2,I)=X1(IN,I-1)
+      A1(J2,I)=A1(IN,I-1)
+      B1(J2,I)=B1(IN,I-1)
+      C1(J2,I)=C1(IN,I-1)
+      D1(J2,I)=D1(IN,I-1)
+      IF(J2.EQ.(NC-1))GO TO 11
+      J1=J2+1
+      NMIN=J1
+      GO TO 2
+    8 IF((J2-NMIN).EQ.1)GO TO 10
+      J3=J2-1
+      DO 9 J=NMIN,J3
+      H=X(J+1)-X(J)
+      D=(A1(J+1,I)-A1(J,I))/H
+      D1(J,I)=(FX(J+1)-FX(J))/(3.*H)
+      C1(J,I)=FX(J)
+    9 B1(J,I)=D-.333333*H*(FX(J+1)+2.*FX(J))
+      IF(KEY)5,5,7
+   10 D1(NMIN,I)=0.
+      C1(NMIN,I)=0.
+      B1(NMIN,I)=(A1(J2,I)-A1(NMIN,I))/(X(J2)-X(NMIN))
+      IF(KEY)5,5,7
+   11 CONTINUE
+C
+C     INPUT DATA - VELOCITY DISTRIBUTION IN INDIVIDUAL LAYERS
+      WRITE(LOU,117)
+      MX2=0
+      MY2=0
+      MXY2=0
+      NC=NINT-1
+      DO 13 I=1,NC
+      MX1=MX2+1
+      MY1=MY2+1
+      MXY1=MXY2+1
+      READ(LU,102)MX,MY
+      IF(MPRINT.GE.0)WRITE(LOU,102)MX,MY
+      NX(I)=MX
+      NY(I)=MY
+      MX2=MX1+MX-1
+      MY2=MY1+MY-1
+      MXY2=MXY1+MX*MY-1
+      READ(LU,104)(SX(J),J=MX1,MX2)
+      READ(LU,104)(SY(J),J=MY1,MY2)
+      IF(MPRINT.GE.0)WRITE(LOU,104)(SX(J),J=MX1,MX2)
+      IF(MPRINT.GE.0)WRITE(LOU,104)(SY(J),J=MY1,MY2)
+      M1=MXY1
+      DO 12 L=1,MX
+      M2=M1+MY-1
+      READ(LU,104)(V(J),J=M1,M2)
+      IF(MPRINT.GE.0)WRITE(LOU,104)(V(J),J=M1,M2)
+   12 M1=M2+1
+C
+C     DETERMINATION OF COEFFICIENTS OF BICUBIC PARABOLAS
+C     APPROXIMATING VELOCITY DISTRIBUTION
+C
+      CALL BIAP(MX1,MX,MY1,MY,MXY1)
+      MMX(I)=MX1
+      MMY(I)=MY1
+      MMXY(I)=MXY1
+   13 CONTINUE
+C
+C     INPUT DATA - DENSITIES AND S VELOCITIES
+C
+      READ(LU,102)NRO,(NVS(I),I=1,NC),NABS
+      IF(MPRINT.GE.0)WRITE(LOU,102)NRO,(NVS(I),I=1,NC),NABS
+      IF(NRO.EQ.0)GO TO 30
+      READ(LU,104)(RHO1(I),RHO2(I),I=1,NC)
+      IF(MPRINT.GE.0)WRITE(LOU,104)(RHO1(I),RHO2(I),I=1,NC)
+   30 IF(NABS.EQ.0)GO TO 34
+      DO 35 I=1,NC
+      READ(LU,106)NQP(I),NQS(I),QP1(I),QP2(I),QP3(I),QS1(I),QS2(I),
+     1QS3(I)
+      IF(MPRINT.GE.0)WRITE(LOU,106)
+     1NQP(I),NQS(I),QP1(I),QP2(I),QP3(I),QS1(I),QS2(I),QS3(I)
+   35 CONTINUE
+   34 IF(NRO.NE.0)GO TO 31
+      DO 32 IRHO=1,NC
+      RHO1(IRHO)=1.7
+      RHO2(IRHO)=.2
+   32 CONTINUE
+   31 CONTINUE
+      READ(LU,104)(PTOS(I),I=1,NC)
+      IF(MPRINT.GE.0)WRITE(LOU,104)(PTOS(I),I=1,NC)
+      DO 33 IRHO=1,NC
+   33 IF(PTOS(IRHO).LT.1.41421356)PTOS(IRHO)=1.732
+      IF(PTOS(1).GE.100.)RHO1(1)=1.
+      IF(PTOS(1).GE.100.)RHO2(1)=0.
+      NRHO=0
+      IF(PTOS(1).GE.100.)NRHO=1
+C
+C     INPUT DATA - PRINTER PLOT OF THE VELOCITY DISTRIBUTION
+C                  X COORDINATES OF VERTICAL BOUNDARIES OF THE MODEL
+C
+      READ(LU,104)VMIN,VMAX,BMIN,BMAX,BLEFT,BRIGHT
+      IF(MPRINT.GE.0)WRITE(LOU,104)VMIN,VMAX,BMIN,BMAX,BLEFT,BRIGHT
+      IF(ABS(BMIN).LT..00001)BMIN=A1(1,1)
+      IF(ABS(BMAX).LT..00001)BMAX=A1(1,NINT)
+      IF(ABS(BLEFT-BRIGHT).GT..001)GO TO 14
+      NC=NPNT(1)
+      BLEFT=X1(1,1)
+      BRIGHT=X1(NC,1)
+C
+C     NUMERICAL FORM OF INTERFACES
+C
+   14 AUX1=(BRIGHT-BLEFT)/25.
+      IF(MPRINT.GT.0)WRITE(LOU,101)MTEXT
+      IF(MPRINT.GE.2)WRITE(LOU,105)NINT
+      IF(MPRINT.GE.2)WRITE(LOU,107)
+      DO 19 I=1,NINT
+      NC=NPNT(I)-1
+      IF(MPRINT.GE.2)WRITE(LOU,112)
+      IF(MPRINT.GE.2)WRITE(LOU,108)I
+      DO 15 J=1,NC
+      IF(MPRINT.GE.2)
+     1WRITE(LOU,109)D1(J,I),C1(J,I),B1(J,I),A1(J,I),X1(J,I),X1(J+1,I),
+     2III(J,I)
+   15 CONTINUE
+      IF(MPRINT.GE.2)WRITE(LOU,110)
+      AUX2=BLEFT
+      AUX3=AUX2
+      AUX(1)=AUX2
+      L=1
+      J=1
+   16 AUX3=AUX3+AUX1
+      IF(AUX3.GT.BRIGHT)GO TO 17
+      L=L+1
+      AUX(L)=AUX3
+      IF(L.LT.12)GO TO 16
+   17 IF(MPRINT.GE.2)WRITE(LOU,111)(AUX(M),M=1,L)
+      K=1
+   18 IF(AUX(K).GT.X1(J+1,I))J=J+1
+      IF(AUX(K).GT.X1(J+1,I))GO TO 18
+      AUX4=AUX(K)-X1(J,I)
+      AUX(K)=((D1(J,I)*AUX4+C1(J,I))*AUX4+B1(J,I))*AUX4+A1(J,I)
+      K=K+1
+      IF(K.LE.L)GO TO 18
+      IF(MPRINT.GE.2)WRITE(LOU,111)(AUX(M),M=1,L)
+      IF(MPRINT.GE.2)WRITE(LOU,112)
+      IF((AUX3+AUX1).GT.BRIGHT)GO TO 19
+      L=0
+      GO TO 16
+   19 CONTINUE
+C
+C     NUMERICAL FORM OF VELOCITY DISTRIBUTION
+C
+      LAY=1
+      ITYPE=1
+      Y(3)=1.
+      VMM=VMAX-VMIN
+      VMMM=VMM/10.
+      IF(MPRINT.GE.1)WRITE(LOU,114)VMIN,VMAX,VMMM
+      DY=(BMAX-BMIN)/50.
+      DX=(BRIGHT-BLEFT)/5.
+      Y(2)=BMIN-DY
+      K1=1
+      AUX(1)=BLEFT
+      DO 20 I=2,6
+   20 AUX(I)=AUX(I-1)+DX
+      IF(MPRINT.GE.1)WRITE(LOU,113)(AUX(I),I=1,6)
+      DX=(BRIGHT-BLEFT)/100.
+      MAUX=0
+      NDER=0
+      DO 29 K=1,51
+      Y(2)=Y(2)+DY
+      Y(1)=BLEFT-DX
+      DO 28 L=1,101
+      Y(1)=Y(1)+DX
+      IF(LAY.GE.NINT)GOTO 24
+   21 LAY1=LAY+1
+      NC=NPNT(LAY1)-1
+      DO 22 I=1,NC
+      J=I
+      IF(Y(1).LT.X1(I+1,LAY1))GO TO 23
+   22 CONTINUE
+   23 A2=A1(J,LAY1)
+      B2=B1(J,LAY1)
+      C2=C1(J,LAY1)
+      D2=D1(J,LAY1)
+      X2=X1(J,LAY1)
+      AUX1=Y(1)-X2
+      ZINT=((D2*AUX1+C2)*AUX1+B2)*AUX1+A2
+      IF(Y(2).GE.ZINT)LAY=LAY+1
+      IF(LAY.GE.NINT)GO TO 27
+      IF(Y(2).GT.ZINT)GO TO 21
+      IF(LAY.LE.0)GO TO 27
+   24 NC=NPNT(LAY)-1
+      DO 25 I=1,NC
+      J=I
+      IF(Y(1).LT.X1(I+1,LAY))GO TO 26
+   25 CONTINUE
+   26 A2=A1(J,LAY)
+      B2=B1(J,LAY)
+      C2=C1(J,LAY)
+      D2=D1(J,LAY)
+      X2=X1(J,LAY)
+      AUX1=Y(1)-X2
+      ZINT=((D2*AUX1+C2)*AUX1+B2)*AUX1+A2
+      IF(Y(2).LT.ZINT)LAY=LAY-1
+      IF(LAY.LE.0)GO TO 27
+      IF(Y(2).LT.ZINT)GO TO 24
+   27 IF(LAY.LE.0.OR.LAY.GE.NINT)IPR(L)=11
+      IF(LAY.LE.0.OR.LAY.GE.NINT)GO TO 28
+      CALL VELOC(Y,VEL)
+      AUX1=10.*(VEL(1)-VMIN)/VMM
+      IPR(L)=IFIX(AUX1)
+      IF(AUX1.LT.0..OR.AUX1.GT.10.)IPR(L)=11
+      ITYPE=1
+   28 CONTINUE
+C
+C     PRINTER PLOT OF THE VELOCITY DISTRIBUTION
+C
+      IF(K1.EQ.K.AND.MPRINT.GE.1)WRITE(LOU,115)Y(2),IPR
+      IF(K1.NE.K.AND.MPRINT.GE.1)WRITE(LOU,116)IPR
+      IF(K1.EQ.K)K1=K1+10
+   29 CONTINUE
+C
+  101 FORMAT(1H1/17A4)
+  102 FORMAT(16I5)
+  103 FORMAT(3(2F10.5,I5))
+  104 FORMAT(8F10.5)
+  105 FORMAT(////1X,'M O D E L   O F   M E D I U M'/2X,'NUMBER OF INTERF
+     1ACES - ',I3)
+  106 FORMAT(2I5,6F10.5)
+  107 FORMAT(///////1X,'I N T E R F A C E S'///1X,'INTERFACES ARE APPROX
+     1IMATED BY CUBIC PARABOLAS  Z=D*(X-X1)**3+C*(X-X1)**2+B*(X-X1)+A  B
+     2ETWEEN  X1  AND  X2'/1X,'COEFFICIENTS OF PARABOLAS ARE DETERMINED
+     3BY CUBIC SPLINE INTERPOLATION'///)
+  108 FORMAT(/1X,'COEFFICIENTS OF PARABOLAS APPROXIMATING INTERFACE',I3/
+     1/15X,'D',14X,'C',14X,'B',14X,'A',2X,'IN INTERVAL',5X,'FROM X1',
+     27X,'TO X2',5X,'INDEX')
+  109 FORMAT(1X,4E15.5,15X,F10.5,F12.5,I10)
+  110 FORMAT(////1X,'NUMERICAL FORM OF INTERFACE'/1X,'UPPER ROW - X-COOR
+     1DINATES OF POINTS OF INTERFACE, LOWER ROW - CORRESPONDING Z-COORDI
+     2NATES OF POINTS OF INTERFACE'//)
+  111 FORMAT(1X,13F9.4)
+  112 FORMAT(/)
+  113 FORMAT(5X,5(F7.3,13X),F7.3)
+  114 FORMAT(////1X,'VELOCITY DISTRIBUTION'/1X,'ISOLINES CONSTRUCTED FRO
+     1M',F10.5,'  TO ',F10.5,'  WITH INCREMENT',F10.5//)
+  115 FORMAT(1X,F6.2,2X,101I1)
+  116 FORMAT(9X,101I1)
+  117 FORMAT(1X,'BICUBIC SPLINE INTERPOLATION')
+C
+      RETURN
+      END
+C
+C     *****************************************************************
+C
+      SUBROUTINE BIAP(MX1,MX,MY1,MY,MXY1)
+C
+      DIMENSION X(100),FX(100)
+      COMMON/MEDIM/V(1000),SX(350),SY(350),NX(20),NY(20),NVS(19),
+     1PTOS(19)
+      COMMON/VCOEF/A02(1000),A20(1000),A22(1000)
+C
+C
+C     THIS ROUTINE PERFORMS THE DETERMINATION OF COEFFICIENTS
+C     OF THE BICUBIC SPLINE INTERPOLATION
+C
+      DO 1 J=1,MX
+      L=MX1+J-1
+    1 X(J)=SX(L)
+      DO 3 I=1,MY
+      DO 2 J=1,MX
+      K=MXY1+(J-1)*MY+I-1
+    2 FX(J)=V(K)
+      CALL SPLIN(X,FX,1,MX)
+      DO 3 J=1,MX
+      K=MXY1+(J-1)*MY+I-1
+    3 A20(K)=FX(J)
+C
+      DO 4 I=1,MY
+      L=MY1+I-1
+    4 X(I)=SY(L)
+      DO 6 J=1,MX
+      DO 5 I=1,MY
+      K=MXY1+(J-1)*MY+I-1
+    5 FX(I)=V(K)
+      CALL SPLIN(X,FX,1,MY)
+      DO 6 I=1,MY
+      K=MXY1+(J-1)*MY+I-1
+    6 A02(K)=FX(I)
+C
+      DO 7 J=1,MX
+      L=MX1+J-1
+    7 X(J)=SX(L)
+      DO 9 I=1,MY
+      DO 8 J=1,MX
+      K=MXY1+(J-1)*MY+I-1
+    8 FX(J)=A02(K)
+      CALL SPLIN(X,FX,1,MX)
+      DO 9 J=1,MX
+      K=MXY1+(J-1)*MY+I-1
+    9 A22(K)=FX(J)
+C
+      RETURN
+      END
+C
+C     *************************************************************
+C
+      SUBROUTINE VELOC(Y,VEL)
+C
+C     DETERMINATION OF VELOCITY AND ITS DERIVATIVES
+C     FOR BICUBIC POLYNOMIAL APPROXIMATION
+C
+      DIMENSION Y(4),VEL(6)
+      COMMON/MEDIM/V(1000),SX(350),SY(350),NX(20),NY(20),NVS(19),
+     1PTOS(19)
+      COMMON/VCOEF/A02(1000),A20(1000),A22(1000)
+      COMMON/INTRF/A1(30,20),B1(29,20),C1(30,20),D1(29,20),X1(30,20),
+     1BRD(2),III(30,20),NPNT(20),NINT
+      COMMON/RAY/AY(12,400),DS(11,50),KINT(50),MREG,N,IREF,IND,IND1
+      COMMON/AUXI/INTR,INT1,IOUT,KRE,IREFR,LAY,ITYPE,NDER,IPRINT,MPRINT,
+     1NTR
+      COMMON/AUXX/MMX(20),MMY(20),MMXY(20),MAUX
+      COMMON/ABSR/QP1(19),QP2(19),QP3(19),QS1(19),QS2(19),QS3(19),
+     1NQP(19),NQS(19),NABS
+C
+      MX=NX(LAY)
+      MY=NY(LAY)
+      DO 1 I=2,MX
+      K=MMX(LAY)+I-1
+      IF(Y(1).LT.SX(K))GO TO 2
+    1 CONTINUE
+    2 I1=K
+      DO 3 I=2,MY
+      K=MMY(LAY)+I-1
+      IF(Y(2).LT.SY(K))GO TO 4
+    3 CONTINUE
+    4 J1=K
+      IF(MAUX.EQ.0)GO TO 5
+      IF(I1.EQ.I2.AND.J1.EQ.J2)GO TO 6
+    5 I=I1-MMX(LAY)
+      J=J1-MMY(LAY)
+      I2=I1
+      J2=J1
+      XX=SX(I1-1)
+      YY=SY(J1-1)
+      MM=MMXY(LAY)-1
+      K=MM+(I-1)*MY+J
+      B20=A20(K)
+      B02=A02(K)
+      B22=A22(K)
+      B00=V(K)
+      K=MM+I*MY+J
+      C20=A20(K)
+      C02=A02(K)
+      C22=A22(K)
+      C00=V(K)
+      K=MM+(I-1)*MY+J+1
+      D20=A20(K)
+      D02=A02(K)
+      D22=A22(K)
+      D00=V(K)
+      K=MM+I*MY+J+1
+      E20=A20(K)
+      E02=A02(K)
+      E22=A22(K)
+      E00=V(K)
+      HX=SX(I1)-XX
+      HY=SY(J1)-YY
+      XA=3.*HX
+      YA=3.*HY
+      XB=HX/3.
+      YB=HY/3.
+      D32=(E22-D22)/XA
+      D30=(E20-D20)/XA
+      B30=(C20-B20)/XA
+      B32=(C22-B22)/XA
+      D12=(E02-D02)/HX-XB*(E22+2.*D22)
+      D10=(E00-D00)/HX-XB*(E20+2.*D20)
+      B10=(C00-B00)/HX-XB*(C20+2.*B20)
+      B12=(C02-B02)/HX-XB*(C22+2.*B22)
+      B03=(D02-B02)/YA
+      B13=(D12-B12)/YA
+      B23=(D22-B22)/YA
+      B33=(D32-B32)/YA
+      B01=(D00-B00)/HY-YB*(D02+2.*B02)
+      B11=(D10-B10)/HY-YB*(D12+2.*B12)
+      B21=(D20-B20)/HY-YB*(D22+2.*B22)
+      B31=(D30-B30)/HY-YB*(D32+2.*B32)
+      MAUX=1
+    6 AX=Y(1)-XX
+      AZ=Y(2)-YY
+      IF(AX.GE.0..AND.AX.LE.HX.AND.AZ.GE.0..AND.AZ.LE.HY)GO TO 11
+      IF(AZ.LT.0..AND.LAY.NE.1)IND=21
+      IF(AZ.GT.HY.AND.LAY.NE.(NINT-1))IND=21
+C     DETERMINATION OF VELOCITY AT A POINT SITUATED
+C     OUTSIDE THE VELOCITY NETWORK
+      DO 13 I=2,6
+   13 VEL(I)=0.
+      RETURN
+   11 AUX1=((B33*AZ+B32)*AZ+B31)*AZ+B30
+      AUX2=((B23*AZ+B22)*AZ+B21)*AZ+B20
+      AUX3=((B13*AZ+B12)*AZ+B11)*AZ+B10
+      AUX4=((B03*AZ+B02)*AZ+B01)*AZ+B00
+      VEL(1)=((AUX1*AX+AUX2)*AX+AUX3)*AX+AUX4
+      VEL(2)=(3.*AUX1*AX+2.*AUX2)*AX+AUX3
+      IF(NDER.EQ.0)GO TO 7
+      VEL(4)=6.*AUX1*AX+2.*AUX2
+    7 AUX1=(3.*B33*AZ+2.*B32)*AZ+B31
+      AUX2=(3.*B23*AZ+2.*B22)*AZ+B21
+      AUX3=(3.*B13*AZ+2.*B12)*AZ+B11
+      AUX4=(3.*B03*AZ+2.*B02)*AZ+B01
+      VEL(3)=((AUX1*AX+AUX2)*AX+AUX3)*AX+AUX4
+      IF(NDER.EQ.0)GO TO 8
+      VEL(5)=(3.*AUX1*AX+2.*AUX2)*AX+AUX3
+      AUX1=3.*B33*AZ+B32
+      AUX2=3.*B23*AZ+B22
+      AUX3=3.*B13*AZ+B12
+      AUX4=3.*B03*AZ+B02
+      VEL(6)=2.*(((AUX1*AX+AUX2)*AX+AUX3)*AX+AUX4)
+    8 IF(ITYPE.GT.0.AND.NVS(LAY).EQ.0)GO TO 10
+      IF(ITYPE.LT.0.AND.NVS(LAY).EQ.1)GO TO 10
+      IF(ITYPE.GT.0.AND.NVS(LAY).EQ.1)GO TO 9
+      IF(PTOS(LAY).GE.100.)GO TO 12
+      VEL(1)=VEL(1)/PTOS(LAY)
+      VEL(2)=VEL(2)/PTOS(LAY)
+      VEL(3)=VEL(3)/PTOS(LAY)
+      IF(NDER.EQ.0)GO TO 10
+      VEL(4)=VEL(4)/PTOS(LAY)
+      VEL(5)=VEL(5)/PTOS(LAY)
+      VEL(6)=VEL(6)/PTOS(LAY)
+      GO TO 10
+   12 VEL(1)=0.
+      VEL(2)=0.
+      VEL(3)=0.
+      IF(NDER.EQ.0)GO TO 10
+      VEL(4)=0.
+      VEL(5)=0.
+      VEL(6)=0.
+      GO TO 10
+    9 VEL(1)=PTOS(LAY)*VEL(1)
+      VEL(2)=PTOS(LAY)*VEL(2)
+      VEL(3)=PTOS(LAY)*VEL(3)
+      IF(NDER.EQ.0)GO TO 10
+      VEL(4)=PTOS(LAY)*VEL(4)
+      VEL(5)=PTOS(LAY)*VEL(5)
+      VEL(6)=PTOS(LAY)*VEL(6)
+   10 IF(Y(3).LT.100.)RETURN
+      V1=VEL(1)
+      AY(6,N)=VEL(1)
+      AY(7,N)=VEL(2)
+      AY(8,N)=VEL(3)
+      IF(NDER.EQ.0)RETURN
+      AY(9,N)=VEL(4)
+      AY(10,N)=VEL(5)
+      AY(11,N)=VEL(6)
+      IF(NABS.EQ.0)RETURN
+      IF(ITYPE.LT.0)GO TO 14
+      Q1=QP1(LAY)
+      Q2=QP2(LAY)
+      Q3=QP3(LAY)
+      NQ=NQP(LAY)
+      GO TO 15
+   14 Q1=QS1(LAY)
+      Q2=QS2(LAY)
+      Q3=QS3(LAY)
+      NQ=NQS(LAY)
+   15 IF(NQ.EQ.0)AY(12,N)=Q1+Q2*V1+Q3*V1*V1
+      IF(NQ.EQ.1)AY(12,N)=Q1+Q2*V1+Q3/V1
+      RETURN
+      END
+C
+C     *************************************************************
+C
+      SUBROUTINE SPLIN(X,FX,NMIN,NMAX)
+C
+      DIMENSION A(100),B(100),H(100),F(100),X(100),FX(100)
+C
+C     CUBIC SPLINE INTERPOLATION WITH ZERO CURVATURES AT
+C     THE END POINTS
+C
+      IF((NMAX-NMIN).EQ.1)GO TO 4
+      NMIN1=NMIN+1
+      NMAX1=NMAX-1
+      H(NMIN1)=X(NMIN1)-X(NMIN)
+      D2=(FX(NMIN1)-FX(NMIN))/H(NMIN1)
+      DO 1 I=NMIN1,NMAX1
+      H(I+1)=X(I+1)-X(I)
+      D1=D2
+      D2=(FX(I+1)-FX(I))/H(I+1)
+      B(I)=H(I)+H(I+1)
+      FX(I)=3.*(D2-D1)/B(I)
+      A(I)=H(I)/B(I)
+    1 B(I)=H(I+1)/B(I)
+    4 FX(NMIN)=0.
+      FX(NMAX)=0.
+      IF((NMAX-NMIN).EQ.1)RETURN
+      H(NMIN)=0.
+      F(NMIN)=0.
+      DO 2 I=NMIN1,NMAX1
+      XPOM=2.+A(I)*H(I-1)
+      H(I)=-B(I)/XPOM
+    2 F(I)=(FX(I)-A(I)*F(I-1))/XPOM
+      DO 3 I=NMIN,NMAX1
+      J=NMAX1-(I-NMIN)
+    3 FX(J)=H(J)*FX(J+1)+F(J)
+      RETURN
+      END

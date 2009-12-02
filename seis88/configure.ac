@@ -1,5 +1,5 @@
-# ToSCo - Tools for Scientific Computing
-# Copyright (C) 2009 Luis D'Afonseca <luis.dafonseca@gebrproject.com>
+# seis88 - Rays tracing tool
+# Copyright (C) 2009 Ivan Psencik <ip@ig.cas.cz>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,6 +14,23 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = rays2       \
-          s88modeling \
-	  seis88
+dnl Process this file with autoconf to produce a configure script.
+
+AC_INIT(src/seis.f)
+
+dnl Every other copy of the package version number gets its value from here
+AM_INIT_AUTOMAKE(seis88,0.1.0)
+
+AC_SUBST(VERSION)
+
+ISODATE=`date +%Y-%m-%d`
+AC_SUBST(ISODATE)
+
+AC_CANONICAL_HOST
+
+dnl Checks for programs.
+AC_PROG_INSTALL
+AC_PROG_F77
+
+AC_OUTPUT( Makefile src/Makefile )
+
