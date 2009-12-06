@@ -1,0 +1,28 @@
+/* optspline - Optimally fit a cubic spline to sampled points
+ * Copyright (C) 2001-2009 Ricardo Biloti <biloti@ime.unicamp.br>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * $Id$
+ */
+
+int spline(int *n, double *x, double *y, double *b,
+	   double *c__, double *d__);
+
+double seval(int *n, double *u, double *x, double *y,
+	     double *b, double *c__, double *d__);
+
+int sgheval(int *n, double *u, double *x, double *y,
+	   double *b, double *c__, double *d__,
+	    double *s, double *g, double *h);

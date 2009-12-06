@@ -1,0 +1,47 @@
+# optspline - Optimally fit a cubic spline to sampled points
+# Copyright (C) 2001-2009 Ricardo Biloti <biloti@ime.unicamp.br>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# $Id$
+
+# GenGetOpt file
+#
+# The following command line was used to generate the file
+# cmdline.c and cmdline.h
+#
+# gengetopt < optspline.ggo --file-name=cmdline
+#
+
+package "optsp"
+version "1.1.0"
+
+purpose "Optimally adjust a cubic spline to a given data set
+
+Given a set of points on the Euclidian plane, optsp fits a cubic
+spline, with a prescribed number of knots, in the least square sense.
+To stdout is sent spline evaluation over the same points of the
+data set. Optionally, a file can be prescribed to store the optimal
+knots found.
+
+Ricardo Biloti <biloti@ime.unicamp.br>
+DMA / IMECC / UNICAMP
+"
+
+option "data"   d "ASCII data file containing the pairs\n(xi, yi) to be fitted" string yes
+option "nknots" n "Number of knots defining the spline" int default="10" no
+option "knots"  k "File to store the obtained knots" string typestr="FILENAME" no
+option "maxitr" m "Maximum iteration number" int default="500" no
+option "refine" r "Refine given knots" flag off
+option "verbose" v "More verbose output" flag off

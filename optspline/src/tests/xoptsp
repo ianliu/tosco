@@ -1,0 +1,46 @@
+#!/bin/bash
+#
+# optspline - Optimally fit a cubic spline to sampled points
+# Copyright (C) 2001-2009 Ricardo Biloti <biloti@ime.unicamp.br>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# $Id$
+
+PARAMS="$@"
+PPAR=$( echo $PARAMS | sed 's/\-k [^ ]*//;s/\-\-knots [^ ]*//g')
+
+../optsp $@ -k knots.dat > smoothed.dat
+
+xmgrace -barebones -noask -free \
+	-pexec "xaxis  tick place normal;
+	        yaxis  tick place normal;
+	        xaxis  label font 4;
+	        yaxis  label font 4;
+	        xaxis  ticklabel font 4;
+	        yaxis  ticklabel font 4;
+	        legend font 4;
+	        legend 0.8, 0.82 " \
+	$2 smoothed.dat knots.dat  \
+	-pexec "s1 line color 2;
+	 	s1 line linewidth 2.0;
+	 	s1 legend \"Spline ótima\";
+         	s2 symbol 1;
+	 	s2 symbol size 0.800000;
+	 	s2 line type 0;
+	 	s2 symbol linewidth 2.0;
+	 	s2 symbol color 1;
+	 	s2 symbol fill color 2;
+	 	s2 symbol fill pattern 1;
+	 	s2 legend \"Nós ótimos\"" &
