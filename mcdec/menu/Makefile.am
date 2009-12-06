@@ -1,5 +1,5 @@
-# ToSCo - Tools for Scientific Computing
-# Copyright (C) 2009 Luis D'Afonseca <luis.dafonseca@gebrproject.com>
+# mcdec - Direct multichannel predictive deconvolution
+# Copyright (c) 2009 Milton J. Porsani <porsani@cpgg.ufba.br>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,8 +14,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = rays2       \
-          s88modeling \
-	  seis88      \
-	  optspline   \
-	  mcdec
+GEBR_MENUS = mcdec.mnu
+
+EXTRA_DIST = ${GEBR_MENUS}
+
+install: ${GEBR_MENUS}
+	@GEBR@ --install-menu $<
+
+reinstall-menu: ${GEBR_MENUS} 
+	@GEBR@ --force-overwrite --install-menu $<
+

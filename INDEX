@@ -3,16 +3,26 @@ Programs distributed by ToSCo:
 Rays:
 
   Depict rays and velocity model from Seis88 and S88modeling.
-  By Ricardo Biloti <biloti@ime.unicamp.br>
+  by Ricardo Biloti <biloti@ime.unicamp.br>
 
 S88modeling:
 
   Synthetic modeling through Seis88.
-  By Ricardo Biloti <biloti@ime.unicamp.br>
+  by Ricardo Biloti <biloti@ime.unicamp.br>
 
 Seis2:
 
   Rays tracing tool
-  By Vlatislav Cerveny <vcerveny@seis.karlov.mff.cuni.cz>
+  by Vlatislav Cerveny <vcerveny@seis.karlov.mff.cuni.cz>
   and Ivan Psencik <ip@ig.cas.cz>
+
+OptSpline:
+
+  Optimally fit a cubic spline to sampled points
+  by Ricardo Biloti <biloti@ime.unicamp.br>
+
+MCDec:
+
+  Direct multichannel predictive deconvolution
+  by Milton J. Porsani <porsani@cpgg.ufba.br>
 
