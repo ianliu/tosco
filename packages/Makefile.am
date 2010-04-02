@@ -14,18 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_INIT(s88modeling)
+packages: deb-package
 
-PACKAGE=tosco
-VERSION=0.1.0
-AC_SUBST(PACKAGE)
-AC_SUBST(VERSION)
-AC_SUBST(TODAY)
+deb-package:
+cd ..; dpkg-buildpackage -kA594D681 -tc -rfakeroot; cd -
 
-AM_INIT_AUTOMAKE($PACKAGE,$VERSION)
-PACKAGE_NAME=$PACKAGE
-PACKAGE_VERSION=$VERSION
-
-AC_CONFIG_SUBDIRS( rays2 s88modeling seis88 optspline mcdec )
-
-AC_OUTPUT( Makefile packages/Makefile )

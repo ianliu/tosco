@@ -1,0 +1,15 @@
+Source: tosco
+Section: science
+Priority: extra
+Maintainer: Luis A. D'Afonseca <luis.dafonseca@gebrproject.com>
+Standards-Version: 0.1.0
+Build-Depends: debhelper (>= 5)
+
+Package: tosco
+Architecture: any
+Depends: 
+Suggests: gebr (= ${binary:Version})
+Conflicts:
+Description: ToSCo - Tools for Scientific 
+.
+More description
