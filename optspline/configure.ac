@@ -19,7 +19,7 @@ dnl Process this file with autoconf to produce a configure script.
 AC_INIT(src/optspline.c)
 
 dnl Every other copy of the package version number gets its value from here
-AM_INIT_AUTOMAKE(optspline,1.0.0)
+AM_INIT_AUTOMAKE(optspline,0.1.0)
 
 AC_SUBST(VERSION)
 
@@ -49,7 +49,7 @@ AC_CHECK_LIB(gsl,main,,     [AC_MSG_ERROR(KModeling requires gsl)])
 # If ATLAS is not available
 PKG_CHECK_MODULES(GLIB,glib-2.0)
 
-LIBS="$LIBS $GLIB_LIBS"
+LIBS="  $LIBS   $GLIB_LIBS"
 CFLAGS="$CFLAGS $GLIB_CFLAGS"
 
 CFLAGS="$CFLAGS -O2 -g \
@@ -61,7 +61,5 @@ CFLAGS="$CFLAGS -O2 -g \
 	-Wsign-compare \
         -Wmissing-prototypes"
 
-AC_PATH_PROG(GEBR,gebr)
-
-AC_OUTPUT( Makefile src/Makefile src/tests/Makefile menu/Makefile )
+AC_OUTPUT( Makefile src/Makefile src/tests/Makefile gebr/Makefile )
 

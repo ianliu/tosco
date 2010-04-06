@@ -47,9 +47,8 @@ PKG_CHECK_MODULES(GLIB,glib-2.0)
 LIBS="  $LIBS   $GLIB_LIBS"
 CFLAGS="$CFLAGS $GLIB_CFLAGS"
 
-AC_PATH_PROG(GEBR,gebr)
 AC_PATH_PROG(SEIS,seis)
 AC_PATH_PROG(SYNT,syntpl)
 
-AC_OUTPUT( Makefile src/Makefile menu/Makefile )
+AC_OUTPUT( Makefile src/Makefile gebr/Makefile )
 

@@ -23,7 +23,7 @@ rays2_SOURCES= rays2.c    \
                cmdline.c  \
                cmdline.h
 
-EXTRA_DIST = rays.ggo
+EXTRA_DIST= rays2.ggo
 
 ##
 ## TODO: Add rule to create cmdline files from rays.ggo

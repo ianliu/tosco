@@ -48,11 +48,8 @@ AC_CHECK_LIB(m,main,,[AC_MSG_ERROR(could not find m library)])
 
 PKG_CHECK_MODULES(GLIB,glib-2.0)
 
-LIBS="$LIBS $GLIB_LIBS"
-
+LIBS="  $LIBS   $GLIB_LIBS"
 CFLAGS="$CFLAGS $GLIB_CFLAGS"
 
-AC_PATH_PROG(GEBR,gebr)
-
-AC_OUTPUT( Makefile src/Makefile menu/Makefile )
+AC_OUTPUT( Makefile src/Makefile gebr/Makefile )
 

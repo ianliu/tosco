@@ -14,13 +14,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-GEBR_MENUS = rays2.mnu
+GEBR_PROJ_DIR= tosco
 
-EXTRA_DIST = ${GEBR_MENUS}
+GEBR_MENUS= rays2.mnu
+
+#------------------------------------------------------------------------------#
+
+EXTRA_DIST= install-menus ${GEBR_MENUS}
 
 install: ${GEBR_MENUS}
-	@GEBR@ --install-menu $<
+	$(srcdir)/install-menus ${GEBR_PROJ_DIR} ${GEBR_MENUS}
 
-reinstall-menu: ${GEBR_MENUS} 
-	@GEBR@ --force-overwrite --install-menu $<
+#------------------------------------------------------------------------------#
 
