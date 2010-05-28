@@ -14,14 +14,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# SUBDIRS = \
+#           cropcoher   \
+# 	  mcdec       \
+# 	  optspline   \
+#           packages    \
+# 	  rays2       \
+#           s88modeling \
+# 	  seis88      \
+# 	  suxkill     \
+# 	  suxmute
+
 SUBDIRS = \
-          cropcoher   \
 	  mcdec       \
 	  optspline   \
           packages    \
 	  rays2       \
           s88modeling \
-	  seis88      \
-	  suxkill     \
-	  suxmute
+	  seis88
 

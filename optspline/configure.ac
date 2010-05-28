@@ -43,8 +43,8 @@ dnl Check for libraries
 AC_CHECK_LIB(m,main,,[AC_MSG_ERROR(could not find m library)])
 
 dnl Checking for GSL
-AC_CHECK_LIB(gslcblas,main,,[AC_MSG_ERROR(KModeling requires cblas library)])
-AC_CHECK_LIB(gsl,main,,     [AC_MSG_ERROR(KModeling requires gsl)])
+AC_CHECK_LIB(gslcblas,main,,[AC_MSG_ERROR(Optspline requires cblas library)])
+AC_CHECK_LIB(gsl,main,,     [AC_MSG_ERROR(Optspline requires gsl)])
 
 # If ATLAS is not available
 PKG_CHECK_MODULES(GLIB,glib-2.0)
