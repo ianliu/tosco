@@ -1,5 +1,5 @@
-# ToSCo - Tools for Scientific Computing
-# Copyright (C) 2009 Luis D'Afonseca <luis.dafonseca@gebrproject.com>
+# suxmute - Mute seismic traces
+# Copyright (C) 2009 Fernanda Fonseca CPGG/UFBA <fsf@cpgg.ufba.br>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,14 +14,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = \
-          cropcoher   \
-	  mcdec       \
-	  optspline   \
-          packages    \
-	  rays2       \
-          s88modeling \
-	  seis88      \
-	  suxkill     \
-	  suxmute
+bin_PROGRAMS= suxmute
 
+suxmute_SOURCES= suxmute.c
+
+#  if you write a self-test script named `chk', uncomment the
+#  following and add `chk' to the EXTRA_DIST list
+#TESTS=chk

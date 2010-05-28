@@ -1,5 +1,5 @@
-# ToSCo - Tools for Scientific Computing
-# Copyright (C) 2009 Luis D'Afonseca <luis.dafonseca@gebrproject.com>
+# CropCoher - Crop Coherence
+# Copyright (C) 2002-2010 Ricardo Biloti <biloti@ime.unicamp.br>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,14 +14,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-SUBDIRS = \
-          cropcoher   \
-	  mcdec       \
-	  optspline   \
-          packages    \
-	  rays2       \
-          s88modeling \
-	  seis88      \
-	  suxkill     \
-	  suxmute
+GEBR_PROJ_DIR= tosco
+
+GEBR_MENUS= cropcoher.mnu
+
+#------------------------------------------------------------------------------#
+
+EXTRA_DIST= install-menus ${GEBR_MENUS}
+
+install: ${GEBR_MENUS}
+	$(srcdir)/install-menus ${GEBR_PROJ_DIR} ${GEBR_MENUS}
+
+#------------------------------------------------------------------------------#
 
