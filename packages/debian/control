@@ -1,15 +1,20 @@
 Source: tosco
-Section: science
 Priority: extra
 Maintainer: Luis A. D'Afonseca <luis.dafonseca@gebrproject.com>
-Standards-Version: 0.1.0
-Build-Depends: debhelper (>= 5)
+Build-Depends: debhelper (>= 5), automake
+Standards-Version: 3.7.2
 
-Package: tosco
+Package: gebr-tosco
+Section: science
 Architecture: any
-Depends: 
-Suggests: gebr (= ${binary:Version})
-Conflicts:
-Description: ToSCo - Tools for Scientific 
-.
-More description
+Depends: ${shlibs:Depends}
+Recommends: gebr
+Suggests: debr
+Breaks: gebr(<<0.9.16)
+Description: ToSCo - Tools for Scientific Computing
+ ToSCo is a set of scientific computing programs, mainly for processing geophysical data.
+ .
+ You can find more about the ToSCo project at http://code.google.com/p/tosco
+ .
+ This project is associated to GêBR project www.gebrproject.com.
+ .

@@ -17,5 +17,5 @@
 packages: deb-package
 
 deb-package:
-cd ..; dpkg-buildpackage -kA594D681 -tc -rfakeroot; cd -
+	cd ..; dpkg-buildpackage -tc -rfakeroot; cd -
 

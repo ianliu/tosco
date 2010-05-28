@@ -23,6 +23,7 @@
 #----------------------------------------------------------------------------#
 
 # Get the name of the directory to be created on GeBR menus directory
+PREFIX=$1  ; shift
 PROJECT=$1 ; shift
 
 # If the scrit is called by root install on system directory,
@@ -30,7 +31,7 @@ PROJECT=$1 ; shift
 if [[ `whoami` == "root" ]]; then
 
   # Set the directory for system instalation
-  TARGET_DIR="/usr/local/share/gebr/menus/${PROJECT}"
+  TARGET_DIR="${PREFIX}/gebr/menus/${PROJECT}"
 
 else
 

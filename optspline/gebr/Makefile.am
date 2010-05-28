@@ -23,7 +23,7 @@ GEBR_MENUS= optspline.mnu
 EXTRA_DIST= install-menus ${GEBR_MENUS}
 
 install: ${GEBR_MENUS}
-	$(srcdir)/install-menus ${GEBR_PROJ_DIR} ${GEBR_MENUS}
+	$(srcdir)/install-menus $(DESTDIR)/$(datadir) ${GEBR_PROJ_DIR} ${GEBR_MENUS}
 
 #------------------------------------------------------------------------------#
 

@@ -1,0 +1,43 @@
+This work was packaged for Debian by:
+
+  Luis A. D Afonseca <luis.dafonseca@gebrproject.com> Fri, May 28 16:53:54 BRT 2010
+
+It was downloaded from:
+
+  http://code.google.com/p/tosco/
+
+Upstream Author(s):
+
+  Luis A. D Afonseca <luis.dafonseca@gebrproject.com>
+
+Copyright:
+
+  Copyright (C) 2010 Luis A. D Afonseca <luis.dafonseca@gebrproject.com>
+
+License:
+
+  This package is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+
+  This package is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this package; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+  Debian systems, the complete text of the GNU General
+  License version 2 can be found in `/usr/share/common-licenses/GPL-2'.
+
+Debian packaging is:
+
+  Copyright (C) 2010 Luis A. D Afonseca <luis.dafonseca@gebrproject.com>
+
+  You can redistribute it and/or modify it under the terms of the 
+  GNU General Public License as published by Free Software Foundation;
+  either version 2 of the License, or (at your option) any later version.
+
