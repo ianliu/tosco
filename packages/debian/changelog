@@ -1,5 +1,5 @@
-tosco (0.1.0) lenny; urgency=low
+tosco (0.1.0) jaunty; urgency=low
 
   * 0.1.0 ToSCo Package
 
- -- Akiles <akiles@troia>  Fri, 28 May 2010 17:23:03 -0300
+ -- Luis A. D Afonseca <luis.dafonseca@gebrproject.com>  Fri, 28 May 2010 17:23:03 -0300

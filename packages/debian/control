@@ -10,7 +10,6 @@ Architecture: any
 Depends: ${shlibs:Depends}
 Recommends: gebr
 Suggests: debr
-Breaks: gebr(<<0.9.16)
 Description: ToSCo - Tools for Scientific Computing
  ToSCo is a set of scientific computing programs, mainly for processing geophysical data.
  .

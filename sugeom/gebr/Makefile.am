@@ -1,5 +1,5 @@
-# ToSCo - Tools for Scientific Computing
-# Copyright (C) 2009 Luis D'Afonseca <luis.dafonseca@gebrproject.com>
+# sugeom - Set geometry parameters on SU files
+# Copyright (C) 2010 Adriano Wagner CPGG/UFBA <adrianowgs@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,19 +14,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_INIT(s88modeling)
+GEBR_PROJ_DIR= tosco
 
-PACKAGE=tosco
-VERSION=0.1.0
-AC_SUBST(PACKAGE)
-AC_SUBST(VERSION)
-AC_SUBST(TODAY)
+GEBR_MENUS= sugeom.mnu
 
-AM_INIT_AUTOMAKE($PACKAGE,$VERSION)
-PACKAGE_NAME=$PACKAGE
-PACKAGE_VERSION=$VERSION
+#------------------------------------------------------------------------------#
 
-AC_CONFIG_SUBDIRS([cropcoher mcdec optspline rays2 s88modeling seis88 sugeom suxkill suxmute])
+EXTRA_DIST= install-menus ${GEBR_MENUS}
 
-AC_OUTPUT( Makefile packages/Makefile )
+install: ${GEBR_MENUS}
+	$(srcdir)/install-menus $(DESTDIR)/$(datadir) ${GEBR_PROJ_DIR} ${GEBR_MENUS}
+
+#------------------------------------------------------------------------------#
 
