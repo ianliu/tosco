@@ -1,0 +1,29 @@
+# velan-cmp - Velocity analisys on CMP sorted data
+# Copyright (C) 2010 Alam Souza CPGG/UFBA <aavbs@cpgg.ufba.br>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+GEBR_PROJ_DIR= tosco
+
+GEBR_MENUS= velan-cmp.mnu
+
+#------------------------------------------------------------------------------#
+
+EXTRA_DIST= install-menus ${GEBR_MENUS}
+
+install: ${GEBR_MENUS}
+	$(srcdir)/install-menus $(DESTDIR)/$(datadir) ${GEBR_PROJ_DIR} ${GEBR_MENUS}
+
+#------------------------------------------------------------------------------#
+

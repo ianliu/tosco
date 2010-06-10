@@ -1,0 +1,16 @@
+TODO List for velan-cmp programs
+
+- Mudar nome dos programas *xwigb2 para *xwigb-yn
+- testar CWPROOT no scriop
+  - se variavel existe usar
+  - se nao existir testar o script cwproot
+  - se nao existir produzir um erro
+
+- duvidaas para documentacao
+  qual a diferença com do su/xwigb2 com o original
+  ele recebe algum parametro extra?
+  todos os parametros do script sao realmente obrigatórios?
+  como usar o programa?
+  quais sao os comandos nas janelas?
+  unificar CDP -> CMP ou CMP->CDP
+

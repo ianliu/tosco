@@ -1,0 +1,398 @@
+#! /bin/sh
+# velan-cmp - Velocity analisys on CMP sorted data
+# Copyright (C) 2010 Alam Souza CPGG/UFBA <aavbs@cpgg.ufba.br>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# baseado na shell iva presente em
+# 262A - Seismic Data Processing with Seismic Un*x
+# Author: David Forel, Thomas Benz, and Wayne D. Pennington
+# SEG
+
+# set -x
+
+if [ "x$1" = "x" ] ; then
+  cat > /dev/stderr <<EOF
+
+velan-cmp - Velocity analisys on CMP sorted data
+usage: velan-cmp  mandatory_parameters
+
+The parameters are parsed by positional order as follow:
+ 1 - input data file
+ 2 - pick file generated
+ 3 - first cdp used
+ 4 - interval between CDP's
+ 5 - quantity of CDP's used
+ 6 - first velocity
+ 7 - last velocity
+ 8 - quantity of CPD used
+ 9 - cvs size
+10 - number of velocities, semblance
+11 - velocity increment, semblance
+12 - power, power of semblance
+13 - strech mute, 1.5=150%
+14 - number of tarces valid only to nccs,uccs,nsel and usel
+15 - distance between sucessives CDP's 
+16 - nsel,usel only, threshold for significance values
+17 - use suvelan or suvelan_nccs  suvelan_nsel  suvelan_uccs  suvelan_usel
+18 - percentile clip
+19 - temporary directory
+
+Copyright (C) 2010 Alam Souza CPGG/UFBA <aavbs@cpgg.ufba.br>
+EOF
+  exit 0;
+fi
+
+if [ "x${19}" = "x" ] ; then
+  cat > /dev/stderr <<EOF
+velan-cmp error: Missing parameters!
+Type velan-cmp with no parameters to read the program help message.
+EOF
+  exit 1;
+fi
+
+input=$1          #input file
+output=$2         #pick file generated
+first=$3          #first cdp used
+step=$4           #interval between CDP's
+qt=$5             #quantity of CDP's used
+first_vel=$6      #first velocity
+last_vel=$7       #last velocity
+quant=$8          #quantity
+cvs_size=$9       #cvs size
+nv=${10}          #number of velocities, semblance
+dv=${11}          #velocity increment, semblance
+pwr=${12}         #power, power of semblance
+smute=${13}       #strech mute, 1.5=150%
+nx=${14}          #number of tarces valid only to nccs,uccs,nsel and usel
+dx=${15}          #distance between sucessives CDP's 
+tau=${16}         #nsel,usel only, thresold for significance values
+plottype=${17}    #use suvelan or suvelan_nccs  suvelan_nsel  suvelan_uccs  suvelan_usel
+perc=${18}        #percentile clip
+TMPDIR=${19}      #temporary directory
+
+rm -f $TMPDIR/cvs* $TMPDIR/semb* $TMPDIR/par* $TMPDIR/cdp_* $TMPDIR/stack* $TMPDIR/pick* $TMPDIR/par* $PWD/resposta
+
+get_cdp_list() #create a list with the cdp values
+{
+	first=$1
+	step=$2
+	cdp_qt_list=$3
+	max=`echo "$first + ( ( $cdp_qt_list - 1 ) * $step )"|bc`
+	#echo $max
+	cdp_list=`seq $first $step $max`
+	return 0
+}
+
+extract_cdps() #extract cdp's from data
+{
+	input=$1
+	cvs_size=$2 #ODD QUANTITY ONLY
+	first=$3
+	step=$4
+	cdp_qt=$5
+
+	half_size=`echo "( $cvs_size - 1 ) / 2"| bc`
+	
+	get_cdp_list $first $step $cdp_qt
+	
+	for cdp in $cdp_list
+	do
+		min=`expr $cdp - $half_size`
+		max=`expr $cdp + $half_size`
+		suwind key=cdp min=$min max=$max <$input| tee $TMPDIR/temp_cvs_panel_$cdp.su | suwind key=cdp min=$cdp max=$cdp >$TMPDIR/cdp_velan_$cdp.su
+	done
+	return 0
+}
+
+make_cvs_panels() #create CVS (constant velocity stack) panel
+{
+	first_vel=$1
+	last_vel=$2
+	qt_cvs=$3
+	first=$4
+	step=$5
+	qtt=$6
+	dv_cvs=`echo "( $last_vel - $first_vel ) / $qt_cvs"|bc`
+	get_cdp_list $first $step $qtt
+	for cdp in $cdp_list
+	do
+		i=1
+		while [ $i -le $qt_cvs ]
+		do
+			vel=`echo "$first_vel + ( $dv_cvs * ( $i - 1 ) ) "|bc`
+			sunmo <$TMPDIR/temp_cvs_panel_$cdp.su vnmo=$vel verbose=0 |sustack >>$TMPDIR/cvs_panel_$cdp.su
+			i=`expr $i + 1`
+		done
+		rm -f $TMPDIR/temp_cvs_panel_$cdp.su
+	done
+	return 0
+}
+
+make_velan_panels() #generate semblance
+{
+	first_vel=$1
+	vel_number=$2
+	dv=$3
+	pwr=$4
+	smute=$5
+	nx=$6 #nccs,uccs,nsel, usel only, number of traces in cdp
+	dx=$7 #nsel,usel only, offset increment
+	tau=$8 #nsel,usel only, thresold for significance values	
+	first=$9
+	step=${10}
+	qt_velan=${11}
+	plot_type=${12}
+
+	get_cdp_list $first $step $qt_velan
+
+	for cdp in $cdp_list
+	do
+		case $plot_type in
+		suvelan)
+			suvelan <$TMPDIR/cdp_velan_$cdp.su fv=$first_vel dv=$dv nv=$vel_number pwr=$pwr verbose=0 >$TMPDIR/semb_$cdp.su
+		;;
+		suvelan_nccs)
+			 suvelani_nccs <$TMPDIR/cdp_velan_$cdp.su nx=$nx fv=$first_vel dv=$dv nv=$vel_number pwr=$pwr verbose=0 >$TMPDIR/semb_$cdp.su
+
+		;;
+		suvelan_uccs)
+			suvelan_uccs <$TMPDIR/cdp_velan_$cdp.su nx=$nx fv=$first_vel dv=$dv nv=$vel_number pwr=$pwr verbose=0 >$TMPDIR/semb_$cdp.su
+
+		;;
+		suvelan_nsel)
+			 suvelan_nsel <$TMPDIR/cdp_velan_$cdp.su nx=$nx dx=$dx tau=$tau fv=$first_vel dv=$dv nv=$vel_number pwr=$pwr verbose=0 >$TMPDIR/semb_$cdp.su
+
+		;;
+		suvelan_usel)
+			suvelan_usel <$TMPDIR/cdp_velan_$cdp.su nx=$nx dx=$dx tau=$tau fv=$first_vel dv=$dv nv=$vel_number pwr=$pwr verbose=0 >$TMPDIR/semb_$cdp.su
+
+		;;
+		esac
+	done
+
+	return 0
+}
+
+cvs_plot() #plot CVS panel
+{
+	cdp=$1
+	first_vel=$2
+	last_vel=$3
+	qt_cvs_plot=$4
+	perc=$5
+	m=`echo "( $last_vel - $first_vel ) / ( ( $qt_cvs_plot - 1 ) * $cvs_size )"|bc`
+	lov=`echo " $first_vel - ( ( ( $cvs_size - 1 ) / 2 ) * $m )" | bc`
+	suximage <$TMPDIR/cvs_panel_$cdp.su cmap=rgb0 f2=$lov d2=$m verbose=0 \
+	title="CMP $cdp  Constant Velocity Stacks" label1="Time (s)" \
+	windowtitle="CVS plot for CDP $cdp"  wbox=471 hbox=600 xbox=942\
+	mpicks=$TMPDIR/picks_cvs_$cdp \
+	label2="Velocity (m/s)" perc=$perc n2tic=5 &
+	return 0
+}
+
+semb_plot() #semblance plot
+{
+	cdp=$1
+	first_vel=$2
+	dv=$3
+	suximage <$TMPDIR/semb_$cdp.su perc=99 units="semblance" f2=$first_vel d2=$dv n2tic=5 \
+	title="Semblance Plot  CMP $cdp" cmap=hsv2 \
+	label1="Time (s)" label2="Velocity (m/s)" legend=1 units=Semblance gridcolor=black \
+	grid1=solid grid2=solid mpicks=$TMPDIR/picks_semb_$cdp wbox=471 hbox=600 xbox=471 \
+	windowtitle="Semblance plot for CDP $cdp"
+	return 0 
+}
+
+
+semb_plot_curve() #semblance plot with curves, last picked values
+{
+	cdp=$1
+	first_vel=$2
+	dv=$3
+	pair=$4
+	suximage <$TMPDIR/semb_$cdp.su perc=99 units="semblance" f2=$first_vel d2=$dv n2tic=5 \
+	title="Semblance Plot  CMP $cdp" cmap=hsv2 wbox=471 hbox=600 xbox=471\
+	label1="Time (s)" label2="Velocity (m/s)" legend=1 units=Semblance gridcolor=black \
+	grid1=solid grid2=solid mpicks=$TMPDIR/picks_semb_$cdp \
+	curve=$TMPDIR/curve_aux npair=$pair curvecolor=white windowtitle="Semblance plot for CDP $cdp"
+	return 0 
+}
+
+
+cdp_plot() #plot cdp extracted from data
+{
+	cdp=$1
+	perc=$2
+	inp="cdp_velan_$cdp.su"
+#	echo " inp inp  $inp"
+	suxwigbyn <$TMPDIR/$inp windowtitle="Plot of CDP $cdp" perc=$perc label1="Time (s)" wbox=471 hbox=600  mpicks=/dev/null label2="Offset (m)" key=offset title="CMP gather $cdp" &
+	return 0
+}
+
+join_pick_files() #concatenate picks
+{
+	cdp=$1
+	touch $TMPDIR/picks_semb_$cdp
+	touch $TMPDIR/picks_cvs_$cdp
+	echo "cdp=$cdp">$TMPDIR/temp_pick
+	cat $TMPDIR/picks_semb_$cdp $TMPDIR/picks_cvs_$cdp| sort -n >$TMPDIR/pick_temp_$cdp
+	mkparfile <$TMPDIR/pick_temp_$cdp string1=tnmo string2=vnmo >$TMPDIR/pick_temp2_$cdp
+	sed <$TMPDIR/pick_temp2_$cdp -e's/tnmo/xin/g' -e's/vnmo/yin/g' >$TMPDIR/par_uni_$cdp
+	cat $TMPDIR/temp_pick $TMPDIR/pick_temp2_$cdp >$TMPDIR/pick_$cdp
+#	cat $TMPDIR/pick_$cdp
+	rm -f $TMPDIR/temp_pick $TMPDIR/pick_temp_$cdp $TMPDIR/pick_temp2_$cdp
+	return 0
+}
+
+
+second_round() #plot the result from last picking section
+{
+	cdp=$1
+	first_vel=$2
+	last_vel=$3
+	perc=$4
+	input=$5
+	nlines=`wc -l <$TMPDIR/pick_$cdp `
+	sunmo <$TMPDIR/cdp_velan_$cdp.su par=$TMPDIR/pick_$cdp verbose=0 >$TMPDIR/stack_$cdp.su
+	suxwigbyn <$TMPDIR/stack_$cdp.su title="CDP $cdp after NMO" label1="Time (s)" wbox=471 hbox=600 label2="Offset (m)" \
+	perc=$perc verbose=0  mpicks=/dev/null windowtitle="CDP $cdp after NMO" &
+	j=1
+	while [ $j -le 8 ]
+	do
+		sustack <$TMPDIR/stack_$cdp.su >>$TMPDIR/stack_temp_$cdp.su
+		j=`expr $j + 1`
+	done
+	suxwigbyn <$TMPDIR/stack_temp_$cdp.su title="CDP $cdp stacked eight times" wbox=471 hbox=600 xbox=471 label1="Time (s)" key=cdp \
+	verbose=0 perc=$perc mpicks=/dev/null
+	rm -f $TMPDIR/stack_temp_$cdp.su
+	#graph $cdp $first_vel $last_vel $input
+
+	return 0
+}
+
+change_repick() #test necessity to repick values
+{
+	repick=""
+	touch $PWD/resposta
+	while [ -z $repick ]
+	do
+		read repick <$PWD/resposta
+	done
+	echo $repick
+	rm -f $PWD/resposta
+	return 0
+}
+
+make_tv_file() #create file used by the sunmo
+{
+	first=$1
+	step=$2
+	qt_tv=$3
+	output=$4
+	rm -f $TMPDIR/pick_all_temp $TMPDIR/saida*
+	get_cdp_list $first $step $qt_tv
+	for j in $cdp_list
+	do
+	    printf "$j\n" >>$TMPDIR/saida
+	done
+	var="#"
+	cat -n $TMPDIR/saida >$TMPDIR/saida2
+	mkparfile <$TMPDIR/saida2 string1=$var string2=cdp > $TMPDIR/saida3
+	sed -e'/#/d'  <$TMPDIR/saida3 >$TMPDIR/saida4
+	for i in $cdp_list
+	do
+	    cat $TMPDIR/pick_$i >>$TMPDIR/pick_all_temp
+	done
+	sed -e'/cdp/d' <$TMPDIR/pick_all_temp>$TMPDIR/pick_all_temp2
+	cat $TMPDIR/saida4 $TMPDIR/pick_all_temp2 |sed -e'$q;s/$/ \\/g' >$output
+	rm -f $TMPDIR/saida* $TMPDIR/pick_all_temp*
+	return 0
+}
+
+make_curve() #create curve
+{
+	cdp=$1
+	step=$2
+	repick=$3
+
+	if [ $repick == "n" ]
+	then
+		pair=`wc -l <$TMPDIR/picks_semb_$cdp`
+		cp $TMPDIR/picks_semb_$cdp $TMPDIR/curve_aux
+	else
+		aux=`expr $cdp - $step`
+		pair=`wc -l <$TMPDIR/picks_semb_$aux`
+		cp $TMPDIR/picks_semb_$aux $TMPDIR/curve_aux
+	fi
+
+	return 0
+}
+
+extract_cdps $input $cvs_size $first $step $qt 
+
+make_cvs_panels $first_vel $last_vel $quant $first $step $qt
+
+#make_velan_panels 1200 100 27 1 1.5 0 0 0 1 30 12 suvelan
+make_velan_panels $first_vel $nv $dv $pwr $smute $nx $dx $tau $first $step $qt $plottype
+
+first_cdp=$first
+repick="n"
+echo $cdp_list
+for cdp in $cdp_list
+do
+	if [ $cdp -eq $first_cdp ] 
+	then
+		while [ $repick = "n" ]
+		do
+			echo $cdp
+			cdp_plot $cdp $perc
+			cvs_plot $cdp $first_vel $last_vel $qt $perc
+			semb_plot $cdp $first_vel $dv
+			#zap xwigb
+			join_pick_files $cdp
+			zap ximage
+			second_round $cdp $first_vel $last_vel $perc $input
+			change_repick
+			#zap xwigb
+			zap ximage
+			zap xwigb
+		done
+	else
+		repick="n"		
+		while [ $repick = "n" ]
+		do
+			cdp_plot $cdp $perc
+			cvs_plot $cdp $first_vel $last_vel $qt $perc
+			make_curve $cdp $step $repick
+			#semb_plot $cdp $first_vel $dv
+			semb_plot_curve $cdp $first_vel $dv $pair
+			#zap xwigb
+			join_pick_files $cdp
+			#zap ximage
+			second_round $cdp $first_vel $last_vel $perc $input
+			change_repick
+			#zap xgraph
+			zap ximage
+			zap xwigb
+		done		
+	fi
+done
+
+make_tv_file $first $step $qt $output
+
+rm -f $TMPDIR/cvs* $TMPDIR/semb* $TMPDIR/cdp* $TMPDIR/stack* $TMPDIR/par* $TMPDIR/pick*
+
+exit 0
+
