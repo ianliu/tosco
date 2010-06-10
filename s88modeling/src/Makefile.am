@@ -16,11 +16,8 @@
 
 bin_PROGRAMS=s88modeling
 s88modeling_SOURCES=s88modeling.c \
-		    parser.c \
-                    parser.h \
- 	            s88.c \
+		    parser.c      \
+                    parser.h      \
+ 	            s88.c         \
                     s88.h
 
-#  if you write a self-test script named `chk', uncomment the
-#  following and add `chk' to the EXTRA_DIST list
-#TESTS=chk

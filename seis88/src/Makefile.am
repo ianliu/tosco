@@ -20,6 +20,3 @@ seis_SOURCES= seis.f calcops.f calcops.inc modis.f ray.f serv.f
 
 syntpl_SOURCES= syntpl.f calcops.f calcops.inc serv.f source.f
 
-#  if you write a self-test script named `chk', uncomment the
-#  following and add `chk' to the EXTRA_DIST list
-#TESTS=chk

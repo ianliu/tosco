@@ -28,7 +28,3 @@ EXTRA_DIST= rays2.ggo
 ##
 ## TODO: Add rule to create cmdline files from rays.ggo
 ##
-
-#  if you write a self-test script named `chk', uncomment the
-#  following and add `chk' to the EXTRA_DIST list
-#TESTS=chk
