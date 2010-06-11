@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+# suktmig2d-offset - Prestack time migration of a common-offset section
+# Copyright (C) 2010 Reynam Pestana CPGG/UFBA <reynam@cpgg.ufba.br>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+infile=synt-off.su
+vfile=velxz.bin
+outfile=output.su
+
+firstcdp=1
+lastcdp=318
+nvelcdp=318
+offmin=0
+offmax=1260
+dx=10
+intoff=20
+
+[ -e ${vfile} ] && [ -e ${infile} ] || ${srcdir}/src/build-test-data
+
+< $infile                                        \
+${bindir}/suktmig2d-offset dx=$dx                \
+                           intoff=$intoff        \
+		           firstcdp=$firstcdp    \
+		           lastcdp=$lastcdp      \
+		           nvelcdp=$nvelcdp      \
+		           offmin=$offmin        \
+		           offmax=$offmax        \
+		           vfile=$vfile          \
+> $outfile
+
