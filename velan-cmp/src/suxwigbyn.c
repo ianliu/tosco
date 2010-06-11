@@ -329,7 +329,7 @@ main(int argc, char **argv)
 		rewind(x2fp);
 		fread(x2string,sizeof(char),x2len,x2fp);
 		plotcmd = (char *) emalloc(x2len+BUFSIZ);
-		sprintf(plotcmd, "%s/bin/xwigb2 n1=%d d1=%f f1=%f %s style=%s", cwproot,
+		sprintf(plotcmd, "xwigbyn n1=%d d1=%f f1=%f %s style=%s",
 			   nt, d1, f1, x2string, style);
 		free(x2string);
 	} else {
@@ -338,7 +338,7 @@ main(int argc, char **argv)
 		}
 		plotcmd = (char *) emalloc(BUFSIZ);
 		sprintf(plotcmd,
-			"xwigb2 n1=%d n2=%d d1=%f d2=%f f1=%f f2=%f style=%s",
+			"xwigbyn n1=%d n2=%d d1=%f d2=%f f1=%f f2=%f style=%s",
 			   nt, ntr, d1, d2, f1, f2, style);
 	}
 

@@ -39,22 +39,21 @@ The parameters are parsed by positional order as follow:
  8 - quantity of CPD used
  9 - cvs size
 10 - number of velocities, semblance
-11 - velocity increment, semblance
-12 - power, power of semblance
-13 - strech mute, 1.5=150%
-14 - number of tarces valid only to nccs,uccs,nsel and usel
-15 - distance between sucessives CDP's 
-16 - nsel,usel only, threshold for significance values
-17 - use suvelan or suvelan_nccs  suvelan_nsel  suvelan_uccs  suvelan_usel
-18 - percentile clip
-19 - temporary directory
+11 - power, power of semblance
+12 - strech mute, 1.5=150%
+13 - number of tarces valid only to nccs,uccs,nsel and usel
+14 - distance between sucessives CDP's 
+15 - nsel,usel only, threshold for significance values
+16 - use suvelan or suvelan_nccs  suvelan_nsel  suvelan_uccs  suvelan_usel
+17 - percentile clip
+18 - temporary directory
 
 Copyright (C) 2010 Alam Souza CPGG/UFBA <aavbs@cpgg.ufba.br>
 EOF
   exit 0;
 fi
 
-if [ "x${19}" = "x" ] ; then
+if [ "x${18}" = "x" ] ; then
   cat > /dev/stderr <<EOF
 velan-cmp error: Missing parameters!
 Type velan-cmp with no parameters to read the program help message.
@@ -72,15 +71,17 @@ last_vel=$7       #last velocity
 quant=$8          #quantity
 cvs_size=$9       #cvs size
 nv=${10}          #number of velocities, semblance
-dv=${11}          #velocity increment, semblance
-pwr=${12}         #power, power of semblance
-smute=${13}       #strech mute, 1.5=150%
-nx=${14}          #number of tarces valid only to nccs,uccs,nsel and usel
-dx=${15}          #distance between sucessives CDP's 
-tau=${16}         #nsel,usel only, thresold for significance values
-plottype=${17}    #use suvelan or suvelan_nccs  suvelan_nsel  suvelan_uccs  suvelan_usel
-perc=${18}        #percentile clip
-TMPDIR=${19}      #temporary directory
+pwr=${11}         #power, power of semblance
+smute=${12}       #strech mute, 1.5=150%
+nx=${13}          #number of tarces valid only to nccs,uccs,nsel and usel
+dx=${14}          #distance between sucessives CDP's 
+tau=${15}         #nsel,usel only, thresold for significance values
+plottype=${16}    #use suvelan or suvelan_nccs  suvelan_nsel  suvelan_uccs  suvelan_usel
+perc=${17}        #percentile clip
+TMPDIR=${18}      #temporary directory
+
+# velocity increment, semblance
+dv=`echo " scale=2; ( $last_vel - $first_vel ) / $nv " | bc`
 
 rm -f $TMPDIR/cvs* $TMPDIR/semb* $TMPDIR/par* $TMPDIR/cdp_* $TMPDIR/stack* $TMPDIR/pick* $TMPDIR/par* $PWD/resposta
 
