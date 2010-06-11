@@ -18,6 +18,3 @@ bin_PROGRAMS = sugeom
 
 sugeom_SOURCES = parser.c parser.h sugeom.c
 
-#  if you write a self-test script named `chk', uncomment the
-#  following and add `chk' to the EXTRA_DIST list
-#TESTS=chk
