@@ -1,0 +1,565 @@
+#!/bin/bash
+# ToSCo SU Packaging
+# Copyright (C) 2010 Luis D'Afonseca <luis.dafonseca@gebrproject.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#-----------------------------------------------------------------------------#
+# su-install
+# $Id$
+#-----------------------------------------------------------------------------#
+
+set -e
+
+. ./config.sh
+
+DESTDIR=$1
+
+export CWP_INST="${DESTDIR}/${CWP_PREFIX}"
+export BIN_INST="${DESTDIR}/${BIN_PREFIX}/bin"
+
+export CWPROOT="${CWP_PREFIX}"
+
+# Installing the SU package
+#-----------------------------------------------------------------------------#
+
+mkdir -p "${CWP_INST}/src/su/include"
+
+# Install builded dirs
+cp -r "${SUBUILD}/bin"     "${CWP_INST}"
+cp -r "${SUBUILD}/lib"     "${CWP_INST}"
+cp -r "${SUBUILD}/include" "${CWP_INST}"
+
+# Install source files needed for SU self documentation
+cp -r "${SUBUILD}/src/doc"                "${CWP_INST}/src"
+cp -r "${SUBUILD}/src/su/include/segy.h"  "${CWP_INST}/src/su/include"
+
+# Creating script to access CWPROOT
+#-----------------------------------------------------------------------------#
+
+mkdir -p ${BIN_INST}
+
+PROG=${BIN_INST}/cwproot
+
+cat > ${PROG} <<EOF
+#!/bin/sh
+CWPROOT=${CWPROOT}
+export CWPROOT
+echo "\${CWPROOT}"
+EOF
+
+chmod +x ${PROG}
+
+# Installing the SU programs
+#-----------------------------------------------------------------------------#
+
+# Do not install this programs (?)
+# copyright - do not make sense to install it on linux
+# t         - equivalent to date
+# gendocs   - used only on SU compilation
+
+# Programs that need only a link
+PROGS_LINK="suplane"
+
+# SU programs that need be renamed to avoid conflict with other packages
+# psmerge   psutils           A collection of PostScript document handling utilities
+# replace   mysql-server-5.0  MySQL database server binaries
+# replace   mysql-server-5.1  MySQL database server binaries
+# resample  resample          Resamples a sound file using a FIR filter
+# ximage    radiance          Lighting Simulation and Rendering System
+# xgraph    xgraph            Plotting program, reads stdin, allows interactive zooming
+# why       why               A software verification tool
+# zap       dvb-apps          Digitial Video Broadcasting (DVB) applications
+
+# OBS:
+# pscontour and psimage may conflict with gmt lib
+
+PROGS_CONFLICT="                 \
+               psmerge           \
+               replace           \
+               resample          \
+	       ximage            \
+               xgraph            \
+               why               \
+               zap               \
+	       "
+
+# All SU programs that need wrapping
+PROGS_WRAPPER="                  \
+               a2b               \
+               a2i               \
+               argv              \
+               b2a               \
+               bhedtopar         \
+               cellauto          \
+               cpall             \
+               cpftrend          \
+               cshot1            \
+               cshot2            \
+               cshotplot         \
+               ctrlstrip         \
+               cwell             \
+               cwpfind           \
+               cxzco             \
+               cxzcs             \
+               cz1               \
+               cz1in             \
+               dctcomp           \
+               dctuncomp         \
+               dirtree           \
+               downfort          \
+               dt1tosu           \
+               dzdv              \
+               elacheck          \
+               elamodel          \
+               elaps             \
+               elaray            \
+               elasyn            \
+               elatriuni         \
+               entropy           \
+               farith            \
+               fcat              \
+               fftlab            \
+               filetype          \
+               float2ibm         \
+               ftnstrip          \
+               ftnunstrip        \
+               gbbeam            \
+               Grep              \
+               grm               \
+               h2b               \
+               hti2stiff         \
+               hudson            \
+               ibm2float         \
+               isatty            \
+               kaperture         \
+               las2su            \
+               lcmap             \
+               linrort           \
+               lookpar           \
+               lorenz            \
+               lprop             \
+               makevel           \
+               maxdiff           \
+               maxints           \
+               merge2            \
+               merge2v           \
+               merge4            \
+               mkparfile         \
+               mrafxzwt          \
+               newcase           \
+               normray           \
+               overwrite         \
+               pause             \
+               pdfhistogram      \
+               percent           \
+               precedence        \
+               prplot            \
+               psbbox            \
+               pscontour         \
+               pscube            \
+               pscubecontour     \
+               psepsi            \
+               psgraph           \
+               psimage           \
+               pslabel           \
+               psmanager         \
+               psmovie           \
+               pstopdfcymk       \
+               pswigb            \
+               pswigp            \
+               randvel3d         \
+               raydata           \
+               rayt2d            \
+               rayt2dan          \
+               rcpall            \
+               rcslocks          \
+               recast            \
+               recip             \
+               refRealAziHTI     \
+               refRealVTI        \
+               regrid3           \
+               resamp            \
+               rmaxdiff          \
+               scmap             \
+               segbread          \
+               segdread          \
+               segyclean         \
+               segyhdrmod        \
+               segyhdrs          \
+               segyread          \
+               segywrite         \
+               setbhed           \
+               smooth2           \
+               smooth3d          \
+               smoothint2        \
+               spsplot           \
+               stiff2vel         \
+               striptotxt        \
+               su3dchart         \
+               suabshw           \
+               suacor            \
+               suacorfrac        \
+               suaddevent        \
+               suaddhead         \
+               suaddnoise        \
+               suaddstatics      \
+               suagc             \
+               sualford          \
+               suamp             \
+               suascii           \
+               suattributes      \
+               suazimuth         \
+               subackus          \
+               subackush         \
+               suband            \
+               subfilt           \
+               subset            \
+               succfilt          \
+               succwt            \
+               sucddecon         \
+               sucdpbin          \
+               sucentsamp        \
+               sucepstrum        \
+               suchart           \
+               suchw             \
+               sucliphead        \
+               sucmp             \
+               sucommand         \
+               suconv            \
+               sucountkey        \
+               sucvs4fowler      \
+               sucwt             \
+               sudatumfd         \
+               sudatumk2dr       \
+               sudatumk2ds       \
+               sudiff            \
+               sudipdivcor       \
+               sudipfilt         \
+               sudivcor          \
+               sudivstack        \
+               sudmofk           \
+               sudmofkcw         \
+               sudmotivz         \
+               sudmotx           \
+               sudmovz           \
+               sudoc             \
+               sudumptrace       \
+               suea2df           \
+               suedit            \
+               sueipofi          \
+               suenv             \
+               sufbpickw         \
+               sufctanismod      \
+               sufdmod1          \
+               sufdmod2          \
+               sufdmod2_pml      \
+               sufft             \
+               sufilter          \
+               sufind            \
+               sufind2           \
+               suflip            \
+               sufnzero          \
+               sufrac            \
+               sufwatrim         \
+               sufwmix           \
+               sufxdecon         \
+               sugabor           \
+               sugain            \
+               sugassmann        \
+               sugausstaper      \
+               sugazmig          \
+               sugendocs         \
+               suget             \
+               sugetgthr         \
+               sugethw           \
+               sugoupillaud      \
+               sugoupillaudpo    \
+               sugprfb           \
+               suharlan          \
+               suhelp            \
+               suhilb            \
+               suhrot            \
+               suhtmath          \
+               suifft            \
+               suilog            \
+               suimp2d           \
+               suimp3d           \
+               suimpedance       \
+               suinterp          \
+               suinterpfowler    \
+               suintvel          \
+               suinvvxzco        \
+               suinvzco3d        \
+               sujitter          \
+               suk1k2filter      \
+               sukdmig2d         \
+               sukdmig3d         \
+               sukdsyn2d         \
+               sukeycount        \
+               sukeyword         \
+               sukfrac           \
+               sukill            \
+               suktmig2d         \
+               sulcthw           \
+               sulfaf            \
+               sulhead           \
+               sulog             \
+               sulprime          \
+               sultt             \
+               sumax             \
+               sumean            \
+               sumedian          \
+               sumigfd           \
+               sumigffd          \
+               sumiggbzo         \
+               sumiggbzoan       \
+               sumigprefd        \
+               sumigpreffd       \
+               sumigprepspi      \
+               sumigpresp        \
+               sumigps           \
+               sumigpspi         \
+               sumigpsti         \
+               sumigsplit        \
+               sumigtk           \
+               sumigtopo2d       \
+               sumix             \
+               sumixgathers      \
+               sumute            \
+               suname            \
+               sunan             \
+               sunhmospike       \
+               sunmo             \
+               sunormalize       \
+               sunull            \
+               suocext           \
+               suoldtonew        \
+               suop              \
+               suop2             \
+               supack1           \
+               supack2           \
+               supaste           \
+               supef             \
+               supermute         \
+               supgc             \
+               suphase           \
+               suphasevel        \
+               suphidecon        \
+               supickamp         \
+               supofilt          \
+               supolar           \
+               suprod            \
+               supscontour       \
+               supscube          \
+               supscubecontour   \
+               supsgraph         \
+               supsimage         \
+               supsmax           \
+               supsmovie         \
+               supswigb          \
+               supswigp          \
+               suptdiff          \
+               suptprod          \
+               suptquo           \
+               suptsum           \
+               suput             \
+               suputgthr         \
+               supws             \
+               suquantile        \
+               suquo             \
+               suradon           \
+               suramp            \
+               surandspike       \
+               surandstat        \
+               surange           \
+               surecip           \
+               sureduce          \
+               surefcon          \
+               sureflpsvsh       \
+               surelan           \
+               surelanan         \
+               suresamp          \
+               suresstat         \
+               susehw            \
+               sushape           \
+               sushift           \
+               sushw             \
+               suslowft          \
+               suslowift         \
+               susmgauss2        \
+               susort            \
+               susorty           \
+               suspecfk          \
+               suspecfx          \
+               suspeck1k2        \
+               suspike           \
+               susplit           \
+               sustack           \
+               sustatic          \
+               sustaticrrs       \
+               sustkvel          \
+               sustolt           \
+               sustrip           \
+               susum             \
+               suswapbytes       \
+               susyncz           \
+               susynlv           \
+               susynlvcw         \
+               susynlvfti        \
+               susynvxz          \
+               susynvxzcs        \
+               sutaper           \
+               sutaup            \
+               sutetraray        \
+               sutifowler        \
+               sutihaledmo       \
+               sutivel           \
+               sutrcount         \
+               sutsq             \
+               suttoz            \
+               sutvband          \
+               sutxtaper         \
+               suunpack1         \
+               suunpack2         \
+               suutm             \
+               suvcat            \
+               suvel2df          \
+               suvelan           \
+               suvelan_nccs      \
+               suvelan_nsel      \
+               suvelan_uccs      \
+               suvelan_usel      \
+               suvibro           \
+               suvlength         \
+               suwaveform        \
+               suweight          \
+               suwellrf          \
+               suwfft            \
+               suwind            \
+               suwindpoly        \
+               suxcontour        \
+               suxcor            \
+               suxedit           \
+               suxgraph          \
+               suximage          \
+               suxmax            \
+               suxmovie          \
+               suxpicker         \
+               suxwigb           \
+               suzero            \
+               suztot            \
+               swapbytes         \
+               sxplot            \
+               tetramod          \
+               this_year         \
+               thom2hti          \
+               thom2stiff        \
+               time_now          \
+               todays_date       \
+               transp            \
+               transp3d          \
+               tri2uni           \
+               trimodel          \
+               trip              \
+               triray            \
+               triseis           \
+               triso             \
+               trisoplot         \
+               triview           \
+               tvnmoqc           \
+               unglitch          \
+               uni2tri           \
+               unif2             \
+               unif2aniso        \
+               unisam            \
+               unisam2           \
+               updatedoc         \
+               updatedocall      \
+               updatehead        \
+               upfort            \
+               usernames         \
+               utmconv           \
+               varlist           \
+               vel2stiff         \
+               velconv           \
+               velpert           \
+               velpertan         \
+               verhulst          \
+               viewer3           \
+               vtlvz             \
+               weekday           \
+               wkbj              \
+               wpc1comp2         \
+               wpc1uncomp2       \
+               wpccompress       \
+               wpcuncompress     \
+               wptcomp           \
+               wptuncomp         \
+               wtcomp            \
+               wtuncomp          \
+               xcontour          \
+               ximage            \
+               xmovie            \
+               xpicker           \
+               xrects            \
+               xwigb             \
+               xy2z              \
+               z2xyz             \
+	       "
+
+# Creating links to SU programs
+#-----------------------------------------------------------------------------#
+
+for P in ${PROGS_LINK}; do
+
+  link -s ${CWPROOT}/$P ${BIN_INST}/$P
+
+done
+
+# Creating links to conflicting SU programs
+#-----------------------------------------------------------------------------#
+
+for P in ${PROGS_LINK}; do
+
+  link -s "${CWPROOT}/$P" "${BIN_INST}/su-$P"
+
+done
+
+# Installing the SU program wrappers
+#-----------------------------------------------------------------------------#
+
+function build_su_wrapper
+{
+  PROG=${BIN_INST}/$1
+
+  echo "Wrapping ${PROG} -> ${CWPROOT}/bin/$1"
+
+  cat > ${PROG} <<EOF
+#!/bin/sh
+CWPROOT=${CWPROOT}
+export CWPROOT
+exec ${CWPROOT}/bin/$1 "\$@"
+EOF
+
+  chmod +x ${PROG}
+}
+
+for P in ${PROGS_WRAPPER}; do
+
+  build_su_wrapper $P
+
+done
+
+#-----------------------------------------------------------------------------#
+

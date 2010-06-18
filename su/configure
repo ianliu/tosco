@@ -1,0 +1,58 @@
+#!/bin/bash
+# ToSCo SU Packaging
+# Copyright (C) 2010 Luis D'Afonseca <luis.dafonseca@gebrproject.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#-----------------------------------------------------------------------------#
+# configure
+# $Id$
+#-----------------------------------------------------------------------------#
+
+SU_VERSION="42"
+
+PACKAGE="tosco-su"
+VERSION="${SU_VERSION}-1"
+
+SU_ARCHIVE=cwp_su_all_${SU_VERSION}.tgz
+CWP_SRC_URL="ftp://ftp.cwp.mines.edu/pub/cwpcodes"
+
+CWP_PREFIX="/opt/tosco-su"
+BIN_PREFIX="/usr"
+
+SRCDIR="${PWD}"
+SUBUILD="${SRCDIR}/su"
+
+cat > config.sh <<EOF
+
+SU_VERSION=${SU_VERSION}
+
+PACKAGE=${PACKAGE}
+VERSION=${VERSION}
+
+SU_ARCHIVE=${SU_ARCHIVE}
+CWP_SRC_URL=${CWP_SRC_URL}
+
+CWP_PREFIX=${CWP_PREFIX}
+BIN_PREFIX=${BIN_PREFIX}
+
+SRCDIR=${SRCDIR}
+SUBUILD=${SUBUILD}
+
+EOF
+
+chmod +x config.sh
+
+cat "config.sh" "Makefile.in" > "Makefile"
+
+#-----------------------------------------------------------------------------#

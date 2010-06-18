@@ -1,0 +1,96 @@
+# ToSCo SU Packaging
+# Copyright (C) 2010 Luis D'Afonseca <luis.dafonseca@gebrproject.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#-----------------------------------------------------------------------------#
+
+all: su-make-done
+
+install: su-make-done
+	$(SRCDIR)/su-install $(DESTDIR)
+
+su-make-done: su-patch-done
+	$(SRCDIR)/su-make  
+	touch $@
+
+patch: su-patch-done
+su-patch-done: $(SRCDIR)/$(SU_ARCHIVE)
+	$(SRCDIR)/su-patch
+	touch $@
+
+download: $(SRCDIR)/$(SU_ARCHIVE)
+$(SRCDIR)/$(SU_ARCHIVE): 
+	$(SRCDIR)/su-download
+
+#-----------------------------------------------------------------------------#
+
+debian:
+	dpkg-buildpackage -tc -rfakeroot
+
+#-----------------------------------------------------------------------------#
+
+clean:
+	rm -vf *~ debian/*~
+
+distclean: clean
+	rm -vf  $(SU_ARCHIVE)
+	rm -vfr $(SUBUILD)
+	rm -vf config.sh Makefile
+	rm -vf *-done
+	rm -vf *-stamp
+
+#-----------------------------------------------------------------------------#
+
+DISTDIR=$(PACKAGE)_$(VERSION)
+DIST_ARCHIVE=$(DISTDIR).tar.gz
+
+DISTFILES= AUTHORS      \
+	   ChangeLog    \
+	   configure    \
+	   COPYING      \
+	   Makefile.in  \
+	   NEWS         \
+	   README       \
+	   su-download  \
+	   su-install   \
+	   su-make      \
+	   su-patch     \
+	   TODO
+
+DEBIANFILES= debian/changelog    \
+	     debian/compat       \
+	     debian/control      \
+	     debian/copyright    \
+	     debian/dirs         \
+	     debian/docs         \
+	     debian/install      \
+	     debian/postinst.ex  \
+	     debian/postrm.ex    \
+	     debian/preinst.ex   \
+	     debian/prerm.ex     \
+	     debian/rules
+
+dist:
+	rm -rf $(DISTDIR)
+	mkdir -p $(DISTDIR)
+	cp $(DISTFILES) $(DISTDIR)
+	mkdir $(DISTDIR)/debian
+	cp $(DEBIANFILES) $(DISTDIR)/debian
+	tar czf $(DIST_ARCHIVE) $(DISTDIR)
+
+#-----------------------------------------------------------------------------#
+
+.PHONY: download patch install clean distclean dist debian
+
+#-----------------------------------------------------------------------------#

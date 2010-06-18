@@ -1,0 +1,139 @@
+#!/bin/bash
+# ToSCo SU Packaging
+# Copyright (C) 2010 Luis D'Afonseca <luis.dafonseca@gebrproject.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#-----------------------------------------------------------------------------#
+# su-patch
+# $Id$
+#-----------------------------------------------------------------------------#
+
+set -e
+
+. ./config.sh
+
+# Unpacking the SU source
+#-----------------------------------------------------------------------------#
+
+echo "Extracting SU source files..."
+
+test -d ${SUBUILD} && rm -r ${SUBUILD}
+
+mkdir -p ${SUBUILD}
+cd       ${SUBUILD}
+
+tar zxf "${SRCDIR}/${SU_ARCHIVE}"
+
+# Remove unnecessary files from SU source tree
+#-----------------------------------------------------------------------------#
+
+# rm -rf ${SUBUILD}/Sfio
+# rm -rf ${SUBUILD}/src/demos
+# rm -rf ${SUBUILD}/src/fac
+# rm -rf ${SUBUILD}/src/Mathematica
+# rm -rf ${SUBUILD}/src/PVM/Bayesian/demos
+# rm -rf ${SUBUILD}/src/3D/Suinvco3d/Demo
+# rm -rf ${SUBUILD}/src/Fortran/AzimVelan/Demo
+# rm -rf ${SUBUILD}/src/Fortran/Cshot/Demo01
+# rm -rf ${SUBUILD}/src/Fortran/Cshot/Demo02
+# rm -rf ${SUBUILD}/src/Fortran/Cshot/Demo03
+# rm -rf ${SUBUILD}/src/Fortran/Cshot/Demo04
+# rm -rf ${SUBUILD}/src/Fortran/Cshot/Demo05
+# rm -rf ${SUBUILD}/src/Fortran/Cshot/Demo06
+# rm -rf ${SUBUILD}/src/Fortran/Cshot/Demo07
+# rm -rf ${SUBUILD}/src/Fortran/Cshot/Demo08
+# rm -rf ${SUBUILD}/src/Fortran/Cshot/Demo09
+# rm -rf ${SUBUILD}/src/Fortran/Cshot/Demo10
+# rm -rf ${SUBUILD}/src/Fortran/Cshot/Demo11
+# rm -rf ${SUBUILD}/src/Fortran/Cshot/Demo12
+# rm -rf ${SUBUILD}/src/Fortran/Cshot/Demo13
+# rm -rf ${SUBUILD}/src/Fortran/Cshot/Demo14
+# rm -rf ${SUBUILD}/src/Fortran/Cwell/Demo01
+# rm -rf ${SUBUILD}/src/Fortran/Cwell/Demo02
+# rm -rf ${SUBUILD}/src/Fortran/Cwell/Demo03
+# rm -rf ${SUBUILD}/src/Fortran/Cwell/Demo04
+# rm -rf ${SUBUILD}/src/Fortran/Cwell/Demo05
+# rm -rf ${SUBUILD}/src/Fortran/Cwell/Demo06
+# rm -rf ${SUBUILD}/src/Fortran/Cwell/Demo07
+# rm -rf ${SUBUILD}/src/Fortran/Cwell/Demo08
+# rm -rf ${SUBUILD}/src/Fortran/Cwell/Demo09
+# rm -rf ${SUBUILD}/src/Fortran/Cwell/Demo10
+# rm -rf ${SUBUILD}/src/Fortran/Cwell/Demo11
+# rm -rf ${SUBUILD}/src/Fortran/Cxzco/Demo1
+# rm -rf ${SUBUILD}/src/Fortran/Cxzco/Demo2
+# rm -rf ${SUBUILD}/src/Fortran/Cxzco/Demo3
+# rm -rf ${SUBUILD}/src/Fortran/Cxzco/Demo4
+# rm -rf ${SUBUILD}/src/Fortran/Cxzcs/Demo1
+# rm -rf ${SUBUILD}/src/Fortran/Cxzcs/Demo2
+# rm -rf ${SUBUILD}/src/Fortran/Cxzcs/Demo3
+# rm -rf ${SUBUILD}/src/Fortran/Cxzcs/Demo4
+# rm -rf ${SUBUILD}/src/Fortran/Cxzcs/Demo5
+# rm -rf ${SUBUILD}/src/Fortran/Cxzcs/Demo6
+# rm -rf ${SUBUILD}/src/Fortran/Raytrace3D/Demo
+# rm -rf ${SUBUILD}/src/Fortran/Triso/Demo
+# rm -rf ${SUBUILD}/src/PVM/Sudgast/Demo
+
+# Applying patch 
+#-----------------------------------------------------------------------------#
+
+mv src/Makefile.config  src/Makefile.config-original
+mv src/chkroot.sh       src/chkroot.sh-original
+
+cat > src/Makefile.config <<EOF
+SHELL = /bin/sh
+ROOT = \$(CWPROOT)
+ENDIANFLAG = -DCWP_LITTLE_ENDIAN
+LARGE_FILE_FLAG =  -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -DGNU_SOURCE
+OPTC = -O3 -Wall -Wno-long-long -ansi -pedantic -D_POSIX_SOURCE
+MAKE = make
+include \$(CWPROOT)/src/Rules/oldmake.rules
+include \$(CWPROOT)/src/Rules/gnumake.rules
+CC = cc
+CFLAGS = -I\$I \$(OPTC) \$(LARGE_FILE_FLAG) \$(ENDIANFLAG) \$(XDRFLAG) \$(LINEHDRFLAG)
+C++ = c++
+C++FLAGS = -I\$I \$(OPTC) \$(LARGE_FILE_FLAG) \$(ENDIANFLAG) \$(XDRFLAG)
+LD_LIBRARY_PATH += \$(CWPROOT)/lib
+AR = ar
+ARFLAGS = rv
+RANLIB = ranlib
+ICHMODLINE = chmod 664 \$@
+MCHMODLINE = chmod 775 \$@
+CPP = /lib/cpp
+OPTF = -O -static -fno-automatic -fno-second-underscore
+FC = gfortran
+JC = javac
+include \$(CWPROOT)/src/Rules/abbrev.rules
+IX11 = /usr/include
+LX11 = /usr/lib
+IMOTIF = /usr/include
+LMOTIF = /usr/lib
+IGL = /usr/include
+LGL = /usr/lib
+IGLUT = /usr/include
+LGLUT = /usr/lib
+include \$(CWPROOT)/src/Rules/cflags.rules
+include \$(CWPROOT)/src/Rules/newmesa.rules
+include \$(CWPROOT)/src/Rules/opengl.rules
+include \$(CWPROOT)/src/Rules/suffix.rules
+include \$(CWPROOT)/src/Rules/misc.rules
+EOF
+
+cat > src/chkroot.sh <<EOF
+echo "GeBR SU building the CWP codes"
+echo "Working directory: \${CWPROOT}"
+EOF
+
+chmod +x src/chkroot.sh
+
+#-----------------------------------------------------------------------------#

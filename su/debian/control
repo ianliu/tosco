@@ -1,0 +1,20 @@
+Source: tosco-su
+Section: science
+Priority: extra
+Maintainer: Luis A D Afonseca <luis.dafonseca@gebrproject.com>
+Build-Depends: debhelper (>= 5), gcc, gfortran, lesstif2-dev, libglut3-dev, libxmu-dev
+Standards-Version: 3.7.2
+
+Package: tosco-su
+Section: science
+Architecture: any
+Depends: ${shlibs:Depends}
+Recommends:
+Suggests: 
+Description: CWP Seismic Unix packaged by ToSCo
+ Seismic Unix is a set of tools for seismic processing, developed at
+ Center for Wave Phenomena (CWP) - http://www.cwp.mines.edu/cwpcodes.
+ .
+ This package it is part of ToSCo project - http://code.google.com/p/tosco
+ and was created to distribute the CWP Seismic Unix programs.
+ .
