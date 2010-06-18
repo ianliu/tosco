@@ -50,11 +50,6 @@ if test "x${CWPROOT}" == "x"; then
   AC_MSG_ERROR([environment variable CWPROOT is not defined])
 fi
 
-AC_PATH_PROG(SU,sumute)
-if test "x${SU}" == "x"; then
-  AC_MSG_ERROR([unable to find SU programs])
-fi
-
 SU_LIBS="-L${CWPROOT}/lib -lsu -lxplot -lSM -lICE -lX11 -lpar -lcwp"
 
 SU_CFLAGS="-I${CWPROOT}/include"

@@ -21,3 +21,5 @@ bin_PROGRAMS= xwigbyn suxwigbyn
 xwigbyn_SOURCES=   xwigbyn.c
 suxwigbyn_SOURCES= suxwigbyn.c
 
+EXTRA_DIST= velan-cmp
+

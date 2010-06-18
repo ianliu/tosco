@@ -44,9 +44,7 @@ char *sdoc[] = {
 "									",
 " Optional parameters:							",
 " intoff= 	interval between offsets				",
-" cdp_trace_last                last cdp in data            		",
 " angmax=40	maximum aperture angle for migration (degrees)		",
-" hoffset=.5*tr.offset		half offset (m)				",
 " nfc=16	number of Fourier-coefficients to approximate low-pass	",
 "		filters. The larger nfc the narrower the filter		",
 " fwidth=5 	high-end frequency increment for the low-pass filters	",
@@ -129,10 +127,9 @@ int main(int argc,char **argv){
 	int ncdp=0;	/* number of cdps in the velocity file	*/
 
 	float dx=0.0;	/* cdp sample interval */
-	float hoffset=0.0;  /* half receiver-source */
 			/* no aliasing of the operator */
 	float dt;	/* t sample interval */
-	float h;	/* offset */
+	float h=0.0;	/* offset */
 
 	float angmax;   /* maximum aperture angle */
 
@@ -176,8 +173,6 @@ int main(int argc,char **argv){
 	dt=(float)intrace.dt/1000000;
 	tmax=(nt-1)*dt;		
 	gottrace=1;
-
-	h=hoffset;
 
 	/* Set up FFT parameters */
 	nfft = npfaro(nt, LOOKFAC*nt);
