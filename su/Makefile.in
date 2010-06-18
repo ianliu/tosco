@@ -35,8 +35,8 @@ $(SRCDIR)/$(SU_ARCHIVE):
 
 #-----------------------------------------------------------------------------#
 
-debian:
-	dpkg-buildpackage -tc -rfakeroot
+deb:
+	dpkg-buildpackage -rfakeroot -us -uc -tc -b -j3
 
 #-----------------------------------------------------------------------------#
 
@@ -91,6 +91,6 @@ dist:
 
 #-----------------------------------------------------------------------------#
 
-.PHONY: download patch install clean distclean dist debian
+.PHONY: download patch install clean distclean dist deb
 
 #-----------------------------------------------------------------------------#

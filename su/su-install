@@ -523,7 +523,7 @@ PROGS_WRAPPER="                  \
 
 for P in ${PROGS_LINK}; do
 
-  link -s ${CWPROOT}/$P ${BIN_INST}/$P
+  ln -s ${CWPROOT}/$P ${BIN_INST}/$P
 
 done
 
@@ -532,7 +532,7 @@ done
 
 for P in ${PROGS_LINK}; do
 
-  link -s "${CWPROOT}/$P" "${BIN_INST}/su-$P"
+  ln -s "${CWPROOT}/$P" "${BIN_INST}/su-$P"
 
 done
 
