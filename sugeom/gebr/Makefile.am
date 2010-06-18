@@ -16,7 +16,7 @@
 
 GEBR_PROJ_DIR= tosco
 
-GEBR_MENUS= sugeom.mnu
+GEBR_MENUS= sugeom.mnu geomtables.mnu
 
 #------------------------------------------------------------------------------#
 

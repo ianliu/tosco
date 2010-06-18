@@ -14,7 +14,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-bin_PROGRAMS = sugeom
+bin_PROGRAMS = sugeom geomtables
 
 sugeom_SOURCES = parser.c parser.h sugeom.c
+
+geomtables_SOURCES = geomtables.c
 
