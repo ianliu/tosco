@@ -73,25 +73,24 @@ perc=99
 TMPDIR=/tmp/velan-cmp
 
 velan-cmp        \
-  ${input}       \
-  ${output}      \
-  ${first}       \
-  ${step}        \
-  ${qt}          \
-  ${first_vel}   \
-  ${last_vel}    \
-  ${quant}       \
-  ${cvs_size}    \
-  ${nv}          \
-  ${dv}          \
-  ${pwr}         \
-  ${smute}       \
-  ${nx}          \
-  ${dx}          \
-  ${tau}         \
-  ${plottype}    \
-  ${perc}        \
-  ${TMPDIR}
+  -i ${input}       \
+  -p ${output}      \
+  -c ${first}       \
+  -d ${step}        \
+  -n ${qt}          \
+  -v ${first_vel}   \
+  -V ${last_vel}    \
+  -m ${quant}       \
+  -s ${cvs_size}    \
+  -k ${nv}          \
+  -e ${pwr}         \
+  -S ${smute}       \
+  -N ${nx}          \
+  -D ${dx}          \
+  -U ${tau}         \
+  -P ${plottype}    \
+  -C ${perc}        \
+  -T ${TMPDIR}
 
 
 

@@ -5,3 +5,7 @@ TODO List for velan-cmp programs
   - se nao existir testar o script cwproot
   - se nao existir produzir um erro
 
+- Conferir parâmetros obrigatorios e opicionais
+- Conferir menu
+- Corrigir documentacao (categorias na documentacao diferem das categorias
+  do menu)
