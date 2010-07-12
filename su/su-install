@@ -527,15 +527,6 @@ for P in ${PROGS_LINK}; do
 
 done
 
-# Creating links to conflicting SU programs
-#-----------------------------------------------------------------------------#
-
-for P in ${PROGS_LINK}; do
-
-  ln -s "${CWPROOT}/$P" "${BIN_INST}/su-$P"
-
-done
-
 # Installing the SU program wrappers
 #-----------------------------------------------------------------------------#
 
@@ -558,6 +549,17 @@ EOF
 for P in ${PROGS_WRAPPER}; do
 
   build_su_wrapper $P
+
+done
+
+# Creating links to conflicting SU programs
+#-----------------------------------------------------------------------------#
+
+for P in ${PROGS_LINK}; do
+
+  build_su_wrapper $P
+
+  # ln -s "${CWPROOT}/$P" "${BIN_INST}/su-$P"
 
 done
 
