@@ -1,46 +1,68 @@
+#!/bin/bash
+# ToSCo SU Packaging
+# Copyright (C) 2010 Luis D'Afonseca <luis.dafonseca@gebrproject.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#-----------------------------------------------------------------------------#
+# dbuild.sh
+# This script is used only for building the ToSCo deb pacage
+#
+# $Id$
+#-----------------------------------------------------------------------------#
+
 if [ $# -lt 2 ]; then
-	echo $0 version description
-	exit 1;
+  echo $0 version description
+  exit 1;
 fi
 
 if [ ! -e export ]; then
-	mkdir export && sudo mount -t tmpfs tmpfs export
-	if [ -e .hg ]; then
-       		hg archive export && rm export/.hg*
-	fi
-	if [ -e .svn ]; then
-		svn export --force . export
-                cp tosco-su-install export/ 
-	fi
-	cd export
-	dch -v $*
+
+  mkdir export && sudo mount -t tmpfs tmpfs export
+
+  svn export --force . export
+
+  cd export
+
+  dch -v $*
+
 else
-	echo Recicled export
+
+  echo Recicled export
+
 fi
 
-for ARCH in amd64 i386; do
-    # for DIST in jaunty lenny karmic lucid; do
-    for DIST in jaunty ; do
-	sudo rm -f /export_local/pbuilder/$DIST-$ARCH/result/*
-	sudo mount -t tmpfs tmpfs /var/cache/pbuilder/build
+# for ARCH in amd64 i386; do
+for ARCH in amd64; do
 
-	# cd su
-	# perl -i -pe "s/\) .*; urgency/) $DIST; urgency/" */debian/changelog
-	# ARCH=$ARCH pdebuild && \
-	# sudo dput -u local /export_local/pbuilder/$DIST-$ARCH/result/*changes && \
-	# sudo DIST=$DIST ARCH=$ARCH pbuilder --update || exit 22
-        # cd ..
+  # for DIST in jaunty lenny karmic lucid; do
+  for DIST in jaunty ; do
 
-	perl -i -pe "s/\) .*; urgency/) $DIST; urgency/" */debian/changelog
-	ARCH=$ARCH pdebuild && \
-	sudo dput -u local /export_local/pbuilder/$DIST-$ARCH/result/*changes && \
-	sudo umount /var/cache/pbuilder/build || exit 55
-    done
+    sudo rm -f /export_local/pbuilder/$DIST-$ARCH/result/*
+    sudo mount -t tmpfs tmpfs /var/cache/pbuilder/build
+
+    perl -i -pe "s/\) .*; urgency/) $DIST; urgency/" */debian/changelog
+
+    ARCH=$ARCH pdebuild                                                   && \
+    sudo dput -u local /export_local/pbuilder/$DIST-$ARCH/result/*changes && \
+    sudo umount /var/cache/pbuilder/build                                 || exit 55
+
+  done
+
 done
+
 cd ..
+
 sudo umount export
 rmdir export
 
-
-	# debsign -kA594D681 /export_local/pbuilder/$DIST-$ARCH/result/*changes && \
-	# sudo dput local /export_local/pbuilder/$DIST-$ARCH/result/*changes && \
