@@ -21,11 +21,14 @@
 # It SHOULD NOT used to install SU for normal usage.
 #-----------------------------------------------------------------------------# 
 
+set -e
+set -v
+
 SU_VERSION="42"
 SU_ARCHIVE="cwp_su_all_$SU_VERSION.tgz"
 DOWNLOAD_PATH="/tmp"
 CWP_SRC_URL="http://peruibe.ime.unicamp.br/~akiles"
-CWPROOT="/opt/tosco-su"
+CWPROOT="/tmp/tosco-su"
 
 echo "Downloading SU source"
 wget -q "$CWP_SRC_URL/$SU_ARCHIVE" -O - > "$DOWNLOAD_PATH/$SU_ARCHIVE"
@@ -81,7 +84,7 @@ echo "GeBR SU building the CWP codes"
 echo "Working directory: \${CWPROOT}"
 EOF
 
-chmod +x src/chkroot.sh
+chmod +x chkroot.sh
 
 touch "LICENSE_${SU_VERSION}_ACCEPTED"
 touch "MAILHOME_${SU_VERSION}"

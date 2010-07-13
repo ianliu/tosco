@@ -25,9 +25,9 @@ configure: configure-stamp
 configure-stamp:
 	dh_testdir
 	# Add here commands to configure the package.
-	./tosco-su-install
+	./tosco-su-unpack
 	autoreconf --install
-	./configure --prefix=/usr --disable-debug CWPROOT=/opt/tosco-su
+	./configure --prefix=/usr --disable-debug
 	touch configure-stamp
 
 

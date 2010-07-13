@@ -42,8 +42,12 @@ else
 
 fi
 
+export CWPROOT="/tmp/tosco-su"
+
 # for ARCH in amd64 i386; do
 for ARCH in amd64; do
+
+  export SUARCH=${ARCH}
 
   # for DIST in jaunty lenny karmic lucid; do
   for DIST in jaunty ; do
@@ -59,10 +63,8 @@ for ARCH in amd64; do
 
   done
 
-done
-
 cd ..
 
 sudo umount export
-rmdir export
+sudo rmdir  export
 
