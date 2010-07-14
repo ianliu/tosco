@@ -46,12 +46,14 @@ AC_CHECK_LIB(m,main,,[AC_MSG_ERROR(could not find m library)])
 dnl Check for SU
 dnl-----------------------------------------------------------------------
 
-echo -n "Checking for SU variable: CWPROOT=${CWPROOT}..."
+echo -n "Checking for SU variable... "
 
 if test "x${CWPROOT}" == "x"; then
+  echo "failed"
   AC_MSG_ERROR([environment variable CWPROOT is not defined])
+else
+  echo "CWPROOT=${CWPROOT}"
 fi
-
 
 SU_LIBS="-L${CWPROOT}/lib -lsu -lxplot -lSM -lICE -lX11 -lpar -lcwp"
 
