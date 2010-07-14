@@ -68,3 +68,8 @@ cd ..
 sudo umount export
 sudo rmdir  export
 
+rm -f "tosco_*_amd64.build"
+rm -f "tosco_*.dsc"
+rm -f "tosco_*_source.changes"
+rm -f "tosco_*.tar.gz"
+
