@@ -30,7 +30,7 @@ AC_CANONICAL_HOST
 
 dnl Checks for programs.
 AC_PROG_INSTALL
-AC_PROG_F77
+AC_PROG_F77( ifort gfortran f77 )
 
 AC_OUTPUT( Makefile src/Makefile )
 
