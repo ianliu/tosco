@@ -16,49 +16,49 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # input file
-input=
+input="${HOME}/GeBR_examples/data/cdp-sorted.su"
 
 # pick file generated
-output=
+output="/tmp/tosco-ex-velan-cmp-picks.par"
 
 # first cdp used
-first=
+first=50
 
 # interval between CDP's
-step=
+step=50
 
 # quantity of CDP's used
-qt=
+qt=7
 
 # first velocity
-first_vel=
+first_vel=1500
 
 # last velocity
-last_vel=
+last_vel=5000
 
 # quantity
-quant=
+quant=10
 
 # cvs size
-cvs_size=
+cvs_size=11
 
 # number of velocities, semblance
-nv=
+nv=50
 
 # velocity increment, semblance
-dv=
+dv=50
 
 # power, power of semblance
 pwr=1
 
-# strech mute, 1.5=150%
+# strech mute, 1.5 = 150%
 smute=1.5
 
 # number of traces valid only to nccs, uccs, nsel and usel
-nx=
+nx=0
 
 # distance between sucessives CDP's 
-dx=
+dx=1
 
 # nsel, usel only, thresold for significance values
 tau=0.4
@@ -70,9 +70,9 @@ plottype=suvelan
 perc=99
 
 # temporary directory
-TMPDIR=/tmp/velan-cmp
+TMPDIR=/tmp
 
-velan-cmp        \
+./velan-cmp         \
   -i ${input}       \
   -p ${output}      \
   -c ${first}       \
@@ -91,8 +91,4 @@ velan-cmp        \
   -P ${plottype}    \
   -C ${perc}        \
   -T ${TMPDIR}
-
-
-
-
 
