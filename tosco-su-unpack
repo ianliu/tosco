@@ -22,18 +22,15 @@
 #-----------------------------------------------------------------------------# 
 
 set -e
-set -v
 
 SU_ARCHIVE="cwp_su_42_${SUARCH}.tgz"
-DOWNLOAD_PATH="/tmp"
 CWP_SRC_URL="http://peruibe.ime.unicamp.br/~akiles"
 CWPROOT="/tmp/tosco-su"
 
 echo "Downloading SU binaries for ${SUARCH}"
-wget -q "$CWP_SRC_URL/$SU_ARCHIVE" -O - > "$DOWNLOAD_PATH/$SU_ARCHIVE"
+wget -q "${CWP_SRC_URL}/${SU_ARCHIVE}" -O - > "/tmp/${SU_ARCHIVE}"
 
-echo "Unpacking SU binarires"
-mkdir -p ${CWPROOT}
-cd ${CWPROOT}
-tar xzf "$DOWNLOAD_PATH/$SU_ARCHIVE
+echo "Unpacking SU binaries"
+cd /tmp
+tar xzf "/tmp/${SU_ARCHIVE}"
 

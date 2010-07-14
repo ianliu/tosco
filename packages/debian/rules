@@ -72,7 +72,6 @@ binary-arch: build install
 	dh_install --sourcedir=debian/tmp
 	dh_installinfo
 	dh_installman
-	dh_desktop
 	dh_link
 	dh_strip
 	dh_compress

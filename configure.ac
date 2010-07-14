@@ -26,8 +26,7 @@ AM_INIT_AUTOMAKE($PACKAGE,$VERSION)
 PACKAGE_NAME=$PACKAGE
 PACKAGE_VERSION=$VERSION
 
-AC_CONFIG_SUBDIRS([suxkill])
-# AC_CONFIG_SUBDIRS([cropcoher mcdec optspline rays2 s88modeling seis88 sugeom suktmig2d-offset suxkill suxmute velan-cmp])
+AC_CONFIG_SUBDIRS([cropcoher mcdec optspline rays2 s88modeling seis88 sugeom suktmig2d-offset suxkill suxmute velan-cmp])
 
 AC_OUTPUT( Makefile packages/Makefile )
 

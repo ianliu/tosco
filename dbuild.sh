@@ -44,13 +44,11 @@ fi
 
 export CWPROOT="/tmp/tosco-su"
 
-# for ARCH in amd64 i386; do
-for ARCH in amd64; do
+for ARCH in amd64 i386; do
 
   export SUARCH=${ARCH}
 
-  # for DIST in jaunty lenny karmic lucid; do
-  for DIST in jaunty ; do
+  for DIST in jaunty lenny karmic lucid; do
 
     sudo rm -f /export_local/pbuilder/$DIST-$ARCH/result/*
     sudo mount -t tmpfs tmpfs /var/cache/pbuilder/build
@@ -62,6 +60,8 @@ for ARCH in amd64; do
     sudo umount /var/cache/pbuilder/build                                 || exit 55
 
   done
+
+done
 
 cd ..
 
