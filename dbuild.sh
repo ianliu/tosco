@@ -26,6 +26,11 @@ if [ $# -lt 2 ]; then
   exit 1;
 fi
 
+LOGFILE="${PWD}/dbuild.log"
+
+echo "Building: $1 - $2" > ${LOGFILE}
+date >> ${LOGFILE}
+
 if [ ! -e export ]; then
 
   mkdir export && sudo mount -t tmpfs tmpfs export
@@ -50,6 +55,8 @@ for ARCH in amd64 i386; do
 
   for DIST in jaunty lenny karmic lucid; do
 
+    echo "$ARCH - $DIST" >> ${LOGFILE}
+
     sudo rm -f /export_local/pbuilder/$DIST-$ARCH/result/*
     sudo mount -t tmpfs tmpfs /var/cache/pbuilder/build
 
@@ -63,6 +70,8 @@ for ARCH in amd64 i386; do
 
 done
 
+echo "Cleaning" >> ${LOGFILE}
+
 cd ..
 
 sudo umount export
@@ -72,4 +81,6 @@ rm -f "tosco_*_amd64.build"
 rm -f "tosco_*.dsc"
 rm -f "tosco_*_source.changes"
 rm -f "tosco_*.tar.gz"
+
+echo "Done" >> ${LOGFILE}
 
