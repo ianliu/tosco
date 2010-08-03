@@ -540,12 +540,12 @@ main (int argc, char **argv)
 				sfp = fopen(sfile,"w+");
 				fprintf(sfp, "s");
 				fclose(sfp);
-				warn("Answer saved");
+				if (verbose) warn("Answer saved");
 				break;
 			} else if (keysym==XK_n ) {
 				sfp = fopen(sfile,"w+");
 				fprintf(sfp, "n");
-				warn("Answer saved");
+				if (verbose) warn("Answer saved");
 				fclose(sfp);
 				break;			    
 			} else if (keysym==XK_l ) {

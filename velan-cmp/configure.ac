@@ -26,47 +26,47 @@ AC_SUBST(VERSION)
 ISODATE=`date +%Y-%m-%d`
 AC_SUBST(ISODATE)
 
-AC_CANONICAL_HOST
+#### AC_CANONICAL_HOST
 
 dnl Checks for programs.
 AC_PROG_INSTALL
-AC_PROG_CC
+#### AC_PROG_CC
 
 dnl Checks for header files.
-AC_HEADER_STDC
+#### AC_HEADER_STDC
 
-AC_HEADER_MAJOR
-AC_FUNC_ALLOCA
-AC_FUNC_CLOSEDIR_VOID
+#### AC_HEADER_MAJOR
+#### AC_FUNC_ALLOCA
+#### AC_FUNC_CLOSEDIR_VOID
 
 dnl Check for libraries
 dnl-----------------------------------------------------------------------
-AC_CHECK_LIB(m,main,,[AC_MSG_ERROR(could not find m library)])
+#### AC_CHECK_LIB(m,main,,[AC_MSG_ERROR(could not find m library)])
 
 dnl Check for SU
 dnl-----------------------------------------------------------------------
 
-echo -n "Checking for SU variable... "
-
-if test "x${CWPROOT}" == "x"; then
-  echo "failed"
-  AC_MSG_ERROR([environment variable CWPROOT is not defined])
-else
-  echo "CWPROOT=${CWPROOT}"
-fi
-
-SU_LIBS="-L${CWPROOT}/lib -lsu -lxplot -lSM -lICE -lX11 -lpar -lcwp"
-
-SU_CFLAGS="-I${CWPROOT}/include"
-SU_CFLAGS="${SU_CFLAGS} -DCWP_LITTLE_ENDIAN"
-SU_CFLAGS="${SU_CFLAGS} -D_FILE_OFFSET_BITS=64"
-SU_CFLAGS="${SU_CFLAGS} -D_LARGEFILE_SOURCE"
-SU_CFLAGS="${SU_CFLAGS} -D_LARGEFILE64_SOURCE"
-SU_CFLAGS="${SU_CFLAGS} -DGNU_SOURCE"
-SU_CFLAGS="${SU_CFLAGS} -D_POSIX_SOURCE"
-
-LIBS="  $LIBS   $SU_LIBS"
-CFLAGS="$CFLAGS $SU_CFLAGS"
+#### echo -n "Checking for SU variable... "
+#### 
+#### if test "x${CWPROOT}" == "x"; then
+####   echo "failed"
+####   AC_MSG_ERROR([environment variable CWPROOT is not defined])
+#### else
+####   echo "CWPROOT=${CWPROOT}"
+#### fi
+#### 
+#### SU_LIBS="-L${CWPROOT}/lib -lsu -lxplot -lSM -lICE -lX11 -lpar -lcwp"
+#### 
+#### SU_CFLAGS="-I${CWPROOT}/include"
+#### SU_CFLAGS="${SU_CFLAGS} -DCWP_LITTLE_ENDIAN"
+#### SU_CFLAGS="${SU_CFLAGS} -D_FILE_OFFSET_BITS=64"
+#### SU_CFLAGS="${SU_CFLAGS} -D_LARGEFILE_SOURCE"
+#### SU_CFLAGS="${SU_CFLAGS} -D_LARGEFILE64_SOURCE"
+#### SU_CFLAGS="${SU_CFLAGS} -DGNU_SOURCE"
+#### SU_CFLAGS="${SU_CFLAGS} -D_POSIX_SOURCE"
+#### 
+#### LIBS="  $LIBS   $SU_LIBS"
+#### CFLAGS="$CFLAGS $SU_CFLAGS"
 
 dnl-----------------------------------------------------------------------
 

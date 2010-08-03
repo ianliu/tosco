@@ -28,7 +28,7 @@ first=50
 step=50
 
 # quantity of CDP's used
-qt=7
+qt=2
 
 # first velocity
 first_vel=1500
@@ -91,4 +91,3 @@ TMPDIR=/tmp
   -P ${plottype}    \
   -C ${perc}        \
   -T ${TMPDIR}
-

@@ -16,10 +16,10 @@
 
 bin_SCRIPTS= velan-cmp
 
-bin_PROGRAMS= xwigbyn suxwigbyn
+### bin_PROGRAMS= xwigbyn suxwigbyn
 
-xwigbyn_SOURCES=   xwigbyn.c
-suxwigbyn_SOURCES= suxwigbyn.c
+### xwigbyn_SOURCES=   xwigbyn.c
+### suxwigbyn_SOURCES= suxwigbyn.c
 
-EXTRA_DIST= velan-cmp
+EXTRA_DIST= velan-cmp test-velan-cmp
 
