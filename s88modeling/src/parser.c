@@ -73,8 +73,9 @@ struct s88* parse_command_line(int argc, char** argv)
 
         
         static GOptionEntry entries_waves[] = {
-                { "ibp",   0, 0, G_OPTION_ARG_INT,  &p.ibp, "Primary reflected waves started as P-waves", "<0,1,2>" },
-                { "ibs",   0, 0, G_OPTION_ARG_INT,  &p.ibs, "Primary reflected waves started as S-waves", "<0,1,2>" },
+                { "ibp",   0, 0, G_OPTION_ARG_INT,  &p.ibp,  "Primary reflected waves started as P-waves (0 = no, 1 = only PP, 2 = PP and PS)", "<0,1,2>" },
+                { "ibs",   0, 0, G_OPTION_ARG_INT,  &p.ibs,  "Primary reflected waves started as S-waves (0 = no, 1 = only SS, 2 = SS and SP)", "<0,1,2>" },
+                { "mltp",  0, 0, G_OPTION_ARG_NONE, &p.mltp, "Model simple multiples", NULL},
                 /*
                 { "iup",   0, 0, G_OPTION_ARG_INT,  &p.iup, "Primary reflected waves started as P-waves (reclection above)", "<0,1,2>" },
                 { "ius",   0, 0, G_OPTION_ARG_INT,  &p.ius, "Primary reflected waves started as S-waves (reclection above)", "<0,1,2>" },
@@ -152,13 +153,16 @@ struct s88* parse_command_line(int argc, char** argv)
                                           "interface below. For smooth interfaces, it is easier to set --iii=auto.\n\n"
                                           "Velocities are linearly interpolated between interfaces. Densities can be\n"
                                           "provided per layer or automatically computed from velocities.\n\n"
-                                          "To specify layer densities, both --rho1 and --rho2 shoulb be set. If so,\n"
+                                          "To specify layer densities, both --rho1 and --rho2 should be set. If so,\n"
                                           "density of i-th layer is given by: rho1(i) + rho2(i) * vp(i), where states\n"
                                           "for i-th layer P-wave velocity. Otherwise, density is given by 1.7 + 0.2*vp(i).\n\n"
                                           "Acceptable types of source are: 0 (only rays and traveltime, but no amplitudes,\n"
                                           "are computed), 1 (geometrical spreading is not taking into account), 2 (line\n"
                                           "source) and 3 (point source).\n\n" 
-                                          "Only primaries and direct waves are able to be computed.\n\n"
+                                          "Primaries for PP and PS waves are able to be computed. Also some simple\n"
+                                          "multiple are eligible. By simple multiples, we mean a wave that propagates directly\n"
+                                          "from the surface to the reflector, back straight to the surface, once more down to\n"
+                                          "the reflector, and then up to surface, where it will be recorded.\n\n"
                                           "The wavelet is given by:\n\n"
                                           "     f(t) = exp { -(omega * t / gamma)^2 } * cos {omega * t + psi},\n\n"
                                           "where omega = 2 * PI * freq.\n\n"
@@ -167,11 +171,15 @@ struct s88* parse_command_line(int argc, char** argv)
                                           "All temporary files are stored in the directory specified by --workdir\n"
                                           "parameter. Ray files (lu1-????.dat) are stored in that directory as well,\n"
                                           "if --showrays flag is on.\n\n"
-                                          "s88modeling releis on Seis88, a robust software developed by\n"
+                                          "s88modeling relies on Seis88, a robust software developed by\n"
                                           "Vlastislav Cerveny, from Institute of Geophysics - Charles University, and\n"
                                           "Ivan Psencik, from Geophysical Institute - Czechosl. Acad. Sci.\n\n"
                                           "Only a small subset of Seis88 features is available through s88modeling.\n\n"
-                                          "Copyright (c) 2009 Ricardo Biloti <biloti@ime.unicamp.br>\n"
+                                          "S88modeling is hosted by Tools for Scientific Computing (ToSCo) Project.\n"
+                                          "Visit its site (http://codes.google.com/p/tosco) to obtain the latest version.\n"
+                                          "Also from ToSCo project, there is a program, called Rays, which is able to\n"
+                                          "parse lu1-????.dat files produced here and depicts ray diagrams.\n\n"
+                                          "Copyright (c) 2009-2010 Ricardo Biloti <biloti@ime.unicamp.br>\n"
                                           "Deparment of Applied Mathematics, IMECC, UNICAMP -- Brazil"
                                           );
         
@@ -234,6 +242,7 @@ struct s88* parse_command_line(int argc, char** argv)
         p.ac = 1.0e-5;
         p.ibp = 1;
         p.ibs = 0;
+        p.mltp = FALSE;
 
         p.tmin = 0;
         p.dt = 0.004;

@@ -141,12 +141,11 @@ void write_s88_config(FILE *fp, struct s88 *p)
 {
         gint ii, jj, aux;
         gdouble  vmin, vmax, bmin, bmax, bleft, bright;
-        
+
         bmin = p->z[0][0];
         bmax = p->z[0][0];
         bleft = p->x[0][0];
         bright = p->x[0][0];
-
 
         // CARD 1
         fprintf (fp,"%2i%2i%2i%68s  %2i%2i\n", 0, 2, 0 , "", 0, 1);
@@ -260,53 +259,84 @@ void write_s88_config(FILE *fp, struct s88 *p)
         // FIX-ME: Se a linha for muito comprida, tem que ser cortada (24I3)
         if (p->ibp)
         {
-                gint ii, jj;
+                gint ii, jj, imult;
 
-                for (ii=1; ii<= p->nint-2; ii++){
-                        fprintf(fp, "%3i%3i", 1, 2*ii);
-                        for (jj=1; jj<=ii; jj++)
-                                fprintf(fp, "%3i", jj);
-                        for (jj=ii; jj>=1; jj--)
-                                fprintf(fp, "%3i", jj);
-                        fprintf(fp, "\n");
+                for (imult=0; imult<=(gint)p->mltp; imult++){
+                        for (ii=1; ii<= p->nint-2; ii++){
+                                fprintf(fp, "%3i%3i", 1, 2*(imult+1)*ii);
+                                for (jj=1; jj<=ii; jj++)
+                                        fprintf(fp, "%3i", jj);
+                                for (jj=ii; jj>=1; jj--)
+                                        fprintf(fp, "%3i", jj);
+                                if (imult){
+                                        for (jj=1; jj<=ii; jj++)
+                                                fprintf(fp, "%3i", jj);
+                                        for (jj=ii; jj>=1; jj--)
+                                                fprintf(fp, "%3i", jj);
+                                }
+                                fprintf(fp, "\n");
+                        }
                 }
                 
                 /* Also converted wave ? */
                 if (p->ibp == 2){
-                        for (ii=1; ii<= p->nint-2; ii++){
-                                fprintf(fp, "%3i%3i", 1, 2*ii);
-                                for (jj=1; jj<=ii; jj++)
-                                        fprintf(fp, "%3i",  jj);
-                                for (jj=ii; jj>=1; jj--)
-                                        fprintf(fp, "%3i", -jj);
-                                fprintf(fp, "\n");
+                        for (imult=0; imult<=(gint)p->mltp; imult++){
+                                for (ii=1; ii<= p->nint-2; ii++){
+                                        fprintf(fp, "%3i%3i", 1, 2*(imult+1)*ii);
+                                        for (jj=1; jj<=ii; jj++)
+                                                fprintf(fp, "%3i",  jj);
+                                        for (jj=ii; jj>=1; jj--)
+                                                fprintf(fp, "%3i", -jj);
+                                        if (imult){
+                                                for (jj=1; jj<=ii; jj++)
+                                                        fprintf(fp, "%3i", -jj);
+                                                for (jj=ii; jj>=1; jj--)
+                                                        fprintf(fp, "%3i", -jj);
+                                        }
+                                        fprintf(fp, "\n");
+                                }
                         }
                 }                
         }
 
         if (p->ibs)
         {
-                gint ii, jj;
+                gint ii, jj, imult;;
                 
-
-                for (ii=1; ii<= p->nint-2; ii++){
-                        fprintf(fp, "%3i%3i", 1, 2*ii);
-                        for (jj=1; jj<=ii; jj++)
-                                fprintf(fp, "%3i", -jj);
-                        for (jj=ii; jj>=1; jj--)
-                                fprintf(fp, "%3i", -jj);
-                        fprintf(fp, "\n");
+                for (imult=0; imult<=(gint)p->mltp; imult++){
+                        for (ii=1; ii<= p->nint-2; ii++){
+                                fprintf(fp, "%3i%3i", 1, 2*(imult+1)*ii);
+                                for (jj=1; jj<=ii; jj++)
+                                        fprintf(fp, "%3i", -jj);
+                                for (jj=ii; jj>=1; jj--)
+                                        fprintf(fp, "%3i", -jj);
+                                if (imult){
+                                        for (jj=1; jj<=ii; jj++)
+                                                fprintf(fp, "%3i", -jj);
+                                        for (jj=ii; jj>=1; jj--)
+                                                fprintf(fp, "%3i", -jj);
+                                }
+                                fprintf(fp, "\n");
+                        }
                 }
 
                 /* Also converted wave ? */
                 if (p->ibs == 2){
-                        for (ii=1; ii<= p->nint-2; ii++){
-                                fprintf(fp, "%3i%3i", 1, 2*ii);
-                                for (jj=1; jj<=ii; jj++)
-                                        fprintf(fp, "%3i", -jj);
-                                for (jj=ii; jj>=1; jj--)
-                                        fprintf(fp, "%3i",  jj);
-                                fprintf(fp, "\n");
+                        for (imult=0; imult<=(gint)p->mltp; imult++){
+                                for (ii=1; ii<= p->nint-2; ii++){
+                                        fprintf(fp, "%3i%3i", 1, 2*(imult+1)*ii);
+                                        for (jj=1; jj<=ii; jj++)
+                                                fprintf(fp, "%3i", -jj);
+                                        for (jj=ii; jj>=1; jj--)
+                                                fprintf(fp, "%3i",  jj);
+                                        if (imult){
+                                                for (jj=1; jj<=ii; jj++)
+                                                        fprintf(fp, "%3i", jj);
+                                                for (jj=ii; jj>=1; jj--)
+                                                        fprintf(fp, "%3i", jj);
+                                        }
+                                        fprintf(fp, "\n");
+                                }
                         }
                 }
         }
@@ -421,7 +451,6 @@ void synt2bin (struct s88 *p)
         gfloat tmin, dt, dist, rstep;
         gint bytes;
         size_t nwritten = 0;
-        size_t aux;
         static gfloat *samples = NULL;
 
         if ((fp = fopen ("fort.10", "rb")) == NULL)

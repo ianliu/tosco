@@ -39,6 +39,7 @@ struct s88 {
         gint               method;
         gint               ibp;
         gint               ibs;
+        gboolean           mltp;
         /*
         gint               iup;
         gint               ius;
