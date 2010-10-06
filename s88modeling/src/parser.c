@@ -180,7 +180,7 @@ struct s88* parse_command_line(int argc, char** argv)
                                           "Also from ToSCo project, there is a program, called Rays, which is able to\n"
                                           "parse lu1-????.dat files produced here and depicts ray diagrams.\n\n"
                                           "Copyright (c) 2009-2010 Ricardo Biloti <biloti@ime.unicamp.br>\n"
-                                          "Deparment of Applied Mathematics, IMECC, UNICAMP -- Brazil"
+                                          "Department of Applied Mathematics, IMECC, UNICAMP -- Brazil"
                                           );
         
         group = g_option_group_new("geom", "Knots for cubic spline representation of interfaces:\n(one instance per interface)", "Show model geometry options ", NULL, NULL);
