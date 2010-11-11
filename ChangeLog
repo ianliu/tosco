@@ -1,0 +1,124 @@
+2010-11-11  fmatheus
+
+	* Store uncompressed menus.
+
+2010-10-06  Ricardo Biloti <biloti@gebrproject.com>
+
+	* Menu updated to add multiple-reflected waves support
+
+2010-09-29  Ricardo Biloti <biloti@gebrproject.com>
+
+	* Support for simple multiple-reflected waves generation
+
+2010-08-03  Luis Alberto D'Afonseca <luis.dafonseca@gebrproject.com>
+
+	* New version of velan-cmp with zenity
+
+2010-07-15  Luis Alberto D'Afonseca <luis.dafonseca@gebrproject.com>
+
+	* Creating a log file
+	* New entry on changelog
+	* Adding dependencies
+
+2010-07-14  Luis Alberto D'Afonseca <luis.dafonseca@gebrproject.com>
+
+	* Some more fixings to build the package
+	* Work around of sh/bash problem
+	* Fixing category LAGEP - CPGG - UFBA
+	* Adding ifort to the search list of fortran compilers
+	* Improving the CWPROOT check
+	* Changes for Packaging
+
+2010-07-13  Luis Alberto D'Afonseca <luis.dafonseca@gebrproject.com>
+
+	* Temporary version for packagin test
+	* Updating dbuild
+	* Adding script dbuild to svn repository
+	* Adding tosco-su-install script
+
+2010-07-12  Luis Alberto D'Afonseca <luis.dafonseca@gebrproject.com>
+
+	* Ignoring the conflicts
+
+2010-06-23  Ricardo Biloti <biloti@gebrproject.com>
+
+	* Fix mdim parameter (missing equal sign)
+
+2010-06-22  Ricardo Biloti <biloti@gebrproject.com>
+
+	* Parse parameters through getopts
+
+2010-06-18  Luis Alberto D'Afonseca <luis.dafonseca@gebrproject.com>
+
+	* Fixing some bugs
+	* Adding the SU packaging tools
+	* Several small updates needed to make distributions for all tosco
+	  programs
+	* Adding the geomtables program and menu. Also doing several small
+	  fixes
+
+2010-06-11  Luis Alberto D'Afonseca <luis.dafonseca@gebrproject.com>
+
+	* Adding the program suktmig2d-offset
+	* Menus updates
+	* Remmoving unecessary comment
+	* Updating the script parameters
+
+2010-06-10  Luis Alberto D'Afonseca <luis.dafonseca@gebrproject.com>
+
+	* Fixing typo
+	* Updating authors and cathegories
+	* Removing useless comment
+	* Adding the program velan-cmp
+
+2010-06-07  Luis Alberto D'Afonseca <luis.dafonseca@gebrproject.com>
+
+	* Adding new program, sugeom, to ToSCo project.
+
+2010-05-28  Luis Alberto D'Afonseca <luis.dafonseca@gebrproject.com>
+
+	* Final changes to generate the debian packages
+	* Fixing configure.ac to autoreconf work properly
+	* Debian packaging of ToSCo project
+	* Adding programs suxmute, suxkill and cropcoher to the repository
+
+2010-04-06  Luis Alberto D'Afonseca <luis.dafonseca@gebrproject.com>
+
+	* Updating the proccess for menu instalation
+
+2010-04-02  Luis Alberto D'Afonseca <luis.dafonseca@gebrproject.com>
+
+	* Starting to build the debian package configuration
+	* Update menus of programs: rays2 s88modeling mcdec optspline
+
+2009-12-06  Luis Alberto D'Afonseca <luis.dafonseca@gebrproject.com>
+
+	* Adding progrmam MCDec to ToSCo
+	* Adding progrmam OptSplines to ToSCo
+
+2009-12-02  Luis Alberto D'Afonseca <luis.dafonseca@gebrproject.com>
+
+	* Adding program seis88 to ToSCo project
+	* Casting size_t to unsigned long int
+
+2009-10-21  Ricardo Biloti <biloti@gebrproject.com>
+
+	* several code cleanups
+	* - help update and minor fixes
+	  - version set to 1.0.0
+	  - minor typo fixes
+	* report maximum traveltime
+	* fix small miscounting of interfaces
+
+2009-10-08  Luis Alberto D'Afonseca <luis.dafonseca@gebrproject.com>
+
+	* Adding servers element due to DTD 0.3.1 change
+
+2009-10-05  Ricardo Biloti <biloti@gebrproject.com>
+
+	* author info update
+
+2009-10-02  Ricardo Biloti <biloti@gebrproject.com>
+
+	* Initial import
+

@@ -1,10 +1,16 @@
-tosco (0.1.1) lucid; urgency=low
+tosco (0.2.0) maverick; urgency=low
+
+  * Multiple-reflected waves generation adn velan-cmp with zenity.
+
+ -- Fabricio Matheus Goncalves <fmatheus@itanhaem-nova>  Thu, 11 Nov 2010 00:44:20 -0200
+
+tosco (0.1.1) maverick; urgency=low
 
   * 0.1.1 Initial release of ToSCo package
 
- -- Luis A. D Afonseca <luis.dafonseca@gebrproject.com>  Thui, 15 Jul 2010 16:30:03 -0300
+ -- Luis A. D Afonseca <luis.dafonseca@gebrproject.com>  Thu, 15 Jul 2010 16:30:03 -0300
 
-tosco (0.1.0) lucid; urgency=low
+tosco (0.1.0) maverick; urgency=low
 
   * 0.1.0 ToSCo Package
 
