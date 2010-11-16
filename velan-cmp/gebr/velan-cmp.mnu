@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow version="0.3.3" nextid="n19">
-  <filename>velan-cmp.mnu</filename>
+<flow version="0.3.6">
   <title>Velan CMP</title>
   <description>Velocity analisys on CMP sorted data</description>
   <help><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -89,18 +88,25 @@
 ]]></help>
   <author>Alam Souza</author>
   <email>aavbs@cpgg.ufba.br</email>
-  <dict><parameters exclusive="0"/></dict><date>
+  <dict>
+    <parameters default-selection="0" selection=""/>
+  </dict>
+  <date>
     <created>2009-03-22T13:51:47Z</created>
-    <modified>2010-07-14T19:03:52.775672Z</modified>
+    <modified>2010-11-16T15:28:17.570286Z</modified>
     <lastrun/>
   </date>
-  <category>Gain, NMO, Stack and Standard Processes</category><category>LAGEP - CPGG - UFBA</category>
-  <category>INCT - GP</category><category>ToSCo</category><io>
+  <category>Gain, NMO, Stack and Standard Processes</category>
+  <category>LAGEP - CPGG - UFBA</category>
+  <category>INCT - GP</category>
+  <category>ToSCo</category>
+  <io>
     <input/>
     <output/>
     <error/>
   </io>
-  <servers/><program stdin="no" stdout="no" stderr="yes" status="unconfigured" version="0.1.0">
+  <servers/>
+  <program stdin="no" stdout="no" stderr="yes" status="unconfigured" version="0.1.0">
     
     <title>Velan CMP</title>
     <binary>velan-cmp</binary>
@@ -253,8 +259,8 @@
 </html>
 ]]></help>
     <url>http://www.cpgg.ufba.br/</url>
-    <parameters exclusive="0">
-      <parameter id="n0">
+    <parameters default-selection="0" selection="">
+      <parameter>
         <label>Input data file</label>
         <file directory="no" filter-name="SU File" filter-pattern="*.su *.SU">
           <property required="yes">
@@ -264,7 +270,7 @@
           </property>
         </file>
       </parameter>
-      <parameter id="n1">
+      <parameter>
         <label>Output file for picked values</label>
         <file directory="no" filter-name="" filter-pattern="">
           <property required="yes">
@@ -274,7 +280,7 @@
           </property>
         </file>
       </parameter>
-      <parameter id="n2">
+      <parameter>
         <label>First CDP used in the velocity analisys</label>
         <int>
           <property required="yes">
@@ -284,7 +290,7 @@
           </property>
         </int>
       </parameter>
-      <parameter id="n3">
+      <parameter>
         <label>Interval between sucessives CDP</label>
         <int>
           <property required="yes">
@@ -294,7 +300,7 @@
           </property>
         </int>
       </parameter>
-      <parameter id="n4">
+      <parameter>
         <label>Quantity of CDP used</label>
         <int>
           <property required="yes">
@@ -304,9 +310,9 @@
           </property>
         </int>
       </parameter>
-      <parameter id="n5">
+      <parameter>
         <label>First velocity</label>
-        <float>
+        <float min="0">
           <property required="no">
             <keyword>-v </keyword>
             <value/>
@@ -314,17 +320,17 @@
           </property>
         </float>
       </parameter>
-      <parameter id="n6">
+      <parameter>
         <label>Last velocity</label>
-        <float>
+        <float min="0">
           <property required="no">
             <keyword>-V </keyword>
             <value/>
-            <default>5000</default>
+            <default>3500</default>
           </property>
         </float>
       </parameter>
-      <parameter id="n7">
+      <parameter>
         <label>Quantity of CVS panels</label>
         <int>
           <property required="no">
@@ -334,7 +340,7 @@
           </property>
         </int>
       </parameter>
-      <parameter id="n8">
+      <parameter>
         <label>Size of each CVS panel (odd numbers only)</label>
         <int>
           <property required="no">
@@ -344,7 +350,7 @@
           </property>
         </int>
       </parameter>
-      <parameter id="n9">
+      <parameter>
         <label>Number of velocities</label>
         <int>
           <property required="no">
@@ -355,7 +361,7 @@
         </int>
       </parameter>
       
-      <parameter id="n11">
+      <parameter>
         <label>Semblance on power</label>
         <int>
           <property required="no">
@@ -365,7 +371,7 @@
           </property>
         </int>
       </parameter>
-      <parameter id="n12">
+      <parameter>
         <label>Strech mute applied to NMO and semblance plots</label>
         <float>
           <property required="no">
@@ -375,7 +381,7 @@
           </property>
         </float>
       </parameter>
-      <parameter id="n13">
+      <parameter>
         <label>Number of traces in each CDP</label>
         <int>
           <property required="no">
@@ -385,7 +391,7 @@
           </property>
         </int>
       </parameter>
-      <parameter id="n14">
+      <parameter>
         <label>Offset increment</label>
         <int>
           <property required="no">
@@ -395,7 +401,7 @@
           </property>
         </int>
       </parameter>
-      <parameter id="n15">
+      <parameter>
         <label>Threshold for significance values</label>
         <float>
           <property required="no">
@@ -405,10 +411,11 @@
           </property>
         </float>
       </parameter>
-      <parameter id="n16">
+      <parameter>
         <label>Plot type</label>
         
       <enum><property required="no"><keyword>-P </keyword><value/><default>suvelan</default></property><option><label>SU Velan</label><value>suvelan</value></option><option><label>SU Velan NCCS</label><value>suvelan_nccs</value></option><option><label>SU Velan UCCS</label><value>suvelan_uccs</value></option><option><label>SU Velan NSel</label><value>suvelan_nsel</value></option><option><label>SU Velan USel</label><value>suvelan_usel</value></option></enum></parameter>
-    <parameter id="n17"><label>Percentile to clip</label><range min="0" max="100" inc="1" digits="0"><property required="no"><keyword>-C </keyword><value/><default>99</default></property></range></parameter><parameter id="n18"><label>Temporary directory</label><file directory="yes" filter-name="" filter-pattern=""><property required="no"><keyword>-T </keyword><value/><default>/tmp</default></property></file></parameter></parameters>
+    <parameter><label>Percentile to clip</label><range min="0" max="100" inc="1" digits="1"><property required="no"><keyword>-C </keyword><value/><default>100.0</default></property></range></parameter><parameter><label>Temporary directory</label><file directory="yes" filter-name="" filter-pattern=""><property required="no"><keyword>-T </keyword><value/><default>/tmp</default></property></file></parameter></parameters>
   </program>
 </flow>
+ 

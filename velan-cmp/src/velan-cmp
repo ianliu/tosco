@@ -101,26 +101,26 @@ hbox=700
 
 while getopts "i:p:c:d:n:v:V:m:s:k:e:S:N:D:U:P:C:T:h" OPT; do
   case $OPT in
-    "h") usage; exit 0     ;;
-    "?") usage; exit 0     ;;
-    "i") input=$OPTARG     ;;             
-    "p") output=$OPTARG    ;;
-    "c") first=$OPTARG     ;;
-    "d") step=$OPTARG      ;;
-    "n") qt=$OPTARG        ;;
-    "v") first_vel=$OPTARG ;;
-    "V") last_vel=$OPTARG  ;;
-    "m") quant=$OPTARG     ;;
-    "s") cvs_size=$OPTARG  ;;
-    "k") nv=$OPTARG        ;;
-    "e") pwr=$OPTARG       ;;
-    "S") smute=$OPTARG     ;;
-    "N") nx=$OPTARG        ;;
-    "D") dx=$OPTARG        ;;
-    "U") tau=$OPTARG       ;;
-    "P") plottype=$OPTARG  ;;
-    "C") perc=$OPTARG      ;;
-    "T") TMPDIR=$OPTARG    ;;
+    "h") usage; exit 0       ;;
+    "?") usage; exit 0       ;;
+    "i") input="$OPTARG"     ;;             
+    "p") output="$OPTARG"    ;;
+    "c") first="$OPTARG"     ;;
+    "d") step="$OPTARG"      ;;
+    "n") qt="$OPTARG"        ;;
+    "v") first_vel="$OPTARG" ;;
+    "V") last_vel="$OPTARG"  ;;
+    "m") quant="$OPTARG"     ;;
+    "s") cvs_size="$OPTARG"  ;;
+    "k") nv="$OPTARG"        ;;
+    "e") pwr="$OPTARG"       ;;
+    "S") smute="$OPTARG"     ;;
+    "N") nx="$OPTARG"        ;;
+    "D") dx="$OPTARG"        ;;
+    "U") tau="$OPTARG"       ;;
+    "P") plottype="$OPTARG"  ;;
+    "C") perc="$OPTARG"      ;;
+    "T") TMPDIR="$OPTARG"    ;;
   esac
 done
 
