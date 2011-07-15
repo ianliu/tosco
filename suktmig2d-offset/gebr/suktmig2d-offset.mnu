@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<flow version="0.3.3" nextid="n18">
-  <filename>suktmig2d-offset.mnu</filename>
+<?xml version="1.0" encoding="utf-8"?>
+<flow version="0.3.6">
   <title>SU K TMig 2D Offset</title>
   <description>Prestack time migration of a common-offset section</description>
-  <help><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  <help>
+    <![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -22,12 +22,12 @@
     <div class="inner-container">
       <div class="header">
         <div class="title">
-	  <!-- begin tt2 -->
+          <!-- begin tt2 -->
          <span class="flowtitle">SU K TMig 2D Offset</span>
          <!-- end tt2 -->
 
           <div class="description">
-	    <!-- begin des -->
+            <!-- begin des -->
             Prestack time migration of a common-offset section
             <!-- end des -->
           </div>
@@ -35,9 +35,9 @@
       </div>
 
       <div class="category">
-	<!-- begin cat -->
-	Migration and Dip Moveout | LAGEP - CPGG - UFBA | INCT - GP | ToSCo
-	<!-- end cat -->
+        <!-- begin cat -->
+        Migration and Dip Moveout | LAGEP - CPGG - UFBA | INCT - GP | ToSCo
+        <!-- end cat -->
       </div>
 
       <div class="main">
@@ -46,21 +46,21 @@
           <a name="intro" id="intro"></a>
           <h2>Introduction</h2>
 
-	  <p>
-	  Perform prestack time migration of a common-offset section 
-	  with the double-square root (DSR) operator.
-	  </p>
+          <p>
+          Perform prestack time migration of a common-offset section 
+          with the double-square root (DSR) operator.
+          </p>
 
-	  <!-- begin par --><!-- end par -->
-	    
-	  <a name="credits" id="credits"></a>
+          <!-- begin par --><!-- end par -->
+            
+          <a name="credits" id="credits"></a>
           <h2>Credits</h2>
 
-	  <!-- begin cpy -->
-	  
+          <!-- begin cpy -->
+          
           <p>Jun 10, 2010: written by Luis A. D&apos;Afonseca &lt;luis.dafonseca@gebrproject.com&gt;</p>
           <!-- end cpy -->
-	  
+          
         </div>
 
         <div class="navigation">
@@ -69,7 +69,7 @@
           <ul>
             <li><a href="#intro">Introduction</a></li>
 
-	    <!-- begin mpr --><!-- end mpr -->
+            <!-- begin mpr --><!-- end mpr -->
 
             <li><a href="#credits">Credits</a></li>
           </ul>
@@ -80,7 +80,7 @@
 
       <div class="footer">
         <span class="left">G&ecirc;BR 0.9.16 (<!-- begin dtd -->0.3.3<!-- end dtd -->) |
-		<!-- begin ver -->Jun 10, 2010<!-- end ver --></span>
+                <!-- begin ver -->Jun 10, 2010<!-- end ver --></span>
 
         <div class="clearer"></div>
       </div>
@@ -88,30 +88,34 @@
   </div>
 </body>
 </html>
-]]></help>
+]]>
+</help>
   <author>Luis A. D'Afonseca</author>
   <email>luis.dafonseca@gebrproject.com</email>
   <dict>
-    <parameters exclusive="0"/>
+    <parameters default-selection="0" selection="" />
   </dict>
   <date>
     <created>2010-06-10T16:53:59.942817Z</created>
-    <modified>2010-07-14T19:11:45.683949Z</modified>
-    <lastrun/>
+    <modified>2011-07-15T19:52:53.009691Z</modified>
+    <lastrun />
   </date>
   <category>Migration and Dip Moveout</category>
-  
-  <category>LAGEP - CPGG - UFBA</category><category>INCT - GP</category><category>ToSCo</category><io>
-    <input/>
-    <output/>
-    <error/>
+  <category>LAGEP - CPGG - UFBA</category>
+  <category>INCT - GP</category>
+  <category>ToSCo</category>
+  <io>
+    <input />
+    <output />
+    <error />
   </io>
-  <servers/>
+  <servers />
   <program stdin="yes" stdout="yes" stderr="yes" status="unconfigured" version="0.1.0">
     <title>SU K TMig 2D Offset</title>
     <binary>suktmig2d-offset</binary>
     <description>Prestack time migration of a common-offset section</description>
-    <help><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    <help>
+      <![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -130,12 +134,12 @@
     <div class="inner-container">
       <div class="header">
         <div class="title">
-	  <!-- begin tt2 -->
+          <!-- begin tt2 -->
          <span class="flowtitle">SU K TMig 2D Offset</span>
          <!-- end tt2 -->
 
           <div class="description">
-	    <!-- begin des -->
+            <!-- begin des -->
             Prestack time migration of a common-offset section
             <!-- end des -->
           </div>
@@ -143,9 +147,9 @@
       </div>
 
       <div class="category">
-	<!-- begin cat -->
-	Migration and Dip Moveout | LAGEP - CPGG - UFBA | INCT - GP | ToSCo
-	<!-- end cat -->
+        <!-- begin cat -->
+        Migration and Dip Moveout | LAGEP - CPGG - UFBA | INCT - GP | ToSCo
+        <!-- end cat -->
       </div>
 
       <div class="main">
@@ -154,18 +158,18 @@
           <a name="intro" id="intro"></a>
           <h2>Introduction</h2>
 
-	  <p>
-	  Perform prestack time migration of a common-offset section 
-	  with the double-square root (DSR) operator.
-	  </p>
+          <p>
+          Perform prestack time migration of a common-offset section 
+          with the double-square root (DSR) operator.
+          </p>
 
-	  <!-- begin par -->
+          <!-- begin par -->
           <div class="parameters">
 
             <a name="par" id="par"></a>
             <h2>Parameters</h2>
-	      
-	    <!-- begin lst --><ul>
+              
+            <!-- begin lst --><ul>
               <li class="req"><span class="reqlabel">File with rms velocity as a function of time v(t,x) in units/s</span></li>
 
               <li class="req"><span class="reqlabel">Distance in units between consecutive traces</span></li>
@@ -187,58 +191,58 @@
               <li><span class="label">Half offset in meters</span><br/>  
               The default is half of the value in the header keyword.</li>
 
-	      <li><span class="label">Number of Fourier-coefficients to approximate low-pass filter</span><br/>
-	      The larger this value is chosen the narrower the filter will be.</li>
+              <li><span class="label">Number of Fourier-coefficients to approximate low-pass filter</span><br/>
+              The larger this value is chosen the narrower the filter will be.</li>
 
-	      <li><span class="label">High-end frequency increment for the low-pass filters in Hz</span><br/>
-	      The lower this number is chosen the larger the number of lowpass filters 
-	      calculated for each input trace will be.
-	      </li>
+              <li><span class="label">High-end frequency increment for the low-pass filters in Hz</span><br/>
+              The lower this number is chosen the larger the number of lowpass filters 
+              calculated for each input trace will be.
+              </li>
 
             </ul>
             <!-- end lst -->
             
           </div>
-	  <!-- end par -->
-	    
-	  <a name="notes" id="notes"></a>
+          <!-- end par -->
+            
+          <a name="notes" id="notes"></a>
           <h2>Notes</h2>
 
           <p>
-	  Data must be preprocessed with <b>SU Frac</b> to correct for the wave-shaping	
-	  factor using phase shitf of 0.25 for 2D migration.
+          Data must be preprocessed with <b>SU Frac</b> to correct for the wave-shaping 
+          factor using phase shitf of 0.25 for 2D migration.
           </p>
 
           <p>
-	  Input traces must be sorted into offset and cdp number. The velocity	
-	  file consists of rms velocities for all CMPs as a function of vertical
-	  time and horizontal position v(t,z) in C-style binary floating point	
-	  numbers. It's easiest to supply v(t,z) that has the same dimensions as
-	  the input data to be migrated.					
+          Input traces must be sorted into offset and cdp number. The velocity  
+          file consists of rms velocities for all CMPs as a function of vertical
+          time and horizontal position v(t,z) in C-style binary floating point  
+          numbers. It's easiest to supply v(t,z) that has the same dimensions as
+          the input data to be migrated.                                        
           </p>
 
           <p>
-	  The units may be feet or meters, as long as these are consistent for	
-	  Antialias filter is performed using (Gray,1992, Geoph. Prosp), using	
-	  nc low-pass filtered copies of the data. The cutoff frequencies are	
-	  calculated  as fractions of the Nyquist frequency.			
+          The units may be feet or meters, as long as these are consistent for  
+          Antialias filter is performed using (Gray,1992, Geoph. Prosp), using  
+          nc low-pass filtered copies of the data. The cutoff frequencies are   
+          calculated  as fractions of the Nyquist frequency.                    
           </p>
 
           <p>
-	  The maximum allowed angle is 80 degrees because of a 10 degree taper 
-	  that is applied to the end of the aperture.
+          The maximum allowed angle is 80 degrees because of a 10 degree taper 
+          that is applied to the end of the aperture.
           </p>
 
-	  <a name="credits" id="credits"></a>
+          <a name="credits" id="credits"></a>
           <h2>Credits</h2>
 
           <p>
-	  Reynam Pestana, LAGEP - CPGG - UFBA
+          Reynam Pestana, LAGEP - CPGG - UFBA
           </p>
 
-	  <!-- begin cpy -->
-	  <!-- end cpy -->
-	  
+          <!-- begin cpy -->
+          <!-- end cpy -->
+          
         </div>
 
         <div class="navigation">
@@ -247,9 +251,9 @@
           <ul>
             <li><a href="#intro">Introduction</a></li>
 
-	    <!-- begin mpr -->
+            <!-- begin mpr -->
             <li><a href="#par">Parameters</a></li>
-	    <!-- end mpr -->
+            <!-- end mpr -->
 
             <li><a href="#notes">Notes</a></li>
 
@@ -262,7 +266,7 @@
 
       <div class="footer">
         <span class="left">G&ecirc;BR 0.9.16 (<!-- begin dtd -->0.3.3<!-- end dtd -->) |
-		<!-- begin ver -->42<!-- end ver --></span>
+                <!-- begin ver -->42<!-- end ver --></span>
 
         <div class="clearer"></div>
       </div>
@@ -270,82 +274,130 @@
   </div>
 </body>
 </html>
-]]></help>
+]]>
+</help>
     <url>http://www.cwp.mines.edu/cwpcodes/</url>
-    <parameters exclusive="0">
-      <parameter id="n0">
+    <parameters default-selection="0" selection="">
+      <parameter>
         <label>File with rms velocity as a function of time v(t,x) in units/s</label>
         <file directory="no" filter-name="" filter-pattern="">
           <property required="yes">
             <keyword>vfile=</keyword>
-            <value/>
-            <default/>
+            <value />
+            <default />
           </property>
         </file>
       </parameter>
-      <parameter id="n1">
+      <parameter>
         <label>Distance in units between consecutive traces</label>
         <float>
           <property required="yes">
             <keyword>dx=</keyword>
-            <value/>
-            <default/>
+            <value />
+            <default />
           </property>
         </float>
       </parameter>
-      <parameter id="n11"><label>Number of consecutive cdps in velocity file</label><int><property required="yes"><keyword>nvelcdp=</keyword><value/><default/></property></int></parameter><parameter id="n4">
+      <parameter>
+        <label>Number of consecutive cdps in velocity file</label>
+        <int>
+          <property required="yes">
+            <keyword>nvelcdp=</keyword>
+            <value />
+            <default />
+          </property>
+        </int>
+      </parameter>
+      <parameter>
         <label>First cdp number in velocity file</label>
         <int>
           <property required="yes">
             <keyword>firstcdp=</keyword>
-            <value/>
-            <default/>
+            <value />
+            <default />
           </property>
         </int>
-      </parameter><parameter id="n5">
+      </parameter>
+      <parameter>
         <label>Last cdp number in velocity file</label>
         <int>
           <property required="yes">
             <keyword>lastcdp=</keyword>
-            <value/>
-            <default/>
+            <value />
+            <default />
           </property>
         </int>
-      </parameter><parameter id="n12"><label>Minimum offset</label><int><property required="yes"><keyword>offmin=</keyword><value/><default/></property></int></parameter><parameter id="n13"><label>Maximum offset</label><int><property required="yes"><keyword>offmax=</keyword><value/><default/></property></int></parameter>
-      
-      
-      <parameter id="n14"><label>Interval between offsets</label><int><property required="no"><keyword>intoff=</keyword><value/><default/></property></int></parameter><parameter id="n7">
+      </parameter>
+      <parameter>
+        <label>Minimum offset</label>
+        <int>
+          <property required="yes">
+            <keyword>offmin=</keyword>
+            <value />
+            <default />
+          </property>
+        </int>
+      </parameter>
+      <parameter>
+        <label>Maximum offset</label>
+        <int>
+          <property required="yes">
+            <keyword>offmax=</keyword>
+            <value />
+            <default />
+          </property>
+        </int>
+      </parameter>
+      <parameter>
+        <label>Interval between offsets</label>
+        <int>
+          <property required="no">
+            <keyword>intoff=</keyword>
+            <value />
+            <default />
+          </property>
+        </int>
+      </parameter>
+      <parameter>
         <label>Maximum aperture angle for migration in degrees</label>
         <float>
           <property required="no">
             <keyword>angmax=</keyword>
-            <value/>
+            <value />
             <default>40</default>
           </property>
         </float>
-      </parameter><parameter id="n9">
+      </parameter>
+      <parameter>
         <label>Number of Fourier-coefficients to approximate low-pass filter</label>
         <int>
           <property required="no">
             <keyword>nfc=</keyword>
-            <value/>
+            <value />
             <default>16</default>
           </property>
         </int>
-      </parameter><parameter id="n10">
-        <label>High-end frequency increment for the low-pass filters	in Hz</label>
+      </parameter>
+      <parameter>
+        <label>High-end frequency increment for the low-pass filters in Hz</label>
         <int>
           <property required="no">
             <keyword>fwidth=</keyword>
-            <value/>
+            <value />
             <default>5</default>
           </property>
         </int>
-      </parameter><parameter id="n17"><label>Echoes extra information</label><flag><property required="no"><keyword>verbose=</keyword><value>off</value><default>off</default></property></flag></parameter>
-      
-      
-      
-      
+      </parameter>
+      <parameter>
+        <label>Echoes extra information</label>
+        <flag>
+          <property required="no">
+            <keyword>verbose=1</keyword>
+            <value>off</value>
+            <default>off</default>
+          </property>
+        </flag>
+      </parameter>
     </parameters>
   </program>
 </flow>
