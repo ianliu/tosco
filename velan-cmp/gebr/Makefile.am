@@ -1,4 +1,5 @@
 # velan-cmp - Velocity analisys on CMP sorted data
+# Copyright (c) 2012 GêBR Core Team <www.gebrproject.com>
 # Copyright (C) 2010 Alam Souza CPGG/UFBA <aavbs@cpgg.ufba.br>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -14,16 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-GEBR_PROJ_DIR= tosco
-
-GEBR_MENUS= velan-cmp.mnu
-
-#------------------------------------------------------------------------------#
-
-EXTRA_DIST= install-menus ${GEBR_MENUS}
-
-install: ${GEBR_MENUS}
-	$(srcdir)/install-menus $(DESTDIR)/$(datadir) ${GEBR_PROJ_DIR} ${GEBR_MENUS}
-
-#------------------------------------------------------------------------------#
-
+gebrmenusdir = $(datadir)/gebr/menus/tosco
+gebrmenus_DATA = velan-cmp.mnu
+EXTRA_DIST = $(gebrmenus_DATA)
