@@ -1,3 +1,7 @@
+2012-03-14  Ricardo Biloti  <biloti@ime.unicamp.br>
+
+	* s88modeling: added support to quality factors.
+
 2009-03-30  Ricardo Biloti  <biloti@ime.unicamp.br>
 
 	* s88modeling: initial version.

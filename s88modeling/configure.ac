@@ -19,7 +19,7 @@ dnl Process this file with autoconf to produce a configure script.
 AC_INIT(src/s88modeling.c)
 
 dnl Every other copy of the package version number gets its value from here
-AM_INIT_AUTOMAKE(s88modeling,0.2.0)
+AM_INIT_AUTOMAKE(s88modeling,0.3.0)
 
 AC_SUBST(VERSION)
 
