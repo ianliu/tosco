@@ -1,84 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow version="0.3.6">
+<flow version="0.3.8">
   <title>S88 Modeling</title>
   <description>Ray tracing modeling through Seis88</description>
-  <help><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="content-type" content=
-  "text/html; charset=utf-8" />
-  <link rel="stylesheet" type="text/css" href="gebr.css" />
-
-  <title>G&ecirc;BR - S88 Modeling</title>
-</head>
-
-<body>
-  <div class="outer-container">
-    <div class="inner-container">
-      <div class="header">
-        <div class="title">
-	  <span class="flowtitle">S88 Modeling</span>
-
-          <div class="description">
-	    Ray tracing modeling through Seis88
-          </div>
-        </div>
-      </div>
-
-      <div class="category">
-	Simulation and Model Building | GGC - UNICAMP | INCT - GP | ToSCo
-      </div>
-
-      <div class="main">
-        <div class="content">
-
-          <a name="intro" id="intro"></a>
-          <h2>Introduction</h2>
-
-          <p>This menu implements S88 Modeling capabilities to GêBR. 
-          S88 Modeling is able to model 2D line acquisition.</p>
-
-	  <a name="credits" id="credits"></a>
-          <h2>Credits</h2>
-
-          <p>Mar 04, 2009: created by Ricardo Biloti &lt;biloti@ime.unicamp.br&gt;<br/>
-          Department of Applied Mathematics<br/>
-          IMECC &mdash; UNICAMP, Brazil</p>
-
-          <p>Jun 26, 2009: revised by Ricardo Biloti.</p>
-
-	  <p>Sep 23, 2009: updated by Luis A. D'Afonseca
-          &lt;luis.dafonseca@gebrproject.com&gt;</p>
-
-	  <p>Oct 06, 2010: updated by Ricardo Biloti.</p>
-	  
-        </div>
-
-        <div class="navigation">
-          <h2>Index</h2>
-
-          <ul>
-            <li><a href="#intro">Introduction</a></li>
-
-            <li><a href="#credits">Credits</a></li>
-          </ul>
-        </div>
-
-        <div class="clearer"></div>
-      </div>
-
-      <div class="footer">
-        <span class="left">G&ecirc;BR 0.9.18 (0.3.6) | Oct 06, 2009 </span>
-
-        <div class="clearer"></div>
-      </div>
-    </div>
-  </div>
-</body>
-</html>
-]]></help>
+  <help>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;&lt;head&gt;  &lt;meta http-equiv="content-type" content=  "text/html; charset=utf-8" /&gt;  &lt;link rel="stylesheet" type="text/css" href="gebr.css" /&gt;  &lt;title&gt;    &lt;!-- begin ttl --&gt;S88 Modeling&lt;!-- end ttl --&gt;  &lt;/title&gt;&lt;/head&gt;&lt;body&gt;  &lt;div class="outer-container"&gt;    &lt;div class="inner-container"&gt;      &lt;div class="header"&gt;        &lt;div class="title"&gt;          &lt;span class="flowtitle"&gt;            &lt;!-- begin tt2 --&gt;S88 Modeling&lt;!-- end tt2 --&gt;          &lt;/span&gt;          &lt;div class="description"&gt;            &lt;!-- begin des --&gt;Ray tracing modeling through Seis88&lt;!-- end des --&gt;          &lt;/div&gt;        &lt;/div&gt;      &lt;/div&gt;      &lt;div class="category"&gt;        &lt;!-- begin cat --&gt;Simulation and Model Building | GGC - UNICAMP | INCT - GP | ToSCo&lt;!-- end cat --&gt;      &lt;/div&gt;      &lt;div class="main"&gt;        &lt;div class="content"&gt;          &lt;!-- begin cnt --&gt;&lt;p&gt;	&lt;a id="intro" name="intro"&gt;&lt;/a&gt;&lt;/p&gt;&lt;h2&gt;	Introduction&lt;/h2&gt;&lt;p&gt;	This menu implements S88 Modeling capabilities to G&amp;ecirc;BR. S88 Modeling is able to model 2D line acquisition.&lt;/p&gt;&lt;p&gt;	&lt;a id="credits" name="credits"&gt;&lt;/a&gt;&lt;/p&gt;&lt;h2&gt;	Credits&lt;/h2&gt;&lt;p&gt;	Mar 04, 2009: created by Ricardo Biloti &amp;lt;biloti@ime.unicamp.br&amp;gt;&lt;br /&gt;	Department of Applied Mathematics&lt;br /&gt;	IMECC &amp;mdash; UNICAMP, Brazil&lt;/p&gt;&lt;p&gt;	Jun 26, 2009: revised by Ricardo Biloti.&lt;/p&gt;&lt;p&gt;	Sep 23, 2009: updated by Luis A. D&amp;#39;Afonseca &amp;lt;luis.dafonseca@gebrproject.com&amp;gt;&lt;/p&gt;&lt;p&gt;	Oct 06, 2010: updated by Ricardo Biloti.&lt;/p&gt;&lt;p&gt;	Mar 14, 2012: updated by Ricardo Biloti to take absortion into account.&lt;/p&gt;&lt;!-- end cnt --&gt;        &lt;/div&gt;        &lt;div class="navigation"&gt;          &lt;h2&gt;Index&lt;/h2&gt;          &lt;ul&gt;            &lt;li&gt;&lt;a href="#intro"&gt;Introduction&lt;/a&gt;&lt;/li&gt;	    &lt;!-- begin mpr --&gt;            &lt;li&gt;&lt;a href="#par"&gt;Parameters&lt;/a&gt;&lt;/li&gt;	    &lt;!-- end mpr --&gt;            &lt;li&gt;&lt;a href="#details"&gt;Description&lt;/a&gt;&lt;/li&gt;            &lt;li&gt;&lt;a href="#notes"&gt;Notes&lt;/a&gt;&lt;/li&gt;            &lt;li&gt;&lt;a href="#ref"&gt;References&lt;/a&gt;&lt;/li&gt;            &lt;li&gt;&lt;a href="#credits"&gt;Credits&lt;/a&gt;&lt;/li&gt;          &lt;/ul&gt;        &lt;/div&gt;        &lt;div class="clearer"&gt;&lt;/div&gt;      &lt;/div&gt;      &lt;div class="footer"&gt;        &lt;span class="left"&gt;G&amp;ecirc;BR 0.16.1 (&lt;!-- begin dtd --&gt;0.3.8&lt;!-- end dtd --&gt;) |		&lt;!-- begin ver --&gt;Mar 14, 2012&lt;!-- end ver --&gt;&lt;/span&gt;        &lt;div class="clearer"&gt;&lt;/div&gt;      &lt;/div&gt;    &lt;/div&gt;  &lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</help>
   <author>Ricardo Biloti</author>
   <email>biloti@ime.unicamp.br</email>
   <dict>
@@ -86,48 +10,60 @@
   </dict>
   <date>
     <created/>
-    <modified>2010-10-06T14:48:18.527380Z</modified>
+    <modified>2012-03-14T19:46:55.248106Z</modified>
     <lastrun/>
   </date>
   <category>Simulation and Model Building</category>
   <category>GGC - UNICAMP</category>
   <category>INCT - GP</category>
   <category>ToSCo</category>
-  <io>
-    <input/>
-    <output/>
-    <error/>
-  </io>
-  <servers/>
-  <program stdin="no" stdout="yes" stderr="yes" status="unconfigured" mpi="" version="October 2010">
+  <server group-type="group" group-name="">
+    <io>
+      <input></input>
+      <output></output>
+      <error></error>
+    </io>
+    <lastrun></lastrun>
+  </server>
+  <program stdin="no" stdout="yes" stderr="yes" status="unconfigured" mpi="" version="Mar 14, 2012">
     
     <title>S88 Modeling</title>
     <binary>s88modeling</binary>
     <description>Ray tracing modeling through Seis88</description>
-    <help><![CDATA[<html xmlns="http://www.w3.org/1999/xhtml"><head xmlns="http://www.w3.org/1999/xhtml"><meta xmlns="http://www.w3.org/1999/xhtml" http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    
-    <link rel="stylesheet" type="text/css" href="gebr.css" />
+    <help><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-    <title xmlns="http://www.w3.org/1999/xhtml">GêBR - S88 Modeling</title>
-  </head><body xmlns="http://www.w3.org/1999/xhtml">
-    <div xmlns="http://www.w3.org/1999/xhtml" class="outer-container">
-      <div xmlns="http://www.w3.org/1999/xhtml" class="inner-container">
-        <div class="header">
-          <div class="title">
-            <span class="flowtitle">S88 Modeling</span>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content=
+  "text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="gebr.css" />
+  <title>
+    <!-- begin ttl -->S88 Modeling<!-- end ttl -->
+  </title>
+</head>
 
-            <div class="description">
-              Ray tracing modeling through Seis88
-            </div>
+<body>
+  <div class="outer-container">
+    <div class="inner-container">
+      <div class="header">
+        <div class="title">
+          <span class="flowtitle">
+            <!-- begin tt2 -->S88 Modeling<!-- end tt2 -->
+          </span>
+          <div class="description">
+            <!-- begin des -->Ray tracing modeling through Seis88<!-- end des -->
           </div>
         </div>
+      </div>
 
-        <div class="category">
-	Simulation and Model Building | GGC - UNICAMP | INCT - GP | ToSCo
-        </div>
+      <div class="category">
+        <!-- begin cat -->Simulation and Model Building | GGC - UNICAMP | INCT - GP | ToSCo<!-- end cat -->
+      </div>
 
-        <div class="main">
-          <div class="content"><h2 id="header_0">
+      <div class="main">
+        <div class="content">
+          <!-- begin cnt --><h2 id="header_0">
 	Introduction</h2>
 <p>
 	This program simulates a regular 2D acquisition over a seismic line. A sequence of common-shots are gathered to yield the seismic data volume. S88 Modeling employs Seis88 package (see notes below).</p>
@@ -148,7 +84,7 @@
 				<li>
 					and positive number to collapse the respective point to the point of the specified index of the interface above (please, refer to Seis88 documentation for detaisl).</li>
 			</ul>
-			For smooth interfaces, the Point types can be set briefly to "auto".<br />
+			For smooth interfaces, the Point types can be set briefly to &quot;auto&quot;.<br />
 			As an example, a sinclinal interface could be<br />
 			X coordinates = 0.0,1.0,2.0,5.0,8.0,9.0,10.0<br />
 			Z coordinates = 2.0,2.0,2.0,1.5,2.0,2.0,2.0<br />
@@ -169,24 +105,53 @@
 			S-wave velocities are defined as <i>v<sub>P</sub></i> / 1.732.
 			<ul>
 				<li class="req">
-					<span class="reqlabel">Velocities at layers' top (km/s)</span></li>
+					<span class="reqlabel">Velocities at layers&#39; top (km/s)</span></li>
 				<li class="req">
-					<span class="reqlabel">Velocities at layers' bottom (km/s)</span></li>
+					<span class="reqlabel">Velocities at layers&#39; bottom (km/s)</span></li>
 			</ul>
 		</li>
 		<li class="group">
 			<span class="grouplabel">Densities</span><br />
 			Densities are computed as<br />
-			α<sub>i</sub> + β<sub>i</sub> · <i>v<sub>P</sub></i>.<br />
-			The two parameters below are the list of α and β values (comma separeted). Leaving them in blank means that<br />
-			α<sub>i</sub> = 1.7 and β<sub>i</sub> = 0.2.
+			&alpha;<sub>i</sub> + &beta;<sub>i</sub> &middot; <i>v<sub>P</sub></i>.<br />
+			The two parameters below are the list of &alpha; and &beta; values (comma separeted). Leaving them in blank means that<br />
+			&alpha;<sub>i</sub> = 1.7 and &beta;<sub>i</sub> = 0.2.
 			<ul>
 				<li>
 					<span class="label">Constant factors for densities</span><br />
-					List of α values for each layer.</li>
+					List of &alpha; values for each layer.</li>
 				<li>
 					<span class="label">Angular factors for densities</span><br />
-					List of β values for each layer.</li>
+					List of &beta; values for each layer.</li>
+			</ul>
+		</li>
+		<li class="group">
+			<span class="grouplabel">Quality factors</span><br />
+			To take slight absortion into account Quality Factors can be specified.
+			<ul>
+				<li>
+					<span class="label">Expression for QP</span><br />
+					This parameter specifies how the quality factor for P wave is computed, in terms of the coefficients a, b, and c provided through the parameter below (VP stand for the P wave velocity for the considered layer).
+					<ul>
+						<li>
+							Quadratic, i.e. &nbsp;QP = a + b * VP + c * VP&sup2;</li>
+						<li>
+							Non-quadratic, i.e. QP = a + b * VP + c / VP</li>
+					</ul>
+				</li>
+				<li>
+					<span class="label">Expression for QS</span><br />
+					This parameter specifies how the quality factor for S wave is computed, in terms of the coefficients &alpha;, &beta;, and &gamma;&nbsp;provided through the parameter below (VS stand for the S wave velocity for the considered layer)
+					<ul>
+						<li>
+							Quadratic, i.e. &nbsp;QS = &alpha; + &beta; * VS + &gamma; * VS&sup2;</li>
+						<li>
+							Non-quadratic, i.e. QS = &alpha;&nbsp;+ &beta;&nbsp;* VS + &gamma;&nbsp;/ VS</li>
+					</ul>
+				</li>
+				<li>
+					<span class="label">Quality-factors coefficientes</span><br />
+					This is the list of six coefficients mentioned above, i.e., a,b,c,&alpha;,&beta;,&gamma;&nbsp;</li>
 			</ul>
 		</li>
 		<li class="group">
@@ -302,32 +267,46 @@
 <h2 id="header_3">
 	Credits</h2>
 <p>
-	S88 modeling was written by Ricardo Biloti &lt;biloti@ime·unicamp·br&gt;, from Department of Applied Mathematics, IMECC/UNICAMP. It is released as free-software under the terms of GNU General Public License, version 3.</p>
+	S88 modeling was written by Ricardo Biloti &lt;biloti@ime&middot;unicamp&middot;br&gt;, from Department of Applied Mathematics, IMECC/UNICAMP. It is released as free-software under the terms of GNU General Public License, version 3.</p>
 <p>
 	Seis88 was developed by Vlatislav Cerveny and Ivan Psencik. It is available at <a href="http://sw3d.mff.cuni.cz/">Seismic Waves in Complex 3-D Structures</a> Consortium Research Project.</p>
-<!-- begin cpy --><!-- end cpy --></div>
-
-          <div class="navigation">
-	  <h2>Index</h2>
-	  <ul><li><a href="#header_0">Introduction</a></li>
-	      <li><a href="#header_1">Parameters</a></li>
-	      <li><a href="#header_2">Notes</a></li>
-	      <li><a href="#header_3">Credits</a></li>
-          </ul>
-          </div>
-          <div class="clearer"></div>
-
-        <div class="footer">
-          <span class="left">GêBR 0.9.18 (<!-- begin dtd -->0.3.6<!-- end dtd -->) | S88 Modeling, October 2010</span>
-
-          <div class="clearer"></div>
+<!-- begin cpy --><!-- end cpy --><!-- end cnt -->
         </div>
-      </a></div><a xmlns="http://www.w3.org/1999/xhtml" href="gebr://menu">
-    </a></div><a xmlns="http://www.w3.org/1999/xhtml" href="gebr://menu">
-  
 
-</a></body></html>
+        <div class="navigation">
+          <h2>Index</h2>
+
+          <ul>
+            <li><a href="#intro">Introduction</a></li>
+
+	    <!-- begin mpr -->
+            <li><a href="#par">Parameters</a></li>
+	    <!-- end mpr -->
+
+            <li><a href="#details">Description</a></li>
+
+            <li><a href="#notes">Notes</a></li>
+
+            <li><a href="#ref">References</a></li>
+
+            <li><a href="#credits">Credits</a></li>
+          </ul>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+
+      <div class="footer">
+        <span class="left">G&ecirc;BR 0.16.1 (<!-- begin dtd -->0.3.8<!-- end dtd -->) |
+		<!-- begin ver -->Mar 14, 2012<!-- end ver --></span>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
 ]]></help>
     <url>http://code.google.com/p/tosco/</url>
-    <parameters default-selection="0" selection=""><parameter><label>Interfaces</label><group instanciable="yes" expand="no"><template-instance><parameters default-selection="0" selection=""><parameter><label>X coordinates (km)</label><float><property required="yes" separator=","><keyword>--xcoord=</keyword><value/><default>0</default><default>6</default></property></float></parameter><parameter><label>Z coordinates (km)</label><float><property required="yes" separator=","><keyword>--zcoord=</keyword><value/><default>0</default><default>0</default></property></float></parameter><parameter><label>Point types (see Seis88 doc for details)</label><string><property required="no" separator=","><keyword>--iii=</keyword><value/><default>auto</default></property></string></parameter></parameters></template-instance><parameters default-selection="0" selection=""><parameter><label></label><reference><property required="no"><keyword/><value/><default>0</default><default>6</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>0</default><default>0</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>auto</default></property></reference></parameter></parameters><parameters default-selection="0" selection=""><parameter><label></label><reference><property required="no"><keyword/><value/><default>0</default><default>2</default><default>5</default><default>6</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>0.5</default><default>0.7</default><default>0.7</default><default>0.5</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>auto</default></property></reference></parameter></parameters><parameters default-selection="0" selection=""><parameter><label></label><reference><property required="no"><keyword/><value/><default>0</default><default>6</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>1.5</default><default>1.5</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>auto</default></property></reference></parameter></parameters></group></parameter><parameter><label>Velocities</label><group instanciable="no" expand="no"><template-instance><parameters default-selection="0" selection=""><parameter><label>Velocities at layers' top (km/s)</label><float><property required="yes" separator=","><keyword>--v1=</keyword><value/><default>1.5</default><default>2.0</default></property></float></parameter><parameter><label>Velocities at layers' bottom (km/s)</label><float><property required="yes" separator=","><keyword>--v2=</keyword><value/><default>1.5</default><default>2.0</default></property></float></parameter><parameter><label>Ratio P/S-wave velocities per layer</label><float><property required="no" separator=","><keyword>--ptos=</keyword><value/><default/></property></float></parameter></parameters></template-instance><parameters default-selection="0" selection=""><parameter><label></label><reference><property required="no"><keyword/><value/><default>1.5</default><default>2.0</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>1.5</default><default>2.0</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default/></property></reference></parameter></parameters></group></parameter><parameter><label>Densities</label><group instanciable="no" expand="no"><template-instance><parameters default-selection="0" selection=""><parameter><label>Constant factors for densities</label><float><property required="no" separator=","><keyword>--rho1=</keyword><value/><default/></property></float></parameter><parameter><label>Angular factors for densities</label><float><property required="no" separator=","><keyword>--rho2=</keyword><value/><default/></property></float></parameter></parameters></template-instance><parameters default-selection="0" selection=""><parameter><label></label><reference><property required="no"><keyword/><value/><default/></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default/></property></reference></parameter></parameters></group></parameter><parameter><label>Experiment</label><group instanciable="no" expand="no"><template-instance><parameters default-selection="0" selection=""><parameter><label>Number of shots</label><range min="1" max="10000" inc="1" digits="0"><property required="no"><keyword>--nshots=</keyword><value>1</value><default>1</default></property></range></parameter><parameter><label>First shot x coordinate (km)</label><float><property required="yes"><keyword>--sxmin=</keyword><value/><default>0</default></property></float></parameter><parameter><label>Shot displacement in x direction (km)</label><float><property required="yes"><keyword>--sxstep=</keyword><value/><default>0.025</default></property></float></parameter><parameter><label>Source depth (km)</label><float><property required="yes"><keyword>--sz=</keyword><value/><default>0.0</default></property></float></parameter><parameter><label>Number of receivers</label><range min="2" max="999" inc="1" digits="0"><property required="no"><keyword>--nrec=</keyword><value>2</value><default>10</default></property></range></parameter><parameter><label>First receiver x coordinate relative to shot position (km)</label><float><property required="yes"><keyword>--rxmin=</keyword><value/><default>0.0</default></property></float></parameter><parameter><label>Receiver displacement in x direction (km)</label><float><property required="yes"><keyword>--rxstep=</keyword><value/><default>0.025</default></property></float></parameter><parameter><label>Initial time</label><float><property required="no"><keyword>--tsour=</keyword><value/><default>0.0</default></property></float></parameter><parameter><label>Source type</label><enum><property required="no"><keyword>--mdim=</keyword><value/><default>3</default></property><option><label>Compute only rays and traveltimes</label><value>0</value></option><option><label>Eval amplitude and fase shift with no geometrical spreading</label><value>1</value></option><option><label>Eval amplitude and fase shift for a line source</label><value>2</value></option><option><label>Eval amplitude and fase shift for a point source</label><value>3</value></option></enum></parameter></parameters></template-instance><parameters default-selection="0" selection=""><parameter><label></label><reference><property required="no"><keyword/><value/><default>1</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default></default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>0.025</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>0.0</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>10</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>0.0</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>0.025</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>0.0</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>3</default></property></reference></parameter></parameters></group></parameter><parameter><label>Modeled wave specification</label><group instanciable="no" expand="no"><template-instance><parameters default-selection="0" selection=""><parameter><label>Primary P-waves</label><enum><property required="yes"><keyword>--ibp=</keyword><value/><default>1</default></property><option><label>not generated</label><value>0</value></option><option><label>PP reflected waves</label><value>1</value></option><option><label>PP and PS reflected wave</label><value>2</value></option></enum></parameter><parameter><label>Primary S-waves</label><enum><property required="yes"><keyword>--ibs=</keyword><value/><default>0</default></property><option><label>not generated</label><value>0</value></option><option><label>SS reflected waves</label><value>1</value></option><option><label>SS and SP reflected waves</label><value>2</value></option></enum></parameter><parameter><label>Simple multiple-reflected waves</label><flag><property required="no"><keyword>--mltp</keyword><value>off</value><default>off</default></property></flag></parameter></parameters></template-instance><parameters default-selection="0" selection=""><parameter><label></label><reference><property required="no"><keyword/><value/><default>1</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>0</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>off</default></property></reference></parameter></parameters></group></parameter><parameter><label>Seismograms specification</label><group instanciable="no" expand="no"><template-instance><parameters default-selection="0" selection=""><parameter><label>Minimum modeled time</label><float><property required="no"><keyword>--tmin=</keyword><value/><default>0.0</default></property></float></parameter><parameter><label>Sampling rate</label><float><property required="no"><keyword>--dt=</keyword><value/><default>0.004</default></property></float></parameter><parameter><label>Maximum modeled time</label><float><property required="no"><keyword>--tmax=</keyword><value/><default>4.0</default></property></float></parameter></parameters></template-instance><parameters default-selection="0" selection=""><parameter><label></label><reference><property required="no"><keyword/><value/><default>0.0</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>0.004</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>4.0</default></property></reference></parameter></parameters></group></parameter><parameter><label>Control parameters</label><group instanciable="no" expand="no"><template-instance><parameters default-selection="0" selection=""><parameter><label>Seis88 binary command</label><file directory="no"><property required="no"><keyword>--spath=</keyword><value/><default>seis</default></property></file></parameter><parameter><label>Syntpl binary command</label><file directory="no"><property required="no"><keyword>--sypath=</keyword><value/><default>syntpl</default></property></file></parameter><parameter><label>Ray shooting method</label><enum><property required="no"><keyword>--method=</keyword><value/><default>0</default></property><option><label>Regula falsi</label><value>0</value></option><option><label>Combination of regula falsi and halving intervals</label><value>1</value></option><option><label>Halving intervals</label><value>2</value></option><option><label>Paraxial ray approximation</label><value>3</value></option></enum></parameter><parameter><label>Number of permited iterations in two-point ray tracing</label><int min="1"><property required="no"><keyword>--itmax=</keyword><value/><default/></property></int></parameter><parameter><label>Radius of the vicinity of a receveir</label><float><property required="no"><keyword>--reps=</keyword><value/><default>0.0005</default></property></float></parameter><parameter><label>Tolerance for boundary rays</label><float><property required="no"><keyword>--reps1=</keyword><value/><default>0.00002</default></property></float></parameter><parameter><label>Time step in integration</label><float><property required="no"><keyword>--dtint=</keyword><value/><default>0.1</default></property></float></parameter><parameter><label>Initial shooting angle for primary reflections</label><float><property required="no"><keyword>--amin1=</keyword><value/><default>0.0</default></property></float></parameter><parameter><label>Angle step for primary reflections</label><float><property required="no"><keyword>--astep1=</keyword><value/><default>0.0010</default></property></float></parameter><parameter><label>Final shooting angle for primary reflections</label><float><property required="no"><keyword>--amax1=</keyword><value/><default>3.1415</default></property></float></parameter><parameter><label>Initial shooting angle for direct wave</label><float><property required="no"><keyword>--amin2=</keyword><value/><default>0.0</default></property></float></parameter><parameter><label>Angle step for direct wave</label><float><property required="no"><keyword>--astep2=</keyword><value/><default>0.0010</default></property></float></parameter><parameter><label>Final shooting angle for direct wave</label><float><property required="no"><keyword>--amax2=</keyword><value/><default>3.1415</default></property></float></parameter><parameter><label>Accuracy for ray tracing integration</label><float><property required="no"><keyword>--ac=</keyword><value/><default>0.00001</default></property></float></parameter><parameter><label>Source magnitude</label><float><property required="no"><keyword>--mag=</keyword><value/><default>1.0</default></property></float></parameter><parameter><label>Source frequence</label><float><property required="no"><keyword>--freq=</keyword><value/><default>25</default></property></float></parameter><parameter><label>Source parameter 1</label><float><property required="no"><keyword>--gamma=</keyword><value/><default>3.5</default></property></float></parameter><parameter><label>Source time shift</label><float><property required="no"><keyword>--psi=</keyword><value/><default>0.0</default></property></float></parameter><parameter><label>Implosive source</label><flag><property required="no"><keyword>--implosive</keyword><value>off</value><default>off</default></property></flag></parameter></parameters></template-instance><parameters default-selection="0" selection=""><parameter><label></label><reference><property required="no"><keyword/><value/><default>seis</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>syntpl</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>0</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default></default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>0.0005</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>0.00002</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>0.1</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>0.0</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>0.0010</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>3.1415</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>0.0</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>0.0010</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>3.1415</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>0.00001</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>1.0</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>25</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>3.5</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>0.0</default></property></reference></parameter><parameter><label></label><reference><property required="no"><keyword/><value/><default>off</default></property></reference></parameter></parameters></group></parameter><parameter><label>Working directory</label><file directory="yes"><property required="no"><keyword>--workdir=</keyword><value/><default>/tmp</default></property></file></parameter><parameter><label>Preserve ray information</label><flag><property required="no"><keyword>--showrays</keyword><value>off</value><default>off</default></property></flag></parameter><parameter><label>Verbose</label><flag><property required="no"><keyword>--verbose</keyword><value>off</value><default>off</default></property></flag></parameter><parameter><label>Show debug information</label><flag><property required="no"><keyword>--debug</keyword><value>off</value><default>off</default></property></flag></parameter><parameter><label>Dry run (do not perform anything, just test)</label><flag><property required="no"><keyword>--dry-run</keyword><value>off</value><default>off</default></property></flag></parameter></parameters></program>
+    <parameters default-selection="0" selection=""><parameter><label>Interfaces</label><group instanciable="yes" expand="no"><template-instance><parameters default-selection="0" selection=""><parameter><label>X coordinates (km)</label><float><property required="yes" separator=","><keyword>--xcoord=</keyword><value/><default>0</default><default>6</default></property></float></parameter><parameter><label>Z coordinates (km)</label><float><property required="yes" separator=","><keyword>--zcoord=</keyword><value/><default>0</default><default>0</default></property></float></parameter><parameter><label>Point types (see Seis88 doc for details)</label><string><property required="no" separator=","><keyword>--iii=</keyword><value/><default>auto</default></property></string></parameter></parameters></template-instance><parameters default-selection="0" selection=""><parameter><label/><reference><property required="no"><keyword/><value/><default>0</default><default>6</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>0</default><default>0</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value></value><default>auto</default></property></reference></parameter></parameters><parameters default-selection="0" selection=""><parameter><label/><reference><property required="no"><keyword/><value/><default>0</default><default>2</default><default>5</default><default>6</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>0.5</default><default>0.7</default><default>0.7</default><default>0.5</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value></value><default>auto</default></property></reference></parameter></parameters><parameters default-selection="0" selection=""><parameter><label/><reference><property required="no"><keyword/><value/><default>0</default><default>6</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>1.5</default><default>1.5</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value></value><default>auto</default></property></reference></parameter></parameters></group></parameter><parameter><label>Velocities</label><group instanciable="no" expand="no"><template-instance><parameters default-selection="0" selection=""><parameter><label>Velocities at layers' top (km/s)</label><float><property required="yes" separator=","><keyword>--v1=</keyword><value/><default>1.5</default><default>2.0</default></property></float></parameter><parameter><label>Velocities at layers' bottom (km/s)</label><float><property required="yes" separator=","><keyword>--v2=</keyword><value/><default>1.5</default><default>2.0</default></property></float></parameter><parameter><label>Ratio P/S-wave velocities per layer</label><float><property required="no" separator=","><keyword>--ptos=</keyword><value/><default/></property></float></parameter></parameters></template-instance><parameters default-selection="0" selection=""><parameter><label/><reference><property required="no"><keyword/><value/><default>1.5</default><default>2.0</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>1.5</default><default>2.0</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default/></property></reference></parameter></parameters></group></parameter><parameter><label>Densities</label><group instanciable="no" expand="no"><template-instance><parameters default-selection="0" selection=""><parameter><label>Constant factors for densities</label><float><property required="no" separator=","><keyword>--rho1=</keyword><value/><default/></property></float></parameter><parameter><label>Angular factors for densities</label><float><property required="no" separator=","><keyword>--rho2=</keyword><value/><default/></property></float></parameter></parameters></template-instance><parameters default-selection="0" selection=""><parameter><label/><reference><property required="no"><keyword/><value/><default/></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default/></property></reference></parameter></parameters></group></parameter><parameter><label>Quality factors</label><group instanciable="yes" expand="no"><template-instance><parameters default-selection="0"><parameter><label>Expression for QP</label><enum><property required="no"><keyword>--nqp=</keyword><value/><default></default></property><option><label>Quadratic</label><value>0</value></option><option><label>Non-quadratic</label><value>1</value></option></enum></parameter><parameter><label>Expression for QS</label><enum><property required="no"><keyword>--nqs=</keyword><value/><default></default></property><option><label>Quadratic</label><value>0</value></option><option><label>Non-quadratic</label><value>1</value></option></enum></parameter><parameter><label>Quality-factors coefficientes</label><string><property required="no"><keyword>--qps=</keyword><value/><default/></property></string></parameter></parameters></template-instance><parameters default-selection="0"><parameter><label/><reference><property required="no"><keyword/><value/><default></default></property></reference></parameter><parameter><label>Expression for QP</label><reference><property required="no"><keyword/><value/><default></default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default></default></property></reference></parameter></parameters></group></parameter><parameter><label>Experiment</label><group instanciable="no" expand="no"><template-instance><parameters default-selection="0" selection=""><parameter><label>Number of shots</label><range min="1" max="10000" inc="1" digits="0"><property required="no"><keyword>--nshots=</keyword><value>1</value><default>1</default></property></range></parameter><parameter><label>First shot x coordinate (km)</label><float><property required="yes"><keyword>--sxmin=</keyword><value/><default>0</default></property></float></parameter><parameter><label>Shot displacement in x direction (km)</label><float><property required="yes"><keyword>--sxstep=</keyword><value/><default>0.025</default></property></float></parameter><parameter><label>Source depth (km)</label><float><property required="yes"><keyword>--sz=</keyword><value/><default>0.0</default></property></float></parameter><parameter><label>Number of receivers</label><range min="2" max="999" inc="1" digits="0"><property required="no"><keyword>--nrec=</keyword><value>2</value><default>10</default></property></range></parameter><parameter><label>First receiver x coordinate relative to shot position (km)</label><float><property required="yes"><keyword>--rxmin=</keyword><value/><default>0.0</default></property></float></parameter><parameter><label>Receiver displacement in x direction (km)</label><float><property required="yes"><keyword>--rxstep=</keyword><value/><default>0.025</default></property></float></parameter><parameter><label>Initial time</label><float><property required="no"><keyword>--tsour=</keyword><value/><default>0.0</default></property></float></parameter><parameter><label>Source type</label><enum><property required="no"><keyword>--mdim=</keyword><value/><default>3</default></property><option><label>Compute only rays and traveltimes</label><value>0</value></option><option><label>Eval amplitude and fase shift with no geometrical spreading</label><value>1</value></option><option><label>Eval amplitude and fase shift for a line source</label><value>2</value></option><option><label>Eval amplitude and fase shift for a point source</label><value>3</value></option></enum></parameter></parameters></template-instance><parameters default-selection="0" selection=""><parameter><label/><reference><property required="no"><keyword/><value/><default>1</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default/></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>0.025</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>0.0</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>10</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>0.0</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>0.025</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>0.0</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>3</default></property></reference></parameter></parameters></group></parameter><parameter><label>Modeled wave specification</label><group instanciable="no" expand="no"><template-instance><parameters default-selection="0" selection=""><parameter><label>Primary P-waves</label><enum><property required="yes"><keyword>--ibp=</keyword><value/><default>1</default></property><option><label>not generated</label><value>0</value></option><option><label>PP reflected waves</label><value>1</value></option><option><label>PP and PS reflected wave</label><value>2</value></option></enum></parameter><parameter><label>Primary S-waves</label><enum><property required="yes"><keyword>--ibs=</keyword><value/><default>0</default></property><option><label>not generated</label><value>0</value></option><option><label>SS reflected waves</label><value>1</value></option><option><label>SS and SP reflected waves</label><value>2</value></option></enum></parameter><parameter><label>Simple multiple-reflected waves</label><flag><property required="no"><keyword>--mltp</keyword><value>off</value><default>off</default></property></flag></parameter></parameters></template-instance><parameters default-selection="0" selection=""><parameter><label/><reference><property required="no"><keyword/><value/><default>1</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>0</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>off</default></property></reference></parameter></parameters></group></parameter><parameter><label>Seismograms specification</label><group instanciable="no" expand="no"><template-instance><parameters default-selection="0" selection=""><parameter><label>Minimum modeled time</label><float><property required="no"><keyword>--tmin=</keyword><value/><default>0.0</default></property></float></parameter><parameter><label>Sampling rate</label><float><property required="no"><keyword>--dt=</keyword><value/><default>0.004</default></property></float></parameter><parameter><label>Maximum modeled time</label><float><property required="no"><keyword>--tmax=</keyword><value/><default>4.0</default></property></float></parameter></parameters></template-instance><parameters default-selection="0" selection=""><parameter><label/><reference><property required="no"><keyword/><value/><default>0.0</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>0.004</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>4.0</default></property></reference></parameter></parameters></group></parameter><parameter><label>Control parameters</label><group instanciable="no" expand="no"><template-instance><parameters default-selection="0" selection=""><parameter><label>Seis88 binary command</label><file directory="no"><property required="no"><keyword>--spath=</keyword><value/><default>seis</default></property></file></parameter><parameter><label>Syntpl binary command</label><file directory="no"><property required="no"><keyword>--sypath=</keyword><value/><default>syntpl</default></property></file></parameter><parameter><label>Ray shooting method</label><enum><property required="no"><keyword>--method=</keyword><value/><default>0</default></property><option><label>Regula falsi</label><value>0</value></option><option><label>Combination of regula falsi and halving intervals</label><value>1</value></option><option><label>Halving intervals</label><value>2</value></option><option><label>Paraxial ray approximation</label><value>3</value></option></enum></parameter><parameter><label>Number of permited iterations in two-point ray tracing</label><int min="1"><property required="no"><keyword>--itmax=</keyword><value/><default/></property></int></parameter><parameter><label>Radius of the vicinity of a receveir</label><float><property required="no"><keyword>--reps=</keyword><value/><default>0.0005</default></property></float></parameter><parameter><label>Tolerance for boundary rays</label><float><property required="no"><keyword>--reps1=</keyword><value/><default>0.00002</default></property></float></parameter><parameter><label>Time step in integration</label><float><property required="no"><keyword>--dtint=</keyword><value/><default>0.1</default></property></float></parameter><parameter><label>Initial shooting angle for primary reflections</label><float><property required="no"><keyword>--amin1=</keyword><value/><default>0.0</default></property></float></parameter><parameter><label>Angle step for primary reflections</label><float><property required="no"><keyword>--astep1=</keyword><value/><default>0.0010</default></property></float></parameter><parameter><label>Final shooting angle for primary reflections</label><float><property required="no"><keyword>--amax1=</keyword><value/><default>3.1415</default></property></float></parameter><parameter><label>Initial shooting angle for direct wave</label><float><property required="no"><keyword>--amin2=</keyword><value/><default>0.0</default></property></float></parameter><parameter><label>Angle step for direct wave</label><float><property required="no"><keyword>--astep2=</keyword><value/><default>0.0010</default></property></float></parameter><parameter><label>Final shooting angle for direct wave</label><float><property required="no"><keyword>--amax2=</keyword><value/><default>3.1415</default></property></float></parameter><parameter><label>Accuracy for ray tracing integration</label><float><property required="no"><keyword>--ac=</keyword><value/><default>0.00001</default></property></float></parameter><parameter><label>Source magnitude</label><float><property required="no"><keyword>--mag=</keyword><value/><default>1.0</default></property></float></parameter><parameter><label>Source frequence</label><float><property required="no"><keyword>--freq=</keyword><value/><default>25</default></property></float></parameter><parameter><label>Source parameter 1</label><float><property required="no"><keyword>--gamma=</keyword><value/><default>3.5</default></property></float></parameter><parameter><label>Source time shift</label><float><property required="no"><keyword>--psi=</keyword><value/><default>0.0</default></property></float></parameter><parameter><label>Implosive source</label><flag><property required="no"><keyword>--implosive</keyword><value>off</value><default>off</default></property></flag></parameter></parameters></template-instance><parameters default-selection="0" selection=""><parameter><label/><reference><property required="no"><keyword/><value></value><default>seis</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value></value><default>syntpl</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>0</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default/></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>0.0005</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>0.00002</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>0.1</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>0.0</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>0.0010</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>3.1415</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>0.0</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>0.0010</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>3.1415</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>0.00001</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>1.0</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>25</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>3.5</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>0.0</default></property></reference></parameter><parameter><label/><reference><property required="no"><keyword/><value/><default>off</default></property></reference></parameter></parameters></group></parameter><parameter><label>Working directory</label><file directory="yes"><property required="no"><keyword>--workdir=</keyword><value></value><default>/tmp</default></property></file></parameter><parameter><label>Preserve ray information</label><flag><property required="no"><keyword>--showrays</keyword><value>off</value><default>off</default></property></flag></parameter><parameter><label>Verbose</label><flag><property required="no"><keyword>--verbose</keyword><value>off</value><default>off</default></property></flag></parameter><parameter><label>Show debug information</label><flag><property required="no"><keyword>--debug</keyword><value>off</value><default>off</default></property></flag></parameter><parameter><label>Dry run (do not perform anything, just test)</label><flag><property required="no"><keyword>--dry-run</keyword><value>off</value><default>off</default></property></flag></parameter></parameters></program>
 </flow>
