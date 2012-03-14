@@ -204,7 +204,7 @@ void write_s88_config(FILE *fp, struct s88 *p)
 
         }
 
-        fprintf(fp, "%5i\n", 0); /* NABS = 0: no absortion */
+        fprintf(fp, "%5i\n", (p->nabs ? 1 : 0));
   
         // CARD 6A
         if (p->nro){
@@ -223,7 +223,14 @@ void write_s88_config(FILE *fp, struct s88 *p)
         }
 
         // CARD 6B
-        /* Not present, since nabs = 0 */
+        if (p->nabs){
+                for (ii=0; ii<p->nint-1; ii++){
+                        fprintf(fp, "%5i%5i%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f\n",
+                                (int) p->nqp[ii], (int) p->nqs[ii],
+                                p->qps[ii][0], p->qps[ii][1], p->qps[ii][2], 
+                                p->qps[ii][3], p->qps[ii][4], p->qps[ii][5] );
+                }
+        }
 
         // CARD 7
         write_double_vector (fp, p->ptos, p->nint-1, "%10.5f", 0, 8);
@@ -366,7 +373,6 @@ void write_synt_config(FILE *fp, struct s88 *p)
         
         // CARD 2
         fprintf (fp,"%3i%3i%3i%3i%3i%3i%3i\n", 0, 0, 0, 0, 0, 0, 3);
-
 
         // CARD 3
         fprintf(fp, "%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f\n",

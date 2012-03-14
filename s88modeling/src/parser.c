@@ -58,6 +58,13 @@ struct s88* parse_command_line(int argc, char** argv)
                 { NULL }
         };
 
+        static GOptionEntry entries_quality_factors[] = { 
+                { "nqp", 0, 0, G_OPTION_ARG_STRING_ARRAY, &pp.nqp, "0 for qp = qp1+qp2*vp+qp3*vp^2, or 1 for qp = qp1+qp2*vp+qp3/vp", "0 or 1" }, 
+                { "nqs", 0, 0, G_OPTION_ARG_STRING_ARRAY, &pp.nqs, "0 for qs = qs1+qs2*vs+qs3*vs^2, or 1 for qp = qs1+qs2*vs+qs3/vs", "0 or 1" },
+                { "qps",  0, 0, G_OPTION_ARG_STRING_ARRAY, &pp.qps, "Quality factors for each layer for P and S wave", "qp1,qp2,qp3,qs1,qs2,qs3" },
+                { NULL }
+        };
+
         static GOptionEntry entries_experiment[] = {
                 { "mdim",  0, 0, G_OPTION_ARG_INT,     &p.mdim,  "Source type (0, 1, 2, or 3)", "3" },
                 { "sxmin", 0, 0, G_OPTION_ARG_DOUBLE,  &p.sxmin, "Initial x coordinate of sources", "" },
@@ -156,6 +163,17 @@ struct s88* parse_command_line(int argc, char** argv)
                                           "To specify layer densities, both --rho1 and --rho2 should be set. If so,\n"
                                           "density of i-th layer is given by: rho1(i) + rho2(i) * vp(i), where states\n"
                                           "for i-th layer P-wave velocity. Otherwise, density is given by 1.7 + 0.2*vp(i).\n\n"
+                                          "Slight absortion can be considered by providing quality factors.\n"
+                                          "For each layer, six coefficients (three for P and other three for S wave) must\n"
+                                          "be given. The quality factor for a layer is determined by one of the two\n"
+                                          "expressions:\n"
+                                          "    QP = qp1 + qp2 * vp + qp3 * vp^2 (when nqp is 0)\n"
+                                          "or\n"
+                                          "    QP = qp1 + qp2 * vp + qp3 / vp (when nqp is 1)\n"
+                                          "Analogous expressions are used to determine QS (quality factor for S wave).\n"
+                                          "Note that for each layer, all three parameters nqp, nqs and qps must be provided.\n"
+                                          "Futhermore this set of three paramters must be provided for all layers of\n"
+                                          "the model. It is not allowed to specify quality factors only for some layers.\n\n"
                                           "Acceptable types of source are: 0 (only rays and traveltime, but no amplitudes,\n"
                                           "are computed), 1 (geometrical spreading is not taking into account), 2 (line\n"
                                           "source) and 3 (point source).\n\n" 
@@ -189,6 +207,10 @@ struct s88* parse_command_line(int argc, char** argv)
 
         group = g_option_group_new("vel", "Velocities and densities:", "Show velocities and densities options", NULL, NULL);
         g_option_group_add_entries(group, entries_velocities);
+        g_option_context_add_group(parser, group);
+
+        group = g_option_group_new("qp", "Quality factors (for each layer):", "Show quality factor options", NULL, NULL);
+        g_option_group_add_entries(group, entries_quality_factors);
         g_option_context_add_group(parser, group);
 
         group = g_option_group_new("exp", "Experiment setup:", "Show experiment setup options", NULL, NULL);
@@ -513,6 +535,27 @@ gint fill_in_s88(struct s88 *p, struct parse_params *pp)
                 p->nro = FALSE;
         }
         
+        if (pp->qps != NULL){
+                p->nabs = TRUE;
+
+                p->nqp = (gdouble *) malloc (sizeof (gdouble) * (p->nint-1));
+                p->nqs = (gdouble *) malloc (sizeof (gdouble) * (p->nint-1));
+                p->qps = (gdouble **) malloc (sizeof (gdouble*) * (p->nint-1));
+
+                for (ii=0; ii < p->nint-1; ii++){
+
+                        p->qps[ii]  = (gdouble *) malloc (sizeof (gdouble*) * 6);
+
+                        convert_double(pp->nqp[ii], &(p->nqp[ii]), 1, "nqp");
+                        convert_double(pp->nqs[ii], &(p->nqs[ii]), 1, "nqs");
+                        convert_double(pp->qps[ii], p->qps[ii], 6, "qps");
+                }
+        }
+        else{
+                p->nabs = FALSE;
+        }
+
+
         p->ptos = (gdouble *) malloc (sizeof (gdouble) * (p->nint-1));
         if (pp->ptos == NULL){
                 gint jj;

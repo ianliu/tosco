@@ -31,8 +31,12 @@ struct s88 {
         gdouble           *v1;
         gdouble           *v2;
         gboolean           nro;
+        gboolean           nabs;
         gdouble           *rho1;
         gdouble           *rho2;
+        gdouble           *nqp;
+        gdouble           *nqs;
+        gdouble          **qps;
         gdouble           *ptos;
         gint               mep;
         gint               mdim;

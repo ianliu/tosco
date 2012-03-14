@@ -29,6 +29,9 @@ struct parse_params {
         gchar     *rho1;
         gchar     *rho2;
         gchar     *ptos;
+        gchar    **nqp;
+        gchar    **nqs;
+        gchar    **qps;
 };
 
 
