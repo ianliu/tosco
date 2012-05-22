@@ -9,7 +9,8 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-CFLAGS = -Wall
+CFLAGS = -Wall -Wl,--no-as-needed
+CWPROOT = /usr/local/stow/su-42
 
 ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
 	CFLAGS += -O0
@@ -25,7 +26,6 @@ configure: configure-stamp
 configure-stamp:
 	dh_testdir
 	# Add here commands to configure the package.
-	./tosco-su-unpack
 	autoreconf --install
 	./configure --prefix=/usr --disable-debug
 	touch configure-stamp
