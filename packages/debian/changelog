@@ -1,3 +1,9 @@
+tosco (0.3.0) lucid; urgency=low
+
+  * Quality Factor support to s88modeling
+
+ -- Fabrício Matheus Gonçalves <fmatheus@gebrproject.com>  Tue, 22 May 2012 20:57:37 -0300
+
 tosco (0.2.0) maverick; urgency=low
 
   * Multiple-reflected waves generation adn velan-cmp with zenity.

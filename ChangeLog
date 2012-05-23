@@ -1,3 +1,31 @@
+2012-05-22  Fabrício Matheus Gonçalvez  <fmatheus@gebrproject.com>
+
+	* Fixed debian package.
+
+2012-03-14  Ricardo Biloti  <biloti@gebrproject.com>
+
+	* Version update
+	* Header update
+	* Menu updated to incorporate quality factor support
+	* Adding Quality Factor support to s88modeling
+
+2012-02-01  Ian Liu Rodrigues  <ian.liu@gebrproject.com>
+
+	* Add spec file to build RPM packages
+	* Install gebr menus respecting prefix folder
+
+2011-07-15  Ricardo Biloti  <biloti@gebrproject.com>
+
+	* verbose parameter fixed
+
+2010-11-16  Ricardo Biloti  <biloti@gebrproject.com>
+
+	* Command-line parameters escaped
+
+2010-11-11  Fabrício Matheus Gonçalvez  <fmatheus@gebrproject.com>
+
+	* Release 0.2.0.
+
 2010-11-11  fmatheus
 
 	* Store uncompressed menus.
