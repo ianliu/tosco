@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow version="0.3.1" nextid="n6">
-  <filename>optspline.mnu</filename>
+<!DOCTYPE flow PUBLIC "-//GEBR//DTD FLOW 0.4.0//EN" "http://gebr.googlecode.com/hg/libgebr/geoxml/data/flow-0.4.0.dtd">
+<flow version="0.4.0">
   <title>Optimal Spline</title>
   <description>Optimally adjust a cubic spline to a given data set</description>
   <help><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -109,21 +109,29 @@
   <author>Luis A. D'Afonseca</author>
   <email>luis.dafonseca@gebrproject.com</email>
   <dict>
-    <parameters exclusive="0"/>
+    <parameters default-selection="0" selection=""/>
   </dict>
+  <parent/>
   <date>
     <created>2009-12-03T16:26:07.451674Z</created>
     <modified>2009-12-07T18:21:59.963446Z</modified>
     <lastrun/>
   </date>
-  <category>Filtering, Transforms and Attributes</category><category>Utilities</category><category>GGC - UNICAMP</category><category>INCT - GP</category><category>ToSCo</category><io>
-    <input/>
-    <output/>
-    <error/>
-  </io>
-  <servers/>
+  <category>Filtering, Transforms and Attributes</category>
+  <category>Utilities</category>
+  <category>GGC - UNICAMP</category>
+  <category>INCT - GP</category>
+  <category>ToSCo</category>
+  <server group-type="group" group-name="">
+    <io>
+      <input/>
+      <output/>
+      <error/>
+    </io>
+    <lastrun/>
+  </server>
   <program stdin="yes" stdout="yes" stderr="yes" status="unconfigured">
-    <menu index="0">optspline.mnu</menu>
+    
     <title>Optimal Spline</title>
     <binary>optsp</binary>
     <description>Optimally adjust a cubic spline to a given data set</description>
@@ -260,6 +268,6 @@
 </html>
 ]]></help>
     <url>http://code.google.com/p/tosco/</url>
-    <parameters exclusive="0"><parameter id="n0"><label>ASCII data file containing the pairs (xi, yi) to be fitted</label><file directory="no"><property required="yes"><keyword>--data=</keyword><value/><default/></property></file></parameter><parameter id="n1"><label>Number of knots defining the spline</label><int min="1"><property required="yes"><keyword>--nknots=</keyword><value/><default>10</default></property></int></parameter><parameter id="n2"><label>File to store the obtained knots</label><file directory="no"><property required="yes"><keyword>--knots=</keyword><value/><default/></property></file></parameter><parameter id="n3"><label>Maximum iteration number</label><int min="1"><property required="no"><keyword>--maxitr=</keyword><value/><default>500</default></property></int></parameter><parameter id="n4"><label>Refine given knots</label><flag><property required="no"><keyword>--refine</keyword><value>off</value><default>off</default></property></flag></parameter><parameter id="n5"><label>More verbose output</label><flag><property required="no"><keyword>--verbose</keyword><value>off</value><default>off</default></property></flag></parameter></parameters>
+    <parameters default-selection="0" selection=""><parameter><label>ASCII data file containing the pairs (xi, yi) to be fitted</label><file directory="no"><property required="yes"><keyword>--data=</keyword><value/><default/></property></file></parameter><parameter><label>Number of knots defining the spline</label><int min="1"><property required="yes"><keyword>--nknots=</keyword><value/><default>10</default></property></int></parameter><parameter><label>File to store the obtained knots</label><file directory="no"><property required="yes"><keyword>--knots=</keyword><value/><default/></property></file></parameter><parameter><label>Maximum iteration number</label><int min="1"><property required="no"><keyword>--maxitr=</keyword><value/><default>500</default></property></int></parameter><parameter><label>Refine given knots</label><flag><property required="no"><keyword>--refine</keyword><value>off</value><default>off</default></property></flag></parameter><parameter><label>More verbose output</label><flag><property required="no"><keyword>--verbose</keyword><value>off</value><default>off</default></property></flag></parameter></parameters>
   </program>
 </flow>

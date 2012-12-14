@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow version="0.3.3" nextid="n3">
-  <filename>sugeom.mnu</filename>
+<!DOCTYPE flow PUBLIC "-//GEBR//DTD FLOW 0.4.0//EN" "http://gebr.googlecode.com/hg/libgebr/geoxml/data/flow-0.4.0.dtd">
+<flow version="0.4.0">
   <title>SU Geometry</title>
   <description>Set geometry parameters on SU files</description>
   <help><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -84,9 +84,28 @@
 ]]></help>
   <author>Adriano Wagner</author>
   <email>adrianowgs@gmail.com</email>
-  <dict><parameters exclusive="0"/></dict><date><created/><modified>2010-07-14T19:20:26.056782Z</modified><lastrun/></date>
-  <category>Editing, Sorting and Manipulation</category><category>LAGEP - CPGG - UFBA</category><category>INCT - GP</category><category>ToSCo</category><io><input/><output/><error/></io>
-  <servers/><program stdin="yes" stdout="yes" stderr="no" status="unconfigured" version="0.1.0">
+  <dict>
+    <parameters default-selection="0" selection=""/>
+  </dict>
+  <parent></parent>
+  <date>
+    <created/>
+    <modified>2010-07-14T19:20:26.056782Z</modified>
+    <lastrun/>
+  </date>
+  <category>Editing, Sorting and Manipulation</category>
+  <category>LAGEP - CPGG - UFBA</category>
+  <category>INCT - GP</category>
+  <category>ToSCo</category>
+  <server group-type="group" group-name="">
+    <io>
+      <input></input>
+      <output></output>
+      <error></error>
+    </io>
+    <lastrun></lastrun>
+  </server>
+  <program stdin="yes" stdout="yes" stderr="no" status="unconfigured" version="0.1.0">
     
     <title>SU Geometry</title>
     <binary>sugeom</binary>
@@ -197,18 +216,18 @@
 </body>
 </html>
 ]]></help>
-    <url>http://www.cpgg.ufba.br/</url><parameters exclusive="0">
-      <parameter id="n0"><label>Station input file</label><file directory="no" filter-name="Station file" filter-pattern="*.txt"><property required="yes"><keyword>station=</keyword><value/><default/></property>
+    <url>http://www.cpgg.ufba.br/</url><parameters default-selection="0" selection="">
+      <parameter><label>Station input file</label><file directory="no" filter-name="Station file" filter-pattern="*.txt"><property required="yes"><keyword>station=</keyword><value></value><default/></property>
 	
 	
 	
       </file></parameter>
-      <parameter id="n1"><label>Shot input file</label><file directory="no" filter-name="Shot file" filter-pattern="*.txt"><property required="yes"><keyword>shot=</keyword><value/><default/></property>
+      <parameter><label>Shot input file</label><file directory="no" filter-name="Shot file" filter-pattern="*.txt"><property required="yes"><keyword>shot=</keyword><value></value><default/></property>
 	
 	
 	
       </file></parameter> 
-      <parameter id="n2"><label>Pattern input file</label><file directory="no" filter-name="Pattern file" filter-pattern="*.txt"><property required="yes"><keyword>pattern=</keyword><value/><default/></property>
+      <parameter><label>Pattern input file</label><file directory="no" filter-name="Pattern file" filter-pattern="*.txt"><property required="yes"><keyword>pattern=</keyword><value></value><default/></property>
 	
 	
 	

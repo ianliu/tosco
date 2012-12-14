@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow version="0.3.3" nextid="n20">
-  <filename>geomtables.mnu</filename>
+<!DOCTYPE flow PUBLIC "-//GEBR//DTD FLOW 0.4.0//EN" "http://gebr.googlecode.com/hg/libgebr/geoxml/data/flow-0.4.0.dtd">
+<flow version="0.4.0">
   <title>Geometry Tables</title>
   <description>Build geometry tables for SU Geometry program</description>
   <help><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -88,18 +88,28 @@
 ]]></help>
   <author>Adriano Wagner</author>
   <email>adrianowgs@gmail.com</email>
-  <dict><parameters exclusive="0"/></dict><date>
+  <dict>
+    <parameters default-selection="0" selection=""/>
+  </dict>
+  <parent></parent>
+  <date>
     <created>2010-06-09T16:05:54Z</created>
     <modified>2010-07-14T19:22:16.852869Z</modified>
     <lastrun/>
   </date>
-  
-  <category>Editing, Sorting and Manipulation</category><category>LAGEP - CPGG - UFBA</category><category>INCT - GP</category><category>ToSCo</category><io>
-    <input/>
-    <output/>
-    <error/>
-  </io>
-  <servers/><program stdin="no" stdout="no" stderr="yes" status="unconfigured" version="0.1.0">
+  <category>Editing, Sorting and Manipulation</category>
+  <category>LAGEP - CPGG - UFBA</category>
+  <category>INCT - GP</category>
+  <category>ToSCo</category>
+  <server group-type="group" group-name="">
+    <io>
+      <input></input>
+      <output></output>
+      <error></error>
+    </io>
+    <lastrun></lastrun>
+  </server>
+  <program stdin="no" stdout="no" stderr="yes" status="unconfigured" version="0.1.0">
     
     <title>Geometry Tables</title>
     <binary>geomtables</binary>
@@ -294,12 +304,12 @@
 </html>
 ]]></help>
     <url>http://www.cpgg.ufba.br/</url>
-    <parameters exclusive="0">
-      <parameter id="n0">
+    <parameters default-selection="0" selection="">
+      <parameter>
         <label>Station parameters</label>
         <group instanciable="yes" expand="yes">
-          <parameters exclusive="0">
-            <parameter id="n1">
+          <template-instance><parameters default-selection="0" selection="">
+            <parameter>
               <label>First and last station numbers</label>
               <int>
                 <property required="yes" separator=",">
@@ -309,7 +319,7 @@
                 </property>
               </int>
             </parameter>
-            <parameter id="n2">
+            <parameter>
               <label>X coordinate of first and last stations</label>
               <float>
                 <property required="yes" separator=",">
@@ -319,7 +329,7 @@
                 </property>
               </float>
             </parameter>
-            <parameter id="n3">
+            <parameter>
               <label>Y coordinate of first and last stations</label>
               <float>
                 <property required="yes" separator=",">
@@ -329,14 +339,27 @@
                 </property>
               </float>
             </parameter>
-          </parameters>
-        </group>
+          </parameters></template-instance>
+        <parameters default-selection="0" selection="">
+            <parameter>
+              <label></label>
+              
+            <reference><property required="no"><keyword/><value/><default/></property></reference></parameter>
+            <parameter>
+              <label></label>
+              
+            <reference><property required="no"><keyword/><value/><default/></property></reference></parameter>
+            <parameter>
+              <label></label>
+              
+            <reference><property required="no"><keyword/><value/><default/></property></reference></parameter>
+          </parameters></group>
       </parameter>
-      <parameter id="n8">
+      <parameter>
         <label>Pattern parameters</label>
         <group instanciable="yes" expand="no">
-          <parameters exclusive="0">
-            <parameter id="n9">
+          <template-instance><parameters default-selection="0" selection="">
+            <parameter>
               <label>Pattern ID</label>
               <int>
                 <property required="yes">
@@ -346,7 +369,7 @@
                 </property>
               </int>
             </parameter>
-            <parameter id="n10">
+            <parameter>
               <label>Number of channels (receivers)</label>
               <int>
                 <property required="yes">
@@ -356,7 +379,7 @@
                 </property>
               </int>
             </parameter>
-            <parameter id="n11">
+            <parameter>
               <label>Shot origin, within the pattern</label>
               <int>
                 <property required="yes">
@@ -366,7 +389,7 @@
                 </property>
               </int>
             </parameter>
-            <parameter id="n12">
+            <parameter>
               <label>List of channel intervals</label>
               <int>
                 <property required="yes" separator=",">
@@ -376,7 +399,7 @@
                 </property>
               </int>
             </parameter>
-            <parameter id="n13">
+            <parameter>
               <label>List of station intervals, relative to the list above</label>
               <int>
                 <property required="yes" separator=",">
@@ -386,13 +409,34 @@
                 </property>
               </int>
             </parameter>
-          </parameters>
-        </group>
-      </parameter><parameter id="n4">
+          </parameters></template-instance>
+        <parameters default-selection="0" selection="">
+            <parameter>
+              <label></label>
+              
+            <reference><property required="no"><keyword/><value></value><default></default></property></reference></parameter>
+            <parameter>
+              <label></label>
+              
+            <reference><property required="no"><keyword/><value></value><default></default></property></reference></parameter>
+            <parameter>
+              <label></label>
+              
+            <reference><property required="no"><keyword/><value></value><default></default></property></reference></parameter>
+            <parameter>
+              <label></label>
+              
+            <reference><property required="no"><keyword/><value/><default/></property></reference></parameter>
+            <parameter>
+              <label></label>
+              
+            <reference><property required="no"><keyword/><value/><default/></property></reference></parameter>
+          </parameters></group>
+      </parameter><parameter>
         <label>Shot parameters</label>
         <group instanciable="yes" expand="no">
-          <parameters exclusive="0">
-            <parameter id="n7">
+          <template-instance><parameters default-selection="0" selection="">
+            <parameter>
               <label>Pattern ID to be used in this shot</label>
               <int>
                 <property required="yes">
@@ -401,7 +445,7 @@
                   <default/>
                 </property>
               </int>
-            </parameter><parameter id="n5">
+            </parameter><parameter>
               <label>First and last shot numbers</label>
               <int>
                 <property required="yes" separator=",">
@@ -411,7 +455,7 @@
                 </property>
               </int>
             </parameter>
-            <parameter id="n6">
+            <parameter>
               <label>First and last shot stations</label>
               <int>
                 <property required="yes" separator=",">
@@ -422,16 +466,29 @@
               </int>
             </parameter>
             
-          </parameters>
-        </group>
+          </parameters></template-instance>
+        <parameters default-selection="0" selection="">
+            <parameter>
+              <label></label>
+              
+            <reference><property required="no"><keyword/><value></value><default></default></property></reference></parameter><parameter>
+              <label></label>
+              
+            <reference><property required="no"><keyword/><value/><default/></property></reference></parameter>
+            <parameter>
+              <label></label>
+              
+            <reference><property required="no"><keyword/><value/><default/></property></reference></parameter>
+            
+          </parameters></group>
       </parameter>
       
-      <parameter id="n19"><label>Output directory</label><file directory="yes"><property required="yes"><keyword>outdir=</keyword><value/><default/></property></file></parameter><parameter id="n17">
+      <parameter><label>Output directory</label><file directory="yes"><property required="yes"><keyword>outdir=</keyword><value></value><default/></property></file></parameter><parameter>
         <label>Outfile prefix</label>
         <string>
           <property required="yes">
             <keyword>outfile=</keyword>
-            <value/>
+            <value></value>
             <default/>
           </property>
         </string>

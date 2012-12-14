@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow version="0.3.3" nextid="n5">
-  <filename>mcdec.mnu</filename>
+<!DOCTYPE flow PUBLIC "-//GEBR//DTD FLOW 0.4.0//EN" "http://gebr.googlecode.com/hg/libgebr/geoxml/data/flow-0.4.0.dtd">
+<flow version="0.4.0">
   <title>MC Deconvolution</title>
   <description>Direct multichannel predictive deconvolution</description>
   <help><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -73,20 +73,31 @@
   <author>Luis A. D'Afonseca</author>
   <email>luis.dafonseca@gebrproject.com</email>
   <dict>
-    <parameters exclusive="0"/>
+    <parameters default-selection="0" selection=""/>
   </dict>
+  <parent></parent>
   <date>
     <created>2009-09-22T06:26:31.201738Z</created>
     <modified>2010-07-14T19:24:54.103969Z</modified>
     <lastrun/>
   </date>
-  <category>Filtering, Transforms and Attributes</category><category>LAGEP - CPGG - UFBA</category>
-  <category>INCT - GP</category><category>ToSCo</category><io>
-    <input/>
-    <output/>
-    <error/>
-  </io><servers/>
-<program stdin="yes" stdout="yes" stderr="yes" status="unconfigured" version="mcdec 0.1.0"><title>MC Deconvolution</title><binary>mcdec</binary><description>Direct multichannel predictive deconvolution</description><help><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  <category>Filtering, Transforms and Attributes</category>
+  <category>LAGEP - CPGG - UFBA</category>
+  <category>INCT - GP</category>
+  <category>ToSCo</category>
+  <server group-type="group" group-name="">
+    <io>
+      <input></input>
+      <output></output>
+      <error></error>
+    </io>
+    <lastrun></lastrun>
+  </server>
+  <program stdin="yes" stdout="yes" stderr="yes" status="unconfigured" version="mcdec 0.1.0">
+    <title>MC Deconvolution</title>
+    <binary>mcdec</binary>
+    <description>Direct multichannel predictive deconvolution</description>
+    <help><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -201,4 +212,59 @@
   </div>
 </body>
 </html>
-]]></help><url>http://www.cpgg.ufba.br/</url><parameters exclusive="0"><parameter id="n0"><label>Number of traces</label><int><property required="yes"><keyword>--ntr </keyword><value/><default/></property></int></parameter><parameter id="n1"><label>Number of channels</label><int><property required="yes"><keyword>--nc </keyword><value/><default>1</default></property></int></parameter><parameter id="n2"><label>Number of selected trace to be deconvolved</label><int><property required="yes"><keyword>--jtarget </keyword><value/><default>1</default></property></int></parameter><parameter id="n3"><label>Multiple period file</label><file directory="no"><property required="yes"><keyword>--pfile </keyword><value/><default/></property></file></parameter><parameter id="n4"><label>Percentage of the period</label><range min="0" max="100" inc="0.1" digits="1"><property required="no"><keyword>--perc </keyword><value/><default>0.2</default></property></range></parameter></parameters></program></flow>
+]]></help>
+    <url>http://www.cpgg.ufba.br/</url>
+    <parameters default-selection="0" selection="">
+      <parameter>
+        <label>Number of traces</label>
+        <int>
+          <property required="yes">
+            <keyword>--ntr </keyword>
+            <value/>
+            <default/>
+          </property>
+        </int>
+      </parameter>
+      <parameter>
+        <label>Number of channels</label>
+        <int>
+          <property required="yes">
+            <keyword>--nc </keyword>
+            <value/>
+            <default>1</default>
+          </property>
+        </int>
+      </parameter>
+      <parameter>
+        <label>Number of selected trace to be deconvolved</label>
+        <int>
+          <property required="yes">
+            <keyword>--jtarget </keyword>
+            <value/>
+            <default>1</default>
+          </property>
+        </int>
+      </parameter>
+      <parameter>
+        <label>Multiple period file</label>
+        <file directory="no">
+          <property required="yes">
+            <keyword>--pfile </keyword>
+            <value></value>
+            <default/>
+          </property>
+        </file>
+      </parameter>
+      <parameter>
+        <label>Percentage of the period</label>
+        <range min="0" max="100" inc="0.1" digits="1">
+          <property required="no">
+            <keyword>--perc </keyword>
+            <value/>
+            <default>0.2</default>
+          </property>
+        </range>
+      </parameter>
+    </parameters>
+  </program>
+</flow>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow version="0.3.3" nextid="n1">
-  <filename>cropcoher.mnu</filename>
+<!DOCTYPE flow PUBLIC "-//GEBR//DTD FLOW 0.4.0//EN" "http://gebr.googlecode.com/hg/libgebr/geoxml/data/flow-0.4.0.dtd">
+<flow version="0.4.0">
   <title>Crop coherence</title>
   <description>Compute 0 for coherence less than a minimum and 1 otherwise</description>
   <help><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -91,18 +91,28 @@
 ]]></help>
   <author>Momoe S. Pisnitchenko</author>
   <email>momoe.p@gmail.com</email>
-  <dict><parameters exclusive="0"/></dict><date>
+  <dict>
+    <parameters default-selection="0" selection=""/>
+  </dict>
+  <parent></parent>
+  <date>
     <created>2009-10-07T14:46:11.026001Z</created>
     <modified>2010-06-10T13:06:18.879941Z</modified>
     <lastrun/>
   </date>
   <category>Utilities</category>
-  <category>GGC - UNICAMP</category><category>INCT - GP</category><category>ToSCo</category><io>
-    <input/>
-    <output/>
-    <error/>
-  </io>
-  <servers/><program stdin="yes" stdout="yes" stderr="yes" status="unconfigured" version="28/10/2002">
+  <category>GGC - UNICAMP</category>
+  <category>INCT - GP</category>
+  <category>ToSCo</category>
+  <server group-type="group" group-name="">
+    <io>
+      <input></input>
+      <output></output>
+      <error></error>
+    </io>
+    <lastrun></lastrun>
+  </server>
+  <program stdin="yes" stdout="yes" stderr="yes" status="unconfigured" version="28/10/2002">
     
     <title>cropcoher</title>
     <binary>cropcoher</binary>
@@ -213,8 +223,8 @@
 </html>
 ]]></help>
     <url/>
-    <parameters exclusive="0">
-      <parameter id="n0">
+    <parameters default-selection="0" selection="">
+      <parameter>
         <label>Minimum coherence</label>
         <float>
           <property required="yes">

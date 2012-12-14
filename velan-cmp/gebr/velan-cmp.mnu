@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow version="0.3.6">
+<!DOCTYPE flow PUBLIC "-//GEBR//DTD FLOW 0.4.0//EN" "http://gebr.googlecode.com/hg/libgebr/geoxml/data/flow-0.4.0.dtd">
+<flow version="0.4.0">
   <title>Velan CMP</title>
   <description>Velocity analisys on CMP sorted data</description>
   <help><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -91,6 +92,7 @@
   <dict>
     <parameters default-selection="0" selection=""/>
   </dict>
+  <parent></parent>
   <date>
     <created>2009-03-22T13:51:47Z</created>
     <modified>2010-11-16T15:28:17.570286Z</modified>
@@ -100,12 +102,14 @@
   <category>LAGEP - CPGG - UFBA</category>
   <category>INCT - GP</category>
   <category>ToSCo</category>
-  <io>
-    <input/>
-    <output/>
-    <error/>
-  </io>
-  <servers/>
+  <server group-type="group" group-name="">
+    <io>
+      <input></input>
+      <output></output>
+      <error></error>
+    </io>
+    <lastrun></lastrun>
+  </server>
   <program stdin="no" stdout="no" stderr="yes" status="unconfigured" version="0.1.0">
     
     <title>Velan CMP</title>
@@ -265,7 +269,7 @@
         <file directory="no" filter-name="SU File" filter-pattern="*.su *.SU">
           <property required="yes">
             <keyword>-i </keyword>
-            <value/>
+            <value></value>
             <default/>
           </property>
         </file>
@@ -275,7 +279,7 @@
         <file directory="no" filter-name="" filter-pattern="">
           <property required="yes">
             <keyword>-p </keyword>
-            <value/>
+            <value></value>
             <default/>
           </property>
         </file>
@@ -415,7 +419,6 @@
         <label>Plot type</label>
         
       <enum><property required="no"><keyword>-P </keyword><value/><default>suvelan</default></property><option><label>SU Velan</label><value>suvelan</value></option><option><label>SU Velan NCCS</label><value>suvelan_nccs</value></option><option><label>SU Velan UCCS</label><value>suvelan_uccs</value></option><option><label>SU Velan NSel</label><value>suvelan_nsel</value></option><option><label>SU Velan USel</label><value>suvelan_usel</value></option></enum></parameter>
-    <parameter><label>Percentile to clip</label><range min="0" max="100" inc="1" digits="1"><property required="no"><keyword>-C </keyword><value/><default>100.0</default></property></range></parameter><parameter><label>Temporary directory</label><file directory="yes" filter-name="" filter-pattern=""><property required="no"><keyword>-T </keyword><value/><default>/tmp</default></property></file></parameter></parameters>
+    <parameter><label>Percentile to clip</label><range min="0" max="100" inc="1" digits="1"><property required="no"><keyword>-C </keyword><value/><default>100.0</default></property></range></parameter><parameter><label>Temporary directory</label><file directory="yes" filter-name="" filter-pattern=""><property required="no"><keyword>-T </keyword><value></value><default>/tmp</default></property></file></parameter></parameters>
   </program>
 </flow>
- 

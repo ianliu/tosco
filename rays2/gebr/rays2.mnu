@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow version="0.3.1" nextid="n10">
-  <filename>rays2.mnu</filename>
+<!DOCTYPE flow PUBLIC "-//GEBR//DTD FLOW 0.4.0//EN" "http://gebr.googlecode.com/hg/libgebr/geoxml/data/flow-0.4.0.dtd">
+<flow version="0.4.0">
   <title>Rays</title>
   <description>Create Grace Projects with rays and interfaces from Seis88</description>
   <help><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -110,21 +110,31 @@
 ]]></help>
   <author>Ricardo Biloti</author>
   <email>biloti@ime.unicamp.br</email>
-  <dict><parameters exclusive="0"/></dict><date>
+  <dict>
+    <parameters default-selection="0" selection=""/>
+  </dict>
+  <parent></parent>
+  <date>
     <created>2009-06-16T18:13:48.583851Z</created>
     <modified>2009-12-07T18:26:06.755502Z</modified>
     <lastrun/>
   </date>
-  <category>Graphics</category><category>Simulation and Model Building</category><category>Utilities</category><category>GGC - UNICAMP</category><category>INCT - GP</category>
-  
-  
-  <category>ToSCo</category><io>
-    <input/>
-    <output/>
-    <error/>
-  </io><servers/>
+  <category>Graphics</category>
+  <category>Simulation and Model Building</category>
+  <category>Utilities</category>
+  <category>GGC - UNICAMP</category>
+  <category>INCT - GP</category>
+  <category>ToSCo</category>
+  <server group-type="group" group-name="">
+    <io>
+      <input></input>
+      <output></output>
+      <error></error>
+    </io>
+    <lastrun></lastrun>
+  </server>
   <program stdin="yes" stdout="yes" stderr="yes" status="unconfigured">
-    <menu index="0">rays2.mnu</menu>
+    
     <title>Rays</title>
     <binary>rays2</binary>
     <description>Create Grace Projects with rays and interfaces from Seis88</description>
@@ -260,8 +270,8 @@
 </html>
 ]]></help>
     <url>http://code.google.com/p/tosco/</url>
-    <parameters exclusive="0">
-      <parameter id="n0">
+    <parameters default-selection="0" selection="">
+      <parameter>
         <label>Minimum x coordinate (left corner)</label>
         <float>
           <property required="no">
@@ -271,7 +281,7 @@
           </property>
         </float>
       </parameter>
-      <parameter id="n1">
+      <parameter>
         <label>Maximum x coordinate (right corner)</label>
         <float>
           <property required="yes">
@@ -281,7 +291,7 @@
           </property>
         </float>
       </parameter>
-      <parameter id="n2">
+      <parameter>
         <label>Minimum z coordinate</label>
         <float>
           <property required="no">
@@ -291,7 +301,7 @@
           </property>
         </float>
       </parameter>
-      <parameter id="n3">
+      <parameter>
         <label>Maximum z coordinate</label>
         <float>
           <property required="no">
@@ -301,7 +311,7 @@
           </property>
         </float>
       </parameter>
-      <parameter id="n4">
+      <parameter>
         <label>Turn off filling in of layers</label>
         <flag>
           <property required="no">
@@ -311,7 +321,7 @@
           </property>
         </flag>
       </parameter>
-      <parameter id="n5">
+      <parameter>
         <label>Land color palette</label>
         <flag>
           <property required="no">
@@ -321,7 +331,7 @@
           </property>
         </flag>
       </parameter>
-      <parameter id="n9"><label>File containing a custom palette</label><file directory="no" filter-name="" filter-pattern=""><property required="no"><keyword>--palette=</keyword><value/><default/></property></file></parameter><parameter id="n6">
+      <parameter><label>File containing a custom palette</label><file directory="no" filter-name="" filter-pattern=""><property required="no"><keyword>--palette=</keyword><value></value><default/></property></file></parameter><parameter>
         <label>Display all rays in black</label>
         <flag>
           <property required="no">
@@ -331,7 +341,7 @@
           </property>
         </flag>
       </parameter>
-      <parameter id="n7">
+      <parameter>
         <label>Suppress rays</label>
         <flag>
           <property required="no">

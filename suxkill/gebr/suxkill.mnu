@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow version="0.3.3" nextid="n54">
-  <filename>suxkill.mnu</filename>
+<!DOCTYPE flow PUBLIC "-//GEBR//DTD FLOW 0.4.0//EN" "http://gebr.googlecode.com/hg/libgebr/geoxml/data/flow-0.4.0.dtd">
+<flow version="0.4.0">
   <title>SU X Kill</title>
   <description>Kill selected data</description>
   <help><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -74,19 +74,32 @@
   <author>Luis A. D'Afonseca</author>
   <email>luis.dafonseca@gebrproject.com</email>
   <dict>
-    <parameters exclusive="0"/>
+    <parameters default-selection="0" selection=""/>
   </dict>
+  <parent></parent>
   <date>
     <created>2009-09-18T06:40:37.740615Z</created>
     <modified>2010-07-14T19:06:18.739036Z</modified>
     <lastrun/>
   </date>
-  <category>Editing, Sorting and Manipulation</category><category>Graphics</category><category>LAGEP - CPGG - UFBA</category><category>INCT - GP</category><category>ToSCo</category><io>
-    <input/>
-    <output/>
-    <error/>
-  </io><servers/>
-<program stdin="yes" stdout="yes" stderr="yes" status="unconfigured" version="0.1.0"><title>SU X Kill</title><binary>suxkill</binary><description>Kill selected data</description><help><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  <category>Editing, Sorting and Manipulation</category>
+  <category>Graphics</category>
+  <category>LAGEP - CPGG - UFBA</category>
+  <category>INCT - GP</category>
+  <category>ToSCo</category>
+  <server group-type="group" group-name="">
+    <io>
+      <input></input>
+      <output></output>
+      <error></error>
+    </io>
+    <lastrun></lastrun>
+  </server>
+  <program stdin="yes" stdout="yes" stderr="yes" status="unconfigured" version="0.1.0">
+    <title>SU X Kill</title>
+    <binary>suxkill</binary>
+    <description>Kill selected data</description>
+    <help><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -391,7 +404,10 @@
 </html>
 
 
-]]></help><url>http://www.cpgg.ufba.br/</url><parameters exclusive="0"><parameter id="n1">
+]]></help>
+    <url>http://www.cpgg.ufba.br/</url>
+    <parameters default-selection="0" selection="">
+      <parameter>
         <label>Keyword to sort sections</label>
         <enum><property required="no"><keyword>key=</keyword><value>cdp</value><default>fldr</default></property>
       <option><label>Alias filter frequency if used</label><value>afilf</value></option>
@@ -474,16 +490,33 @@
       <option><label>Y source coordinate</label><value>sy</value></option>
       <option><label>Year data recorded</label><value>year</value></option>
       </enum>
-      </parameter><parameter id="n52"><label>Section sampling interval</label><int><property required="no"><keyword>inc=</keyword><value/><default>1</default></property></int></parameter><parameter id="n2">
+      </parameter>
+      <parameter>
+        <label>Section sampling interval</label>
+        <int>
+          <property required="no">
+            <keyword>inc=</keyword>
+            <value/>
+            <default>1</default>
+          </property>
+        </int>
+      </parameter>
+      <parameter>
 <label>Title of the plot</label>
 <string>
 <property required="no">
 <keyword>title=</keyword>
-<value/>
+<value></value>
 <default/>
 </property>
 </string>
-</parameter><parameter id="n3"><label>Picking options</label><group instanciable="no" expand="yes"><parameters exclusive="0"><parameter id="n4">
+</parameter>
+      <parameter>
+        <label>Picking options</label>
+        <group instanciable="no" expand="yes">
+          <template-instance>
+            <parameters default-selection="0" selection="">
+              <parameter>
 <label>File to save mouse picks</label>
 <file directory="no">
 <property required="no">
@@ -492,7 +525,43 @@
 <default/>
 </property>
 </file>
-</parameter><parameter id="n5"><label>Saved picks as (x2,x1) instead of (x1,x2)</label><flag><property required="no"><keyword>x1x2=0</keyword><value>off</value><default>off</default></property></flag></parameter></parameters></group></parameter><parameter id="n7"><label>Axis 1 properties (fast dimension)</label><group instanciable="no" expand="no"><parameters exclusive="0"><parameter id="n8">
+</parameter>
+              <parameter>
+                <label>Saved picks as (x2,x1) instead of (x1,x2)</label>
+                <flag>
+                  <property required="no">
+                    <keyword>x1x2=0</keyword>
+                    <value>off</value>
+                    <default>off</default>
+                  </property>
+                </flag>
+              </parameter>
+            </parameters>
+          </template-instance>
+          <parameters default-selection="0" selection="">
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default></default></property></reference></parameter>
+            <parameter>
+              <label></label>
+              <reference>
+                <property required="no">
+                  <keyword/>
+                  <value>off</value>
+                  <default>off</default>
+                </property>
+              </reference>
+            </parameter>
+          </parameters>
+        </group>
+      </parameter>
+      <parameter>
+        <label>Axis 1 properties (fast dimension)</label>
+        <group instanciable="no" expand="no">
+          <template-instance>
+            <parameters default-selection="0" selection="">
+              <parameter>
 <label>Axis label</label>
 <string>
 <property required="no">
@@ -501,7 +570,8 @@
 <default/>
 </property>
 </string>
-</parameter><parameter id="n12">
+</parameter>
+              <parameter>
 <label>Value at which axis begins</label>
 <float>
 <property required="no">
@@ -510,7 +580,8 @@
 <default/>
 </property>
 </float>
-</parameter><parameter id="n13">
+</parameter>
+              <parameter>
 <label>Value at which axis ends</label>
 <float>
 <property required="no">
@@ -519,7 +590,8 @@
 <default/>
 </property>
 </float>
-</parameter><parameter id="n14">
+</parameter>
+              <parameter>
 <label>Interval between numbered tics</label>
 <float>
 <property required="no">
@@ -528,7 +600,8 @@
 <default/>
 </property>
 </float>
-</parameter><parameter id="n15">
+</parameter>
+              <parameter>
 <label>First numbered tic</label>
 <float>
 <property required="no">
@@ -537,7 +610,8 @@
 <default/>
 </property>
 </float>
-</parameter><parameter id="n16">
+</parameter>
+              <parameter>
 <label>Number of tics between consecutive numbered tics</label>
 <int>
 <property required="no">
@@ -546,7 +620,79 @@
 <default/>
 </property>
 </int>
-</parameter><parameter id="n17"><label>Grid line style</label><enum><property required="no"><keyword>grid1=</keyword><value/><default>none</default></property><option><label>No grid lines</label><value>none</value></option><option><label>Dotted grid lines</label><value>dot</value></option><option><label>Dashed grid lines</label><value>dash</value></option><option><label>Solid grid lines</label><value>solid</value></option></enum></parameter></parameters></group></parameter><parameter id="n18"><label>Axis 2 properties (slow dimension)</label><group instanciable="no" expand="no"><parameters exclusive="0"><parameter id="n19">
+</parameter>
+              <parameter>
+                <label>Grid line style</label>
+                <enum>
+                  <property required="no">
+                    <keyword>grid1=</keyword>
+                    <value/>
+                    <default>none</default>
+                  </property>
+                  <option>
+                    <label>No grid lines</label>
+                    <value>none</value>
+                  </option>
+                  <option>
+                    <label>Dotted grid lines</label>
+                    <value>dot</value>
+                  </option>
+                  <option>
+                    <label>Dashed grid lines</label>
+                    <value>dash</value>
+                  </option>
+                  <option>
+                    <label>Solid grid lines</label>
+                    <value>solid</value>
+                  </option>
+                </enum>
+              </parameter>
+            </parameters>
+          </template-instance>
+          <parameters default-selection="0" selection="">
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default></default></property></reference></parameter>
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default></default></property></reference></parameter>
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default></default></property></reference></parameter>
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default></default></property></reference></parameter>
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default></default></property></reference></parameter>
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default></default></property></reference></parameter>
+            <parameter>
+              <label></label>
+              <reference>
+                <property required="no">
+                  <keyword/>
+                  <value></value>
+                  <default>none</default>
+                </property>
+              </reference>
+            </parameter>
+          </parameters>
+        </group>
+      </parameter>
+      <parameter>
+        <label>Axis 2 properties (slow dimension)</label>
+        <group instanciable="no" expand="no">
+          <template-instance>
+            <parameters default-selection="0" selection="">
+              <parameter>
 <label>Axis label</label>
 <string>
 <property required="no">
@@ -555,7 +701,8 @@
 <default/>
 </property>
 </string>
-</parameter><parameter id="n26">
+</parameter>
+              <parameter>
 <label>Interval between numbered tics</label>
 <float>
 <property required="no">
@@ -564,7 +711,8 @@
 <default/>
 </property>
 </float>
-</parameter><parameter id="n27">
+</parameter>
+              <parameter>
 <label>First numbered tic</label>
 <float>
 <property required="no">
@@ -573,7 +721,8 @@
 <default/>
 </property>
 </float>
-</parameter><parameter id="n28">
+</parameter>
+              <parameter>
 <label>Number of tics between consecutive numbered tics</label>
 <int>
 <property required="no">
@@ -582,7 +731,71 @@
 <default/>
 </property>
 </int>
-</parameter><parameter id="n29"><label>Grid line style</label><enum><property required="no"><keyword>grid2=</keyword><value/><default>none</default></property><option><label>No grid lines</label><value>none</value></option><option><label>Dotted grid lines</label><value>dot</value></option><option><label>Dashed grid lines</label><value>dash</value></option><option><label>Solid grid lines</label><value>solid</value></option></enum></parameter></parameters></group></parameter><parameter id="n30"><label>Wiggle properties</label><group instanciable="no" expand="no"><parameters exclusive="0"><parameter id="n31">
+</parameter>
+              <parameter>
+                <label>Grid line style</label>
+                <enum>
+                  <property required="no">
+                    <keyword>grid2=</keyword>
+                    <value/>
+                    <default>none</default>
+                  </property>
+                  <option>
+                    <label>No grid lines</label>
+                    <value>none</value>
+                  </option>
+                  <option>
+                    <label>Dotted grid lines</label>
+                    <value>dot</value>
+                  </option>
+                  <option>
+                    <label>Dashed grid lines</label>
+                    <value>dash</value>
+                  </option>
+                  <option>
+                    <label>Solid grid lines</label>
+                    <value>solid</value>
+                  </option>
+                </enum>
+              </parameter>
+            </parameters>
+          </template-instance>
+          <parameters default-selection="0" selection="">
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default></default></property></reference></parameter>
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default></default></property></reference></parameter>
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default></default></property></reference></parameter>
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default></default></property></reference></parameter>
+            <parameter>
+              <label></label>
+              <reference>
+                <property required="no">
+                  <keyword/>
+                  <value></value>
+                  <default>none</default>
+                </property>
+              </reference>
+            </parameter>
+          </parameters>
+        </group>
+      </parameter>
+      <parameter>
+        <label>Wiggle properties</label>
+        <group instanciable="no" expand="no">
+          <template-instance>
+            <parameters default-selection="0" selection="">
+              <parameter>
 <label>Do not draw wiggle trace</label>
 <flag>
 <property required="no">
@@ -591,7 +804,42 @@
 <default>off</default>
 </property>
 </flag>
-</parameter><parameter id="n32"><label>Variable area fill</label><enum><property required="no"><keyword>va=</keyword><value/><default>1</default></property><option><label>No area fill</label><value>0</value></option><option><label>Positive area fill</label><value>1</value></option><option><label>Negative area fill with light grey</label><value>2</value></option><option><label>Negative area fill with grey</label><value>3</value></option><option><label>Negative area fill with dark grey</label><value>4</value></option><option><label>Negative area fill with black</label><value>5</value></option></enum></parameter><parameter id="n33">
+</parameter>
+              <parameter>
+                <label>Variable area fill</label>
+                <enum>
+                  <property required="no">
+                    <keyword>va=</keyword>
+                    <value/>
+                    <default>1</default>
+                  </property>
+                  <option>
+                    <label>No area fill</label>
+                    <value>0</value>
+                  </option>
+                  <option>
+                    <label>Positive area fill</label>
+                    <value>1</value>
+                  </option>
+                  <option>
+                    <label>Negative area fill with light grey</label>
+                    <value>2</value>
+                  </option>
+                  <option>
+                    <label>Negative area fill with grey</label>
+                    <value>3</value>
+                  </option>
+                  <option>
+                    <label>Negative area fill with dark grey</label>
+                    <value>4</value>
+                  </option>
+                  <option>
+                    <label>Negative area fill with black</label>
+                    <value>5</value>
+                  </option>
+                </enum>
+              </parameter>
+              <parameter>
 <label>Wiggle excursion in traces corresponding to clip</label>
 <float>
 <property required="no">
@@ -600,7 +848,37 @@
 <default>1.0</default>
 </property>
 </float>
-</parameter></parameters></group></parameter><parameter id="n34"><label>Clipping properties</label><group instanciable="no" expand="no"><parameters exclusive="0"><parameter id="n35">
+</parameter>
+            </parameters>
+          </template-instance>
+          <parameters default-selection="0" selection="">
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value>off</value><default>off</default></property></reference></parameter>
+            <parameter>
+              <label></label>
+              <reference>
+                <property required="no">
+                  <keyword/>
+                  <value></value>
+                  <default>1</default>
+                </property>
+              </reference>
+            </parameter>
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default>1.0</default></property></reference></parameter>
+          </parameters>
+        </group>
+      </parameter>
+      <parameter>
+        <label>Clipping properties</label>
+        <group instanciable="no" expand="no">
+          <template-instance>
+            <parameters default-selection="0" selection="">
+              <parameter>
 <label>Percentile used to determine clip value</label>
 <range min="0" max="100" inc="0.1" digits="1">
 <property required="no">
@@ -609,10 +887,12 @@
 <default>100.0</default>
 </property>
 </range>
-</parameter><parameter id="n36">
+</parameter>
+              <parameter>
 <label>Clip value</label>
 
-<float><property required="no"><keyword>clip=</keyword><value/><default/></property></float></parameter><parameter id="n37">
+<float><property required="no"><keyword>clip=</keyword><value/><default/></property></float></parameter>
+              <parameter>
 <label>Bias value corresponding to location along axis 2</label>
 <float>
 <property required="no">
@@ -621,7 +901,31 @@
 <default/>
 </property>
 </float>
-</parameter></parameters></group></parameter><parameter id="n38"><label>Appearance properties</label><group instanciable="no" expand="no"><parameters exclusive="0"><parameter id="n39">
+</parameter>
+            </parameters>
+          </template-instance>
+          <parameters default-selection="0" selection="">
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default>100.0</default></property></reference></parameter>
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default></default></property></reference></parameter>
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default></default></property></reference></parameter>
+          </parameters>
+        </group>
+      </parameter>
+      <parameter>
+        <label>Appearance properties</label>
+        <group instanciable="no" expand="no">
+          <template-instance>
+            <parameters default-selection="0" selection="">
+              <parameter>
 <label>Upper left corner x coordinate in pixels</label>
 <int>
 <property required="no">
@@ -630,7 +934,8 @@
 <default>50</default>
 </property>
 </int>
-</parameter><parameter id="n40">
+</parameter>
+              <parameter>
 <label>Upper left corner y coordinate in pixels</label>
 <int>
 <property required="no">
@@ -639,7 +944,8 @@
 <default>50</default>
 </property>
 </int>
-</parameter><parameter id="n41">
+</parameter>
+              <parameter>
 <label>Window width in pixels</label>
 <int>
 <property required="no">
@@ -648,7 +954,8 @@
 <default>550</default>
 </property>
 </int>
-</parameter><parameter id="n42">
+</parameter>
+              <parameter>
 <label>Window height in pixels</label>
 <int>
 <property required="no">
@@ -657,7 +964,8 @@
 <default>700</default>
 </property>
 </int>
-</parameter><parameter id="n53">
+</parameter>
+              <parameter>
 <label>Swap axes</label>
 <flag>
 <property required="no">
@@ -666,7 +974,8 @@
 <default>off</default>
 </property>
 </flag>
-</parameter><parameter id="n43">
+</parameter>
+              <parameter>
 <label>Use 8 point sinc interpolation</label>
 <flag>
 <property required="no">
@@ -675,7 +984,8 @@
 <default>off</default>
 </property>
 </flag>
-</parameter><parameter id="n44">
+</parameter>
+              <parameter>
 <label>Plot title font</label>
 <string>
 <property required="no">
@@ -684,7 +994,8 @@
 <default/>
 </property>
 </string>
-</parameter><parameter id="n45">
+</parameter>
+              <parameter>
 <label>Plot title color</label>
 <string>
 <property required="no">
@@ -693,7 +1004,8 @@
 <default>red</default>
 </property>
 </string>
-</parameter><parameter id="n46">
+</parameter>
+              <parameter>
 <label>Axes labels font</label>
 <string>
 <property required="no">
@@ -702,7 +1014,8 @@
 <default/>
 </property>
 </string>
-</parameter><parameter id="n47">
+</parameter>
+              <parameter>
 <label>Axes labels color</label>
 <string>
 <property required="no">
@@ -711,7 +1024,8 @@
 <default>blue</default>
 </property>
 </string>
-</parameter><parameter id="n48">
+</parameter>
+              <parameter>
 <label>Grid color</label>
 <string>
 <property required="no">
@@ -720,7 +1034,58 @@
 <default>blue</default>
 </property>
 </string>
-</parameter></parameters></group></parameter><parameter id="n49">
+</parameter>
+            </parameters>
+          </template-instance>
+          <parameters default-selection="0" selection="">
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default>50</default></property></reference></parameter>
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default>50</default></property></reference></parameter>
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default>550</default></property></reference></parameter>
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default>700</default></property></reference></parameter>
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value>off</value><default>off</default></property></reference></parameter>
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value>off</value><default>off</default></property></reference></parameter>
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default></default></property></reference></parameter>
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default>red</default></property></reference></parameter>
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default></default></property></reference></parameter>
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default>blue</default></property></reference></parameter>
+            <parameter>
+<label></label>
+
+<reference><property required="no"><keyword/><value></value><default>blue</default></property></reference></parameter>
+          </parameters>
+        </group>
+      </parameter>
+      <parameter>
 <label>Quiet mode</label>
 <flag>
 <property required="no">
@@ -729,7 +1094,11 @@
 <default>on</default>
 </property>
 </flag>
-</parameter><parameter id="n50">
+</parameter>
+      <parameter>
         <label>Machine endian</label>
         
-      <enum><property required="no"><keyword>endian=</keyword><value/><default/></property><option><label>Little endian</label><value>0</value></option><option><label>Big endian</label><value>1</value></option></enum></parameter></parameters></program></flow>
+      <enum><property required="no"><keyword>endian=</keyword><value/><default/></property><option><label>Little endian</label><value>0</value></option><option><label>Big endian</label><value>1</value></option></enum></parameter>
+    </parameters>
+  </program>
+</flow>

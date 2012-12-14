@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<flow version="0.3.6">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE flow PUBLIC "-//GEBR//DTD FLOW 0.4.0//EN" "http://gebr.googlecode.com/hg/libgebr/geoxml/data/flow-0.4.0.dtd">
+<flow version="0.4.0">
   <title>SU K TMig 2D Offset</title>
   <description>Prestack time migration of a common-offset section</description>
   <help>
@@ -93,23 +94,26 @@
   <author>Luis A. D'Afonseca</author>
   <email>luis.dafonseca@gebrproject.com</email>
   <dict>
-    <parameters default-selection="0" selection="" />
+    <parameters default-selection="0" selection=""/>
   </dict>
+  <parent></parent>
   <date>
     <created>2010-06-10T16:53:59.942817Z</created>
     <modified>2011-07-15T19:52:53.009691Z</modified>
-    <lastrun />
+    <lastrun/>
   </date>
   <category>Migration and Dip Moveout</category>
   <category>LAGEP - CPGG - UFBA</category>
   <category>INCT - GP</category>
   <category>ToSCo</category>
-  <io>
-    <input />
-    <output />
-    <error />
-  </io>
-  <servers />
+  <server group-type="group" group-name="">
+    <io>
+      <input></input>
+      <output></output>
+      <error></error>
+    </io>
+    <lastrun></lastrun>
+  </server>
   <program stdin="yes" stdout="yes" stderr="yes" status="unconfigured" version="0.1.0">
     <title>SU K TMig 2D Offset</title>
     <binary>suktmig2d-offset</binary>
@@ -283,8 +287,8 @@
         <file directory="no" filter-name="" filter-pattern="">
           <property required="yes">
             <keyword>vfile=</keyword>
-            <value />
-            <default />
+            <value></value>
+            <default/>
           </property>
         </file>
       </parameter>
@@ -293,8 +297,8 @@
         <float>
           <property required="yes">
             <keyword>dx=</keyword>
-            <value />
-            <default />
+            <value/>
+            <default/>
           </property>
         </float>
       </parameter>
@@ -303,8 +307,8 @@
         <int>
           <property required="yes">
             <keyword>nvelcdp=</keyword>
-            <value />
-            <default />
+            <value/>
+            <default/>
           </property>
         </int>
       </parameter>
@@ -313,8 +317,8 @@
         <int>
           <property required="yes">
             <keyword>firstcdp=</keyword>
-            <value />
-            <default />
+            <value/>
+            <default/>
           </property>
         </int>
       </parameter>
@@ -323,8 +327,8 @@
         <int>
           <property required="yes">
             <keyword>lastcdp=</keyword>
-            <value />
-            <default />
+            <value/>
+            <default/>
           </property>
         </int>
       </parameter>
@@ -333,8 +337,8 @@
         <int>
           <property required="yes">
             <keyword>offmin=</keyword>
-            <value />
-            <default />
+            <value/>
+            <default/>
           </property>
         </int>
       </parameter>
@@ -343,8 +347,8 @@
         <int>
           <property required="yes">
             <keyword>offmax=</keyword>
-            <value />
-            <default />
+            <value/>
+            <default/>
           </property>
         </int>
       </parameter>
@@ -353,8 +357,8 @@
         <int>
           <property required="no">
             <keyword>intoff=</keyword>
-            <value />
-            <default />
+            <value/>
+            <default/>
           </property>
         </int>
       </parameter>
@@ -363,7 +367,7 @@
         <float>
           <property required="no">
             <keyword>angmax=</keyword>
-            <value />
+            <value/>
             <default>40</default>
           </property>
         </float>
@@ -373,7 +377,7 @@
         <int>
           <property required="no">
             <keyword>nfc=</keyword>
-            <value />
+            <value/>
             <default>16</default>
           </property>
         </int>
@@ -383,7 +387,7 @@
         <int>
           <property required="no">
             <keyword>fwidth=</keyword>
-            <value />
+            <value/>
             <default>5</default>
           </property>
         </int>
