@@ -1,3 +1,20 @@
+2012-12-14  Fabrício Matheus Gonçalvez  <fmatheus@gebrproject.com>
+
+	* Create Menu's index.
+	* Upgrade menu's dtd to 0.4.0.
+
+2012-12-12  Eric Keiji <keiji.eric@gebrproject.com>
+
+	* Add full paths to the default values of the s88 modelling menu
+
+2012-05-25  Fabrício Matheus Gonçalvez  <fmatheus@gebrproject.com>
+
+	* Added tag 0.3.0 for changeset 7c11a1d70a5d
+
+2012-05-22  Fabrício Matheus Gonçalvez  <fmatheus@gebrproject.com>
+
+	* Release 0.3.0: Quality Factor support to s88modeling
+
 2012-05-22  Fabrício Matheus Gonçalvez  <fmatheus@gebrproject.com>
 
 	* Fixed debian package.
