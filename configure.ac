@@ -25,6 +25,8 @@ AC_SUBST(TODAY)
 AM_INIT_AUTOMAKE($PACKAGE,$VERSION)
 PACKAGE_NAME=$PACKAGE
 PACKAGE_VERSION=$VERSION
+TOSCO_MENU_DIR='$(datadir)/gebr/menus/tosco'
+AC_SUBST([TOSCO_MENU_DIR])
 
 AC_CONFIG_SUBDIRS([cropcoher mcdec optspline rays2 s88modeling seis88 sugeom suktmig2d-offset suxkill suxmute velan-cmp])
 

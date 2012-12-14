@@ -28,3 +28,5 @@ SUBDIRS = \
 	  suxmute          \
           velan-cmp
 
+install-data-hook:
+	gebr-geoxml-menu-indices $(DESTDIR)@TOSCO_MENU_DIR@ $(DESTDIR)@TOSCO_MENU_DIR@/menus.idx2 $(DESTDIR)@TOSCO_MENU_DIR@/categories.idx2
