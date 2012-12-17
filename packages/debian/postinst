@@ -20,6 +20,7 @@ set -e
 
 case "$1" in
     configure)
+	cd /usr/share/gebr/menus/tosco && gebr-geoxml-menu-indices . menus.idx2 categories.idx2
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

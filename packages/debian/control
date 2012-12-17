@@ -1,7 +1,7 @@
 Source: tosco
 Priority: extra
 Maintainer: Luis A. D'Afonseca <luis.dafonseca@gebrproject.com>
-Build-Depends: debhelper (>= 5), automake, gfortran, libglib2.0-dev, libgsl0-dev, lesstif2-dev, freeglut3-dev, libxmu-dev, wget, libgebr0(>>0.19.7)
+Build-Depends: debhelper (>= 5), automake, gfortran, libglib2.0-dev, libgsl0-dev, lesstif2-dev, freeglut3-dev, libxmu-dev, wget
 Standards-Version: 3.7.2
 
 Package: tosco
