@@ -1,5 +1,5 @@
 /*  S88modeling - Seismic modeler by rays theory
- *  Copyright (C) 2009-2012 Ricardo Biloti <biloti@ime.unicamp.br>
+ *  Copyright (C) 2009-2013 Ricardo Biloti <biloti@ime.unicamp.br>
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -360,7 +360,7 @@ gint check_parameters (struct s88 *p, struct parse_params *pp)
 {
         
         static gchar *seis  = "seis";
-        static gchar *synt = "synt";
+        static gchar *synt = "syntpl";
         static gchar *tmp = "/tmp";
 
         if (p->spath == NULL)
