@@ -82,7 +82,9 @@ struct s88* parse_command_line(int argc, char** argv)
         static GOptionEntry entries_waves[] = {
                 { "ibp",   0, 0, G_OPTION_ARG_INT,  &p.ibp,  "Primary reflected waves started as P-waves (0 = no, 1 = only PP, 2 = PP and PS)", "<0,1,2>" },
                 { "ibs",   0, 0, G_OPTION_ARG_INT,  &p.ibs,  "Primary reflected waves started as S-waves (0 = no, 1 = only SS, 2 = SS and SP)", "<0,1,2>" },
-                { "mltp",  0, 0, G_OPTION_ARG_NONE, &p.mltp, "Model simple multiples", NULL},
+                { "mltp",  0, 0, G_OPTION_ARG_NONE, &p.mltp, "Simple multiples", NULL},
+                { "sghost",0, 0, G_OPTION_ARG_NONE, &p.sghost, "Ghosts at sources (sources must be buried in the first layer)", NULL},
+                // { "rghost",0, 0, G_OPTION_ARG_NONE, &p.rghost, "Ghosts at receivers", NULL},
                 /*
                 { "iup",   0, 0, G_OPTION_ARG_INT,  &p.iup, "Primary reflected waves started as P-waves (reclection above)", "<0,1,2>" },
                 { "ius",   0, 0, G_OPTION_ARG_INT,  &p.ius, "Primary reflected waves started as S-waves (reclection above)", "<0,1,2>" },
@@ -98,10 +100,10 @@ struct s88* parse_command_line(int argc, char** argv)
                 { "reps",  0, 0, G_OPTION_ARG_DOUBLE,   &p.reps,    "Radius of the vicinity of a receveir", "5.0e-4" },
                 { "reps1", 0, 0, G_OPTION_ARG_DOUBLE,   &p.reps1,   "Tolerance for boundary rays", "2.0e-5" },
                 { "dtint", 0, 0, G_OPTION_ARG_DOUBLE,   &p.dtint,   "Time step in integration", "0.1" },
-                { "amin1", 0, 0, G_OPTION_ARG_DOUBLE,   &p.amin1,   "Initial angle for primary reflections", "0.000" },
+                { "amin1", 0, 0, G_OPTION_ARG_DOUBLE,   &p.amin1,   "Initial angle for primary reflections", "-3.1415" },
                 { "astep1",0, 0, G_OPTION_ARG_DOUBLE,   &p.astep1,  "Angle step for primary reflections", "0.0010" },
                 { "amax1", 0, 0, G_OPTION_ARG_DOUBLE,   &p.amax1,   "Final angle for primary reflections", "3.1415" },
-                { "amin2", 0, 0, G_OPTION_ARG_DOUBLE,   &p.amin2,   "Initial angle for direct wave", "0.000" },
+                { "amin2", 0, 0, G_OPTION_ARG_DOUBLE,   &p.amin2,   "Initial angle for direct wave", "-3.1415" },
                 { "astep2",0, 0, G_OPTION_ARG_DOUBLE,   &p.astep2,  "Angle step for direct wave", "0.0010" },
                 { "amax2", 0, 0, G_OPTION_ARG_DOUBLE,   &p.amax2,   "Final angle for direct wave", "3.1415" },
                 { "ac",    0, 0, G_OPTION_ARG_DOUBLE,   &p.ac,      "Accuracy for ray tracing integration", "1.0e-5" },
@@ -255,16 +257,18 @@ struct s88* parse_command_line(int argc, char** argv)
         p.reps =  0.0005;
         p.reps1 = 0.00002;
         p.dtint = 0.1;
-        p.amin1 = 0;
+        p.amin1 = -3.1415;
         p.astep1 = 1.0e-3;
         p.amax1 = M_PI;
-        p.amin2 = 0;
+        p.amin2 = -3.1415;
         p.astep2 = .001;
         p.amax2 = M_PI;
         p.ac = 1.0e-5;
         p.ibp = 1;
         p.ibs = 0;
         p.mltp = FALSE;
+        p.sghost = FALSE;
+        p.rghost = FALSE;
 
         p.tmin = 0;
         p.dt = 0.004;
@@ -453,7 +457,7 @@ gint check_parameters (struct s88 *p, struct parse_params *pp)
                 fprintf (stderr, "ibs out of range.\n");
                 return 1;
         }
-
+        
         if (p->debug)
                 p->verbose = TRUE;
 

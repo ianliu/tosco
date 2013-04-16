@@ -243,9 +243,11 @@ void write_s88_config(FILE *fp, struct s88 *p)
         fprintf (fp, "%3i%3i%3i%3i%3i",
                 1, p->mep, 0, p->mdim, p->method);
 
+        // No automatic generation of wavepath codes
         fprintf (fp, "%3i%3i%3i%3i%3i%3i",
                  0, 0, 0, 0, 0, 0);
-
+        
+        // Turn on manual generation of wavepath codes
         fprintf (fp, "%3i%3i%3i%3i%3i%3i", 1, 1, 0, 1, 7, 8);
 
         fprintf (fp, "%3i%3i%3i\n", 0, 0, 0);
@@ -306,6 +308,49 @@ void write_s88_config(FILE *fp, struct s88 *p)
                 }                
         }
 
+        // Ghosts at source?
+        if (p->ibp && p->sghost)
+        {
+                gint ii, jj, imult;
+
+                for (imult=0; imult<=(gint)p->mltp; imult++){
+                        for (ii=1; ii<= p->nint-2; ii++){
+                          fprintf(fp, "%3i%3i%3i", -1, 2*(imult+1)*ii+1,1);
+                                for (jj=1; jj<=ii; jj++)
+                                        fprintf(fp, "%3i", jj);
+                                for (jj=ii; jj>=1; jj--)
+                                        fprintf(fp, "%3i", jj);
+                                if (imult){
+                                        for (jj=1; jj<=ii; jj++)
+                                                fprintf(fp, "%3i", jj);
+                                        for (jj=ii; jj>=1; jj--)
+                                                fprintf(fp, "%3i", jj);
+                                }
+                                fprintf(fp, "\n");
+                        }
+                }
+                
+                /* Also converted wave ? */
+                if (p->ibp == 2){
+                        for (imult=0; imult<=(gint)p->mltp; imult++){
+                                for (ii=1; ii<= p->nint-2; ii++){
+                                  fprintf(fp, "%3i%3i%3i", -1, 2*(imult+1)*ii+1,1);
+                                        for (jj=1; jj<=ii; jj++)
+                                                fprintf(fp, "%3i",  jj);
+                                        for (jj=ii; jj>=1; jj--)
+                                                fprintf(fp, "%3i", -jj);
+                                        if (imult){
+                                                for (jj=1; jj<=ii; jj++)
+                                                        fprintf(fp, "%3i", -jj);
+                                                for (jj=ii; jj>=1; jj--)
+                                                        fprintf(fp, "%3i", -jj);
+                                        }
+                                        fprintf(fp, "\n");
+                                }
+                        }
+                }                
+        }
+
         if (p->ibs)
         {
                 gint ii, jj, imult;;
@@ -347,6 +392,50 @@ void write_s88_config(FILE *fp, struct s88 *p)
                         }
                 }
         }
+
+        // Ghosts at source?
+        if (p->ibs && p->sghost)
+        {
+                gint ii, jj, imult;;
+                
+                for (imult=0; imult<=(gint)p->mltp; imult++){
+                        for (ii=1; ii<= p->nint-2; ii++){
+                          fprintf(fp, "%3i%3i%3i", -1, 2*(imult+1)*ii,1);
+                                for (jj=1; jj<=ii; jj++)
+                                        fprintf(fp, "%3i", -jj);
+                                for (jj=ii; jj>=1; jj--)
+                                        fprintf(fp, "%3i", -jj);
+                                if (imult){
+                                        for (jj=1; jj<=ii; jj++)
+                                                fprintf(fp, "%3i", -jj);
+                                        for (jj=ii; jj>=1; jj--)
+                                                fprintf(fp, "%3i", -jj);
+                                }
+                                fprintf(fp, "\n");
+                        }
+                }
+
+                /* Also converted wave ? */
+                if (p->ibs == 2){
+                        for (imult=0; imult<=(gint)p->mltp; imult++){
+                                for (ii=1; ii<= p->nint-2; ii++){
+                                  fprintf(fp, "%3i%3i%3i", -1, 2*(imult+1)*ii,1);
+                                        for (jj=1; jj<=ii; jj++)
+                                                fprintf(fp, "%3i", -jj);
+                                        for (jj=ii; jj>=1; jj--)
+                                                fprintf(fp, "%3i",  jj);
+                                        if (imult){
+                                                for (jj=1; jj<=ii; jj++)
+                                                        fprintf(fp, "%3i", jj);
+                                                for (jj=ii; jj>=1; jj--)
+                                                        fprintf(fp, "%3i", jj);
+                                        }
+                                        fprintf(fp, "\n");
+                                }
+                        }
+                }
+        }
+
         fprintf(fp, "\n");
 
 
@@ -357,7 +446,7 @@ void write_s88_config(FILE *fp, struct s88 *p)
         fprintf (fp, "%3i%3i%3i%3i%3i%3i",
                  0, 0, 0, 0, 0, 0);
 
-        fprintf (fp, "%3i%3i%3i%3i%3i%3i", 0, 1, 0, 1, 7, 8);
+        fprintf (fp, "%3i%3i%3i%3i%3i%3i", 1, 1, 0, 1, 7, 8);
 
         fprintf (fp, "%3i%3i%3i\n", 0, 0, 0);
 
@@ -372,12 +461,17 @@ void write_synt_config(FILE *fp, struct s88 *p)
         fprintf (fp,"%3i%3i%3i%3i%3i\n", 2, 3, 1, 7, 0);
         
         // CARD 2
-        fprintf (fp,"%3i%3i%3i%3i%3i%3i%3i\n", 0, 0, 0, 0, 0, 0, 3);
+        fprintf (fp,"%3i%3i%3i%3i%3i%3i%3i\n", 0, 0, 0, 0, 0, (p->nabs ? 1 : 0), 3);
 
         // CARD 3
         fprintf(fp, "%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f\n",
                 p->tmin, p->dt, p->tmax, p->freq, p->gamma, p->psi, 8.0, 0.0);
   
+        // CARD 6
+        if (p->nabs) {
+                fprintf (fp,"%10.5f%10.5f\n", 1.0, 1.0);
+        }
+
         // CARD 7
         fprintf (fp, "%5i%5i%5i%5i%10.5f%10.5f%10.5f%10.5f%10.5f%10.5f\n",
                  (p->implos ? -1 : 1), 0, 0, 0, p->mag, 0.0, 0.0, 0.0, 0.0, 0.0);

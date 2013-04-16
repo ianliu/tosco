@@ -44,6 +44,8 @@ struct s88 {
         gint               ibp;
         gint               ibs;
         gboolean           mltp;
+        gboolean           sghost;
+        gboolean           rghost;
         /*
         gint               iup;
         gint               ius;
