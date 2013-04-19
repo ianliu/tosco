@@ -69,46 +69,64 @@ void s88_run(struct s88 *p)
                 write_synt_config (stderr, p);
                 fprintf (stderr, "\n");
         }
+
+        /* Save velocities for rays2 */
+        if (!p->dryrun){
+          FILE *fpvel;
+          GString *velname;
+          int i;
+
+          velname = g_string_new(NULL);
+          g_string_printf(velname,"%s/vel.rays2", p->workdir);
+          
+          fpvel = fopen(velname->str, "w");
+          for (i=0; i<p->nint-1; i++)
+            fprintf(fpvel, "%6.3f %6.3f\n",  p->v1[i], p->v2[i]);
+          fclose(fpvel);
+
+          g_string_free(velname, TRUE);          
+        }
+
                 
         p->zsour = p->sz;
         for (ishot=0; ishot<p->nshots; ishot++){
 
-                newname = g_string_new(NULL);
+          newname = g_string_new(NULL);
                 
-                p->xsour = p->sxmin + p->sxstep * ishot;
-                p->rmin  = p->xsour + p->rxmin;
+          p->xsour = p->sxmin + p->sxstep * ishot;
+          p->rmin  = p->xsour + p->rxmin;
                  
-                if (p->verbose)
-                        fprintf (stderr, "Modeling for source at %f: ", p->xsour);
-                if (p->debug){
-                        fprintf (stderr, "\nSeis config:\n");
-                        write_s88_config (stderr, p);
-                        fprintf (stderr, "\n");
-                }
+          if (p->verbose)
+            fprintf (stderr, "Modeling for source at %f: ", p->xsour);
+          if (p->debug){
+            fprintf (stderr, "\nSeis config:\n");
+            write_s88_config (stderr, p);
+            fprintf (stderr, "\n");
+          }
                 
-                if (!p->dryrun){
-                        fp = fopen (fname1->str, "w");
-                        write_s88_config (fp, p);
-                        fclose (fp);
+          if (!p->dryrun){
+            fp = fopen (fname1->str, "w");
+            write_s88_config (fp, p);
+            fclose (fp);
 
-                        if (!system (cmd1->str)){
-                                if (!system (cmd2->str)){
-                                        synt2bin(p);
-                                        if (p->verbose) fprintf(stderr,"done\n");
-                                }
-                                else{
-                                        fprintf(stderr, "\nsyntpl with problem\n");
-                                }
-                        }
-                        else{
-                                fprintf(stderr, "\nseis with problem\n");
-                        }
+            if (!system (cmd1->str)){
+              if (!system (cmd2->str)){
+                synt2bin(p);
+                if (p->verbose) fprintf(stderr,"done\n");
+              }
+              else{
+                fprintf(stderr, "\nsyntpl with problem\n");
+              }
+            }
+            else{
+              fprintf(stderr, "\nseis with problem\n");
+            }
 
-                        if (p->showrays){
-                                g_string_printf(newname, "lu1-%04i.dat", ishot+1);
-                                g_rename("lu1.dat", newname->str);
-                        }
-                }
+            if (p->showrays){
+              g_string_printf(newname, "lu1-%04i.dat", ishot+1);
+              g_rename("lu1.dat", newname->str);
+            }
+          }
 
         }
         g_string_free(newname, TRUE);
