@@ -1,5 +1,5 @@
 /*  rays2 - Draw seismic rays using grace
- *  Copyright (C) 2002-2009 Ricardo Biloti <biloti@ime.unicamp.br>
+ *  Copyright (C) 2002-2013 Ricardo Biloti <biloti@ime.unicamp.br>
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,10 +27,9 @@
 #define TRUE             1
 #define FALSE            0
 
-#define MAX_NRAYS        20000
-#define MAX_CODEWAVES    200
+#define MAX_NRAYS        100000
+#define MAX_CODEWAVES    400
 #define MAX_NINTERF      100
-
 #define NSAMPLEX         151
 
 /* ---------------------------------------------------- */
@@ -75,7 +74,8 @@ void strip (float         xmin,
 /* ---------------------------------------------------- */
 
 size_t line = 0;
-
+unsigned int nx;
+unsigned int nz;
 
 /* ---------------------------------------------------- */
 int main(int argc, char ** argv){
@@ -99,6 +99,9 @@ int main(int argc, char ** argv){
 
         if (cmdline_parser(argc, argv, &arg) != 0)
                 exit(EXIT_FAILURE);
+
+        nx = arg.nx_arg;
+        nz = arg.nz_arg;
 
         /** BLOCK 1
 
@@ -332,6 +335,59 @@ int main(int argc, char ** argv){
                 }
         }
 
+        /* Export the velocity model */
+        if (arg.vfile_given){
+          float *v;
+          int ix, iz;
+          FILE *fp;
+          float v1[MAX_NINTERF], v2[MAX_NINTERF];
+          int ilayer;
+
+          fp=fopen(arg.layervel_arg, "r");
+          for (ilayer=0; ilayer <nint; ilayer++){
+            fscanf(fp, "%f %f\n", &v1[ilayer], &v2[ilayer]);
+          }
+          fclose(fp);
+          fp=fopen(arg.vfile_arg, "w");
+
+          v = (float *) malloc(sizeof(float)*nz);
+
+          for (ix = 0; ix < nx; ix++){
+            float x;
+            double depth[MAX_NINTERF];
+
+            x = arg.xmin_arg + ix * (arg.xmax_arg - arg.xmin_arg) / (nx-1);
+
+            for (ilayer=0; ilayer <nint; ilayer++){
+              depth[ilayer] = seval((int*) &(interf[ilayer].n), &x,
+                                    interf[ilayer].x, interf[ilayer].z,
+                                    interf[ilayer].b, interf[ilayer].c, interf[ilayer].d);
+            }
+
+            ilayer = 0;
+            for (iz=0; iz<nz; iz++){
+              double z;
+              z = arg.zmin_arg + iz * (arg.zmax_arg - arg.zmin_arg) / (nz-1);
+              
+              while ((z >= depth[ilayer]) && (ilayer < nint)){
+                ilayer++;
+              }
+
+              if (ilayer < nint){
+                v[iz] = v1[ilayer-1] + (z - depth[ilayer-1])/(depth[ilayer]-depth[ilayer-1])*(v2[ilayer-1]-v1[ilayer-1]);
+              }else{
+                v[iz] = v2[nint -2];
+              }
+            }
+            
+            fwrite(v, sizeof(float), nz, fp);
+                     
+          }
+          free(v);
+          fclose(fp);
+          printf("Velocity model should be exported\n");
+        }
+
         for (i=0; i<nrays; i++){
                 ray_free(&(ray[i]));
         }
@@ -446,17 +502,16 @@ interface_dummy_read(FILE *fp, int nn)
 /*--------------------------------------------------------------*/
 void
 strip   (float        xmin,
-	 float        xmax, 
-	 interface_t *s1,
-	 interface_t *s2,
-	 unsigned int cor)
+         float        xmax, 
+         interface_t *s1,
+         interface_t *s2,
+         unsigned int cor)
 {
-        int i;
-        unsigned int n;
+        int n, i;
         float *x, *z, lambda, xx;
+        
+        n = 2*NSAMPLEX + 1;
 
-        n = 2*NSAMPLEX+1;
-  
         x = (float *) malloc(n * sizeof(float));
         z = (float *) malloc(n * sizeof(float));
   
@@ -472,7 +527,6 @@ strip   (float        xmin,
                 x[NSAMPLEX+i] = xx;
                 z[NSAMPLEX+i] = seval((int*) &(s2->n), &xx,
                                       s2->x, s2->z, s2->b, s2->c, s2->d);
-
         }
 
         xx = xmin;

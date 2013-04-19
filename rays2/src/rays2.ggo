@@ -6,10 +6,11 @@
 # gengetopt < rays2.ggo --file-name=cmdline
 
 package "rays2"
-version "1.0.0"
+version "1.1.0"
 
 purpose "Given a file lu1.dat (as stdin) from Seis88, it generates a
-Grace project file showing rays and interfaces.
+Grace project file showing rays and interfaces. Additionaly, it
+can export the velocity model sampled on a regular grid.
 
 Ricardo Biloti <biloti@ime.unicamp.br>
 Department of Applied Mathematics
@@ -19,6 +20,10 @@ option "xmin" - "x left box coordinate" float no
 option "zmin" - "z top box coordinate" float no
 option "xmax" - "x right box coordinate" float yes
 option "zmax" - "z top box coordinate" float no
+option "nx"   - "number samples in x (for exporting the velocity model)" default="101" int no
+option "nz"   - "number samples in z (for exporting the velocity model)" default="101" int no
+option "vfile" v "file to export the velocity model" string no     
+option "layervel" - "file with velocities in top and bottom of each layer" default="vel.rays2" string no
 option "nofill" - "turn off filling in of layers" flag off
 option "palette" p "custom palette" string no
 option "land" l "land color profile" flag off

@@ -3,120 +3,16 @@
 <flow version="0.4.0">
   <title>Rays</title>
   <description>Create Grace Projects with rays and interfaces from Seis88</description>
-  <help><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="content-type" content=
-  "text/html; charset=utf-8" />
-  <link rel="stylesheet" type="text/css" href="gebr.css" />
-
-  <!-- begin ttl -->
-  <title>G&ecirc;BR - Rays</title>
-  <!-- end ttl -->
-</head>
-
-<body>
-  <div class="outer-container">
-    <div class="inner-container">
-      <div class="header">
-        <div class="title">
-	  <!-- begin tt2 -->
-         <span class="flowtitle">Rays</span>
-         <!-- end tt2 -->
-
-          <div class="description">
-           <!-- begin des -->
-            Create Grace Projects with rays and interfaces from Seis88
-            <!-- end des -->
-          </div>
-        </div>
-      </div>
-
-      <div class="category">
-        <!-- begin cat -->
-        Graphics | Simulation and Model Building  | Utilities | INCT  - GP | GGC - UNICAMP | ToSCo
-        <!-- end cat -->
-      </div>
-
-      <div class="main">
-        <div class="content">
-
-          <a name="intro" id="intro"></a>
-          <h2>Introduction</h2>
-
-          <p>Given a file <i>lu1.dat</i> (as stdin) from Seis88, 
-          it generates a Grace project file showing rays and interfaces.</p>
-
-	  <a name="details" id="details"></a>
-          <h2>Description</h2>
-
-          <p>Seis88 is a ray tracing modeling program. For each shot
-          Seis88 records a file, generally called lu1.dat, containing
-          model and rays information. Since Seis88 represents interfaces
-          by cubic splines, it's trick to visualize the model.</p>
-
-          <p>Grace is a plotting tool to display and manipulate 2D graphs.</p>
-
-          <p>This menu processes a <i>lu1.dat</i> file from Seis88 to 
-          produce a project file, which may be visualized with Grace.</p>
-
-	  <a name="ref" id="ref"></a>
-          <h2>References</h2>
-
-	  <!-- List of references -->
-          <ul>
-            <li><a href="http://sw3d.mff.cuni.cz/" target="_blank">Seis88</a></li>
-            <li><a href="http://plasma-gate.weizmann.ac.il/Grace/" target="_blank">Grace</a></li>
-          </ul>
-
-	  <a name="credits" id="credits"></a>
-          <h2>Credits</h2>
-          <!-- begin cpy -->
-
-          <p>Jun 16, 2009: written by Ricardo Biloti &lt;biloti@ime.unicamp.br&gt;</p>
-	  <p>Sep 23, 2009: updated by Luis A. D'Afonseca &lt;luis.dafonseca@gebrproject.com&gt;</p>
-	  <p>Dec 07, 2009: updated by Luis A. D'Afonseca &lt;luis.dafonseca@gebrproject.com&gt;</p>
-          <!-- end cpy -->
-        </div>
-
-        <div class="navigation">
-          <h2>Index</h2>
-
-          <ul>
-            <li><a href="#intro">Introduction</a></li>
-
-            <li><a href="#details">Description</a></li>
-
-            <li><a href="#ref">References</a></li>
-
-            <li><a href="#credits">Credits</a></li>
-          </ul>
-        </div>
-
-        <div class="clearer"></div>
-      </div>
-
-      <div class="footer">
-        <span class="left">G&ecirc;BR 0.9.14 (<!-- begin dtd -->0.3.1<!-- end dtd -->) | Dec 07, 2009 </span>
-
-        <div class="clearer"></div>
-      </div>
-    </div>
-  </div>
-</body>
-</html>
-]]></help>
+  <help>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;&lt;head&gt;  &lt;meta http-equiv="content-type" content=  "text/html; charset=utf-8" /&gt;  &lt;link rel="stylesheet" type="text/css" href="gebr.css" /&gt;  &lt;title&gt;    &lt;!-- begin ttl --&gt;Rays&lt;!-- end ttl --&gt;  &lt;/title&gt;&lt;/head&gt;&lt;body&gt;  &lt;div class="outer-container"&gt;    &lt;div class="inner-container"&gt;      &lt;div class="header"&gt;        &lt;div class="title"&gt;          &lt;span class="flowtitle"&gt;            &lt;!-- begin tt2 --&gt;Rays&lt;!-- end tt2 --&gt;          &lt;/span&gt;          &lt;div class="description"&gt;            &lt;!-- begin des --&gt;Create Grace Projects with rays and interfaces from Seis88&lt;!-- end des --&gt;          &lt;/div&gt;        &lt;/div&gt;      &lt;/div&gt;      &lt;div class="category"&gt;        &lt;!-- begin cat --&gt;Graphics | Simulation and Model Building | Utilities | GGC - UNICAMP | INCT - GP | ToSCo&lt;!-- end cat --&gt;      &lt;/div&gt;      &lt;div class="main"&gt;        &lt;div class="content"&gt;          &lt;!-- begin cnt --&gt;&lt;p&gt;	&lt;a id="intro" name="intro"&gt;&lt;/a&gt;&lt;/p&gt;&lt;h2&gt;	Introduction&lt;/h2&gt;&lt;p&gt;	Given a file &lt;i&gt;lu1.dat&lt;/i&gt; (as stdin) from Seis88, it generates a Grace project file showing rays and interfaces.&lt;/p&gt;&lt;p&gt;	&lt;a id="details" name="details"&gt;&lt;/a&gt;&lt;/p&gt;&lt;h2&gt;	Description&lt;/h2&gt;&lt;p&gt;	Seis88 is a ray tracing modeling program. For each shot Seis88 records a file, generally called lu1.dat, containing model and rays information. Since Seis88 represents interfaces by cubic splines, it&amp;#39;s trick to visualize the model.&lt;/p&gt;&lt;p&gt;	Grace is a plotting tool to display and manipulate 2D graphs.&lt;/p&gt;&lt;p&gt;	This menu processes a &lt;i&gt;lu1.dat&lt;/i&gt; file from Seis88 to produce a project file, which may be visualized with Grace.&lt;/p&gt;&lt;p&gt;	&lt;a id="ref" name="ref"&gt;&lt;/a&gt;&lt;/p&gt;&lt;h2&gt;	References&lt;/h2&gt;&lt;!-- List of references --&gt;&lt;ul&gt;	&lt;li&gt;		&lt;a href="http://sw3d.mff.cuni.cz/" target="_blank"&gt;Seis88&lt;/a&gt;&lt;/li&gt;	&lt;li&gt;		&lt;a href="http://plasma-gate.weizmann.ac.il/Grace/" target="_blank"&gt;Grace&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;	&lt;a id="credits" name="credits"&gt;&lt;/a&gt;&lt;/p&gt;&lt;h2&gt;	Credits&lt;/h2&gt;&lt;!-- begin cpy --&gt;&lt;p&gt;	Jun 16, 2009: written by Ricardo Biloti &amp;lt;biloti@ime.unicamp.br&amp;gt;&lt;/p&gt;&lt;p&gt;	Sep 23, 2009: updated by Luis A. D&amp;#39;Afonseca &amp;lt;luis.dafonseca@gebrproject.com&amp;gt;&lt;/p&gt;&lt;p&gt;	Dec 07, 2009: updated by Luis A. D&amp;#39;Afonseca &amp;lt;luis.dafonseca@gebrproject.com&amp;gt;&lt;/p&gt;&lt;p&gt;	Apr 19, 2013: updated by Ricardo Biloti &amp;lt;biloti@gebrproject.com&amp;gt;&lt;/p&gt;&lt;!-- end cpy --&gt;&lt;!-- end cnt --&gt;        &lt;/div&gt;        &lt;div class="navigation"&gt;          &lt;h2&gt;Index&lt;/h2&gt;          &lt;ul&gt;            &lt;li&gt;&lt;a href="#intro"&gt;Introduction&lt;/a&gt;&lt;/li&gt;	    &lt;!-- begin mpr --&gt;            &lt;li&gt;&lt;a href="#par"&gt;Parameters&lt;/a&gt;&lt;/li&gt;	    &lt;!-- end mpr --&gt;            &lt;li&gt;&lt;a href="#details"&gt;Description&lt;/a&gt;&lt;/li&gt;            &lt;li&gt;&lt;a href="#notes"&gt;Notes&lt;/a&gt;&lt;/li&gt;            &lt;li&gt;&lt;a href="#ref"&gt;References&lt;/a&gt;&lt;/li&gt;            &lt;li&gt;&lt;a href="#credits"&gt;Credits&lt;/a&gt;&lt;/li&gt;          &lt;/ul&gt;        &lt;/div&gt;        &lt;div class="clearer"&gt;&lt;/div&gt;      &lt;/div&gt;      &lt;div class="footer"&gt;        &lt;span class="left"&gt;G&amp;ecirc;BR 0.20.1 (&lt;!-- begin dtd --&gt;0.4.0&lt;!-- end dtd --&gt;) |		&lt;!-- begin ver --&gt;Apr 19, 2013&lt;!-- end ver --&gt;&lt;/span&gt;        &lt;div class="clearer"&gt;&lt;/div&gt;      &lt;/div&gt;    &lt;/div&gt;  &lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</help>
   <author>Ricardo Biloti</author>
   <email>biloti@ime.unicamp.br</email>
   <dict>
     <parameters default-selection="0" selection=""/>
   </dict>
-  <parent></parent>
+  <parent/>
   <date>
     <created>2009-06-16T18:13:48.583851Z</created>
-    <modified>2009-12-07T18:26:06.755502Z</modified>
+    <modified>2013-04-19T19:48:06.741977Z</modified>
     <lastrun/>
   </date>
   <category>Graphics</category>
@@ -127,13 +23,13 @@
   <category>ToSCo</category>
   <server group-type="group" group-name="">
     <io>
-      <input></input>
-      <output></output>
-      <error></error>
+      <input/>
+      <output/>
+      <error/>
     </io>
-    <lastrun></lastrun>
+    <lastrun/>
   </server>
-  <program stdin="yes" stdout="yes" stderr="yes" status="unconfigured">
+  <program stdin="yes" stdout="yes" stderr="yes" status="unconfigured" mpi="" version="1.1.0">
     
     <title>Rays</title>
     <binary>rays2</binary>
@@ -146,10 +42,9 @@
   <meta http-equiv="content-type" content=
   "text/html; charset=utf-8" />
   <link rel="stylesheet" type="text/css" href="gebr.css" />
-
-  <!-- begin ttl -->
-  <title>G&ecirc;BR - Rays</title>
-  <!-- end ttl -->
+  <title>
+    <!-- begin ttl -->Rays<!-- end ttl -->
+  </title>
 </head>
 
 <body>
@@ -157,87 +52,85 @@
     <div class="inner-container">
       <div class="header">
         <div class="title">
-	  <!-- begin tt2 -->
-         <span class="flowtitle">Rays</span>
-         <!-- end tt2 -->
-
+          <span class="flowtitle">
+            <!-- begin tt2 -->Rays<!-- end tt2 -->
+          </span>
           <div class="description">
-           <!-- begin des -->
-            Create Grace Projects with rays and interfaces from Seis88
-            <!-- end des -->
+            <!-- begin des -->Create Grace Projects with rays and interfaces from Seis88<!-- end des -->
           </div>
         </div>
       </div>
 
       <div class="category">
-        <!-- begin cat -->
-       Graphics | Simulation and Model Building | Utilities | GGC - UNICAMP | INCT - GP | ToSCo
-       <!-- end cat -->
+        <!-- begin cat -->Graphics | Simulation and Model Building | Utilities | GGC - UNICAMP | INCT - GP | ToSCo<!-- end cat -->
       </div>
 
       <div class="main">
         <div class="content">
-
-          <a name="intro" id="intro"></a>
-          <h2>Introduction</h2>
-
-          <p>Given a file <i>lu1.dat</i> (as stdin) from Seis88, 
-          it generates a Grace project file showing rays and interfaces.</p>
-
-	  <!-- begin par -->
-          <div class="parameters">
-
-            <a name="par" id="par"></a>
-            <h2>Parameters</h2>
-
-            <p>The spatial window displayed is defined by the four following parameters.
-            Only the maximum x coordinate is mandatory. The three others are safely guessed 
-            from input file.</p>
-	      
-	    <!-- begin lst -->
-            <ul>
-              <li><span class="label">Minimum x coordinate (left corner)</span></li>
-
-              <li class="req"><span class="reqlabel">Maximum x coordinate (right corner)</span></li>
-
-              <li><span class="label">Minimum z coordinate</span></li>
-
-              <li><span class="label">Maximum z coordinate</span></li>
-
-              <li><span class="label">Turn off filling in of layers</span><br/>
-              Whenever this flag is activated layers are not colorized.</li>
-
-              <li><span class="label">Land color palette</span><br/>
-              Specifies a color for first layer which resembles a rock instead of water.</li>
-
-              <li><span class="label">File containing a custom palette</span><br/>
-              Specifies a coustom palette to colorize layers</li>
-
-              <li><span class="label">Display all rays in black</span></li>
-
-              <li><span class="label">Suppress rays</span></li>
-
-            </ul>
-            <!-- end lst -->
-
-          </div>
-	  <!-- end par -->
-	    
-	  <a name="notes" id="notes"></a>
-          <h2>Notes</h2>
-
-          <p>The Grace project is sent to the standard output. Save
-          it into a file with <i>.agr</i> extension, in order Grace
-          recognizes it.</p>
-
-	  <a name="credits" id="credits"></a>
-          <h2>Credits</h2>
-          <p>This program was written by Ricardo Biloti, Department of
-          Applied Mathematics &ndash; State University of Campinas, as
-          a project to turn Seis88 <i>user frendly</i>.</p>
-
-	  <!-- begin cpy -->
-	  <!-- end cpy -->
+          <!-- begin cnt --><p>
+	<a id="intro" name="intro"></a></p>
+<h2>
+	Introduction</h2>
+<p>
+	Given a file <i>lu1.dat</i> (as stdin) from Seis88, it generates a Grace project file showing rays and interfaces.</p>
+<!-- begin par --><div class="parameters">
+	<a id="par" name="par"></a>
+	<h2>
+		Parameters</h2>
+	<p>
+		The spatial window displayed is defined by the four following parameters. Only the maximum x coordinate is mandatory. The three others are safely guessed from input file.</p>
+<!-- begin lst -->	<ul>
+		<li>
+			<span class="label">Minimum x coordinate (left corner)</span></li>
+		<li class="req">
+			<span class="reqlabel">Maximum x coordinate (right corner)</span></li>
+		<li>
+			<span class="label">Minimum z coordinate</span></li>
+		<li>
+			<span class="label">Maximum z coordinate</span></li>
+		<li>
+			<span class="label">Turn off filling in of layers</span><br />
+			Whenever this flag is activated layers are not colorized.</li>
+		<li>
+			<span class="label">Land color palette</span><br />
+			Specifies a color for first layer which resembles a rock instead of water.</li>
+		<li>
+			<span class="label">File containing a custom palette</span><br />
+			Specifies a coustom palette to colorize layers</li>
+		<li>
+			<span class="label">Display all rays in black</span></li>
+		<li>
+			<span class="label">Suppress rays</span></li>
+		<li class="group">
+			<span class="grouplabel">Export velocity model</span>
+			<ul>
+				<li>
+					<span class="label">File to export the velocity model</span><br />
+					Provide a file to export the velocity model. The velocity model will be save as a binary matrix, sampled in z and then in x, according to the number of samples specified below.</li>
+				<li>
+					<span class="label">Number samples in x</span></li>
+				<li>
+					<span class="label">Number samples in z</span></li>
+				<li>
+					<span class="label">File to read top and bottom velocities for each layer</span><br />
+					This file must contain one line per layer in the model. Each line has two values: the velocity at the top of the layer and the velocity at the bottom of the layer. This file is automatically generated by <strong>S88 Modeling</strong>, and is save in the same directory lu1.dat files are, with the name <em>vel.rays2</em>.</li>
+			</ul>
+		</li>
+	</ul>
+<!-- end lst --></div>
+<!-- end par --><p>
+	<a id="notes" name="notes"></a></p>
+<h2>
+	Notes</h2>
+<p>
+	The Grace project is sent to the standard output. Save it into a file with <i>.agr</i> extension, in order Grace recognizes it.</p>
+<p>
+	<a id="credits" name="credits"></a></p>
+<h2>
+	Credits</h2>
+<p>
+	This program was written by Ricardo Biloti, Department of Applied Mathematics &ndash; University of Campinas, as a project to turn Seis88 <i>user frendly</i>.&nbsp;See <strong>S88 Modeling</strong> also.</p>
+<!-- begin cpy --><!-- end cpy --><!-- end cnt -->
         </div>
 
         <div class="navigation">
@@ -250,7 +143,11 @@
             <li><a href="#par">Parameters</a></li>
 	    <!-- end mpr -->
 
+            <li><a href="#details">Description</a></li>
+
             <li><a href="#notes">Notes</a></li>
+
+            <li><a href="#ref">References</a></li>
 
             <li><a href="#credits">Credits</a></li>
           </ul>
@@ -260,7 +157,8 @@
       </div>
 
       <div class="footer">
-        <span class="left">G&ecirc;BR 0.9.14 (<!-- begin dtd -->0.3.1<!-- end dtd -->) | rays2 0.1.0</span>
+        <span class="left">G&ecirc;BR 0.20.1 (<!-- begin dtd -->0.4.0<!-- end dtd -->) |
+		<!-- begin ver -->1.1.0<!-- end ver --></span>
 
         <div class="clearer"></div>
       </div>
@@ -287,7 +185,7 @@
           <property required="yes">
             <keyword>--xmax=</keyword>
             <value/>
-            <default/>
+            <default>6</default>
           </property>
         </float>
       </parameter>
@@ -331,7 +229,7 @@
           </property>
         </flag>
       </parameter>
-      <parameter><label>File containing a custom palette</label><file directory="no" filter-name="" filter-pattern=""><property required="no"><keyword>--palette=</keyword><value></value><default/></property></file></parameter><parameter>
+      <parameter><label>File containing a custom palette</label><file directory="no" filter-name="" filter-pattern=""><property required="no"><keyword>--palette=</keyword><value/><default/></property></file></parameter><parameter>
         <label>Display all rays in black</label>
         <flag>
           <property required="no">
@@ -351,6 +249,6 @@
           </property>
         </flag>
       </parameter>
-    </parameters>
+    <parameter><label>Export velocity model</label><group instanciable="no" expand="no"><template-instance><parameters default-selection="0"><parameter><label>File to export the velocity model</label><file directory="no" filter-name="" filter-pattern=""><property required="no"><keyword>--vfile=</keyword><value/><default/></property></file></parameter><parameter><label>Number samples in x</label><int><property required="no"><keyword>--nx=</keyword><value/><default>101</default></property></int></parameter><parameter><label>Number samples in z</label><int><property required="no"><keyword>--nz=</keyword><value/><default>101</default></property></int></parameter><parameter><label>File to read top and bottom velocities for each layer</label><file directory="no" filter-name="" filter-pattern=""><property required="no"><keyword>--layervel=</keyword><value/><default>&lt;TMP&gt;/vel.rays2</default></property></file></parameter></parameters></template-instance><parameters default-selection="0"><parameter><label>File to export the velocity model</label><reference><property required="no"><keyword/><value/><default/></property></reference></parameter><parameter><label>Number samples in x</label><reference><property required="no"><keyword/><value/><default>101</default></property></reference></parameter><parameter><label>Number samples in z</label><reference><property required="no"><keyword/><value/><default>101</default></property></reference></parameter><parameter><label>File to read top and bottom velocities for each layer</label><reference><property required="no"><keyword/><value/><default>&lt;TMP&gt;/vel.rays2</default></property></reference></parameter></parameters></group></parameter></parameters>
   </program>
 </flow>
