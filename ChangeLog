@@ -1,3 +1,29 @@
+2013-05-13  Fabrício Matheus Gonçalvez  <fmatheus@gebrproject.com>
+
+	* Recomends grace to easy use.
+	* Uses gebr-install-su.sh to install su before build tosco.
+
+2013-04-19  Ricardo Biloti  <biloti@gebrproject.com>
+
+	* Minor update in AUTHOR and README
+	* Export velocity model
+	* Save velocities in vel.rays2
+
+2013-04-16  Ricardo Biloti  <biloti@gebrproject.com>
+
+	* Fix default values in menu for seis and syntpl path
+	* Menu update
+	* Initial ghost at source support
+
+2012-12-17  Fabrício Matheus Gonçalvez  <fmatheus@gebrproject.com>
+
+	* Moved menu's index creation from makefile to package deploy.
+
+2012-12-14  Fabrício Matheus Gonçalvez  <fmatheus@gebrproject.com>
+
+	* Added tag 0.3.1 for changeset 49047540d9b2
+	* Release 0.3.1: Menu's index
+
 2012-12-14  Fabrício Matheus Gonçalvez  <fmatheus@gebrproject.com>
 
 	* Create Menu's index.
