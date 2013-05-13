@@ -28,3 +28,4 @@ SUBDIRS = \
 	  suxmute          \
           velan-cmp
 
+EXTRA_DIST=gebr-su-install.sh
