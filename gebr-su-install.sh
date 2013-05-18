@@ -166,8 +166,8 @@ fi
 
 cd "$DOWNLOAD_PATH"
 if [ -e "$SU_ARCHIVE" ]; then 
-    SHA256SUM=`sha256sum "$SU_ARCHIVE"`
-    if [ $SHA256SUM -eq $SU_SHA256SUM ]; then
+    SHA256SUM=`sha256sum "$SU_ARCHIVE" | cut -f 1 -d\ `
+    if [ "$SHA256SUM" = "$SU_SHA256SUM" ]; then
 	echo "SU $SU_VERSION archive.............. Found"
     else
 	echo "SU $SU_VERSION archive.............. Corrupted"
