@@ -1,4 +1,4 @@
-tosco (0.4.0) precise; urgency=low
+tosco (0.4.0) raring; urgency=low
 
   * S88 Modeling supports the generation of source ghosts, and exports the layer velocities to be read by Rays.
   * Rays can export the velocity model on a regular grid.

@@ -65,7 +65,7 @@ SU_CFLAGS="${SU_CFLAGS} -D_LARGEFILE64_SOURCE"
 SU_CFLAGS="${SU_CFLAGS} -DGNU_SOURCE"
 SU_CFLAGS="${SU_CFLAGS} -D_POSIX_SOURCE"
 
-LIBS="  $LIBS   $SU_LIBS"
+LIBS="  $SU_LIBS   $LIBS"
 CFLAGS="$CFLAGS $SU_CFLAGS"
 
 dnl-----------------------------------------------------------------------
