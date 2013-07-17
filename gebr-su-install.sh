@@ -66,6 +66,35 @@ function check_pkg {
     fi
 }
 
+function install_deb_required_packages {
+	echo "Testing for required packages"
+
+	PKGS_TO_INSTALL=""
+
+	echo -n "gcc........................ "
+	check_pkg gcc
+
+	echo -n "gfortran................... "
+	check_pkg gfortran
+
+	echo -n "stow....................... "
+	check_pkg stow
+
+	echo -n "lesstif.................... "
+	check_pkg lesstif2-dev
+
+	echo -n "GLUT....................... "
+	check_pkg freeglut3-dev
+
+	echo -n "Xmu........................ "
+	check_pkg libxmu-dev
+
+	if [ "$PKGS_TO_INSTALL"'x' != 'x' ]; then
+    	echo "Installing missing packages"
+    	apt-get -y install $PKGS_TO_INSTALL
+	fi
+}
+
 # Default values
 #------------------------------------------------------------------------------#
 
@@ -180,32 +209,8 @@ if [ ! -e "$SU_ARCHIVE" ]; then
     wget "$CWP_SRC_URL/$SU_ARCHIVE"
 fi    
 
-echo "Testing for required packages"
-
-PKGS_TO_INSTALL=""
-
-echo -n "gcc........................ "
-check_pkg gcc
-
-echo -n "gfortran................... "
-check_pkg gfortran
-
-echo -n "stow....................... "
-check_pkg stow
-
-echo -n "lesstif.................... "
-check_pkg lesstif2-dev
-
-echo -n "GLUT....................... "
-check_pkg freeglut3-dev
-
-echo -n "Xmu........................ "
-check_pkg libxmu-dev
-
-if [ "$PKGS_TO_INSTALL"'x' != 'x' ]; then
-    echo "Installing missing packages"
-    apt-get -y install $PKGS_TO_INSTALL
-fi
+# Test if distro is Debian based then install required packages
+dpkg --version >/dev/null 2>&1 && install_deb_required_packages
 
 cd "$CWPROOT"
 echo "Extracting SU source files..."

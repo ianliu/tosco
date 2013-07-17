@@ -31,7 +31,7 @@ This project is associated to GêBR project www.gebrproject.com.
 %setup -q
 
 %build
-fakeroot ./gebr-su-install.sh -o /var/tmp/gebr-tmp-dir/cache
+./gebr-su-install.sh -o /var/tmp/gebr-tmp-dir/cache
 %configure CWPROOT=`./gebr-su-install.sh -i`
 make
 
