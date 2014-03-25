@@ -32,21 +32,22 @@ const char *gengetopt_args_info_usage = "Usage: rays2 [OPTIONS]...";
 const char *gengetopt_args_info_description = "";
 
 const char *gengetopt_args_info_help[] = {
-  "  -h, --help             Print help and exit",
-  "  -V, --version          Print version and exit",
-  "      --xmin=FLOAT       x left box coordinate",
-  "      --zmin=FLOAT       z top box coordinate",
-  "      --xmax=FLOAT       x right box coordinate",
-  "      --zmax=FLOAT       z top box coordinate",
-  "      --nx=INT           number samples in x (for exporting the velocity model) \n                            (default=`101')",
-  "      --nz=INT           number samples in z (for exporting the velocity model) \n                            (default=`101')",
-  "  -v, --vfile=STRING     file to export the velocity model",
-  "      --layervel=STRING  file with velocities in top and bottom of each layer  \n                           (default=`vel.rays2')",
-  "      --nofill           turn off filling in of layers  (default=off)",
-  "  -p, --palette=STRING   custom palette",
-  "  -l, --land             land color profile  (default=off)",
-  "  -b, --blackrays        rays in black  (default=off)",
-  "      --norays           do not generate rays  (default=off)",
+  "  -h, --help               Print help and exit",
+  "  -V, --version            Print version and exit",
+  "      --xmin=FLOAT         x left box coordinate",
+  "      --zmin=FLOAT         z top box coordinate",
+  "      --xmax=FLOAT         x right box coordinate",
+  "      --zmax=FLOAT         z top box coordinate",
+  "      --nx=INT             number samples in x (for exporting the velocity \n                             model)  (default=`101')",
+  "      --nz=INT             number samples in z (for exporting the velocity \n                             model)  (default=`101')",
+  "  -v, --vfile=STRING       file to export the velocity model",
+  "      --layervel=STRING    input file with velocities at top and bottom of each \n                             layer  (default=`vel.rays2')",
+  "  -i, --interfaces=STRING  file to export the interfaces",
+  "      --nofill             turn off filling in of layers  (default=off)",
+  "  -p, --palette=STRING     custom palette",
+  "  -l, --land               land color profile  (default=off)",
+  "  -b, --blackrays          rays in black  (default=off)",
+  "      --norays             do not generate rays  (default=off)",
     0
 };
 
@@ -85,6 +86,7 @@ void clear_given (struct gengetopt_args_info *args_info)
   args_info->nz_given = 0 ;
   args_info->vfile_given = 0 ;
   args_info->layervel_given = 0 ;
+  args_info->interfaces_given = 0 ;
   args_info->nofill_given = 0 ;
   args_info->palette_given = 0 ;
   args_info->land_given = 0 ;
@@ -108,6 +110,8 @@ void clear_args (struct gengetopt_args_info *args_info)
   args_info->vfile_orig = NULL;
   args_info->layervel_arg = gengetopt_strdup ("vel.rays2");
   args_info->layervel_orig = NULL;
+  args_info->interfaces_arg = NULL;
+  args_info->interfaces_orig = NULL;
   args_info->nofill_flag = 0;
   args_info->palette_arg = NULL;
   args_info->palette_orig = NULL;
@@ -132,11 +136,12 @@ void init_args_info(struct gengetopt_args_info *args_info)
   args_info->nz_help = gengetopt_args_info_help[7] ;
   args_info->vfile_help = gengetopt_args_info_help[8] ;
   args_info->layervel_help = gengetopt_args_info_help[9] ;
-  args_info->nofill_help = gengetopt_args_info_help[10] ;
-  args_info->palette_help = gengetopt_args_info_help[11] ;
-  args_info->land_help = gengetopt_args_info_help[12] ;
-  args_info->blackrays_help = gengetopt_args_info_help[13] ;
-  args_info->norays_help = gengetopt_args_info_help[14] ;
+  args_info->interfaces_help = gengetopt_args_info_help[10] ;
+  args_info->nofill_help = gengetopt_args_info_help[11] ;
+  args_info->palette_help = gengetopt_args_info_help[12] ;
+  args_info->land_help = gengetopt_args_info_help[13] ;
+  args_info->blackrays_help = gengetopt_args_info_help[14] ;
+  args_info->norays_help = gengetopt_args_info_help[15] ;
   
 }
 
@@ -227,6 +232,8 @@ cmdline_parser_release (struct gengetopt_args_info *args_info)
   free_string_field (&(args_info->vfile_orig));
   free_string_field (&(args_info->layervel_arg));
   free_string_field (&(args_info->layervel_orig));
+  free_string_field (&(args_info->interfaces_arg));
+  free_string_field (&(args_info->interfaces_orig));
   free_string_field (&(args_info->palette_arg));
   free_string_field (&(args_info->palette_orig));
   
@@ -279,6 +286,8 @@ cmdline_parser_dump(FILE *outfile, struct gengetopt_args_info *args_info)
     write_into_file(outfile, "vfile", args_info->vfile_orig, 0);
   if (args_info->layervel_given)
     write_into_file(outfile, "layervel", args_info->layervel_orig, 0);
+  if (args_info->interfaces_given)
+    write_into_file(outfile, "interfaces", args_info->interfaces_orig, 0);
   if (args_info->nofill_given)
     write_into_file(outfile, "nofill", 0, 0 );
   if (args_info->palette_given)
@@ -585,6 +594,7 @@ cmdline_parser_internal (
         { "nz",	1, NULL, 0 },
         { "vfile",	1, NULL, 'v' },
         { "layervel",	1, NULL, 0 },
+        { "interfaces",	1, NULL, 'i' },
         { "nofill",	0, NULL, 0 },
         { "palette",	1, NULL, 'p' },
         { "land",	0, NULL, 'l' },
@@ -593,7 +603,7 @@ cmdline_parser_internal (
         { 0,  0, 0, 0 }
       };
 
-      c = getopt_long (argc, argv, "hVv:p:lb", long_options, &option_index);
+      c = getopt_long (argc, argv, "hVv:i:p:lb", long_options, &option_index);
 
       if (c == -1) break;	/* Exit from `while (1)' loop.  */
 
@@ -617,6 +627,18 @@ cmdline_parser_internal (
               &(local_args_info.vfile_given), optarg, 0, 0, ARG_STRING,
               check_ambiguity, override, 0, 0,
               "vfile", 'v',
+              additional_error))
+            goto failure;
+        
+          break;
+        case 'i':	/* file to export the interfaces.  */
+        
+        
+          if (update_arg( (void *)&(args_info->interfaces_arg), 
+               &(args_info->interfaces_orig), &(args_info->interfaces_given),
+              &(local_args_info.interfaces_given), optarg, 0, 0, ARG_STRING,
+              check_ambiguity, override, 0, 0,
+              "interfaces", 'i',
               additional_error))
             goto failure;
         
@@ -739,7 +761,7 @@ cmdline_parser_internal (
               goto failure;
           
           }
-          /* file with velocities in top and bottom of each layer.  */
+          /* input file with velocities at top and bottom of each layer.  */
           else if (strcmp (long_options[option_index].name, "layervel") == 0)
           {
           

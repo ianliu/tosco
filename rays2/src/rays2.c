@@ -76,6 +76,7 @@ void strip (float         xmin,
 size_t line = 0;
 unsigned int nx;
 unsigned int nz;
+unsigned int export_surface = 0;
 
 /* ---------------------------------------------------- */
 int main(int argc, char ** argv){
@@ -335,6 +336,31 @@ int main(int argc, char ** argv){
                 }
         }
 
+        /* Export the interfaces */
+        if (arg.interfaces_given){
+          FILE *fp;
+          int ii;
+
+          fp = fopen(arg.interfaces_arg, "w");
+          
+          for (ii=0; ii <nint; ii++){
+            int ix;
+            float x;
+
+            for (ix = 0; ix < nx; ix++){
+
+              x = arg.xmin_arg + ix * (arg.xmax_arg - arg.xmin_arg) / (nx-1);
+
+              fprintf(fp, "% .4f %.4f\n", x, 
+                      seval((int*) &(interf[ii].n), &x,
+                            interf[ii].x, interf[ii].z,
+                            interf[ii].b, interf[ii].c, interf[ii].d));
+            }
+            fprintf(fp, "\n");
+          }
+          fclose(fp);
+        }
+
         /* Export the velocity model */
         if (arg.vfile_given){
           float *v;
@@ -344,6 +370,11 @@ int main(int argc, char ** argv){
           int ilayer;
 
           fp=fopen(arg.layervel_arg, "r");
+          if (fp == NULL){
+            fprintf(stderr, "Unable to read layer's velocity file %s\n. Aborting.\n", arg.layervel_arg);
+            return EXIT_FAILURE;
+          }
+            
           for (ilayer=0; ilayer <nint; ilayer++){
             fscanf(fp, "%f %f\n", &v1[ilayer], &v2[ilayer]);
           }

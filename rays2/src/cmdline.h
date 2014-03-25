@@ -31,7 +31,7 @@ extern "C" {
 
 #ifndef CMDLINE_PARSER_VERSION
 /** @brief the program version */
-#define CMDLINE_PARSER_VERSION "1.1.0"
+#define CMDLINE_PARSER_VERSION "1.2.0"
 #endif
 
 /** @brief Where the command line options are stored */
@@ -60,9 +60,12 @@ struct gengetopt_args_info
   char * vfile_arg;	/**< @brief file to export the velocity model.  */
   char * vfile_orig;	/**< @brief file to export the velocity model original value given at command line.  */
   const char *vfile_help; /**< @brief file to export the velocity model help description.  */
-  char * layervel_arg;	/**< @brief file with velocities in top and bottom of each layer (default='vel.rays2').  */
-  char * layervel_orig;	/**< @brief file with velocities in top and bottom of each layer original value given at command line.  */
-  const char *layervel_help; /**< @brief file with velocities in top and bottom of each layer help description.  */
+  char * layervel_arg;	/**< @brief input file with velocities at top and bottom of each layer (default='vel.rays2').  */
+  char * layervel_orig;	/**< @brief input file with velocities at top and bottom of each layer original value given at command line.  */
+  const char *layervel_help; /**< @brief input file with velocities at top and bottom of each layer help description.  */
+  char * interfaces_arg;	/**< @brief file to export the interfaces.  */
+  char * interfaces_orig;	/**< @brief file to export the interfaces original value given at command line.  */
+  const char *interfaces_help; /**< @brief file to export the interfaces help description.  */
   int nofill_flag;	/**< @brief turn off filling in of layers (default=off).  */
   const char *nofill_help; /**< @brief turn off filling in of layers help description.  */
   char * palette_arg;	/**< @brief custom palette.  */
@@ -85,6 +88,7 @@ struct gengetopt_args_info
   unsigned int nz_given ;	/**< @brief Whether nz was given.  */
   unsigned int vfile_given ;	/**< @brief Whether vfile was given.  */
   unsigned int layervel_given ;	/**< @brief Whether layervel was given.  */
+  unsigned int interfaces_given ;	/**< @brief Whether interfaces was given.  */
   unsigned int nofill_given ;	/**< @brief Whether nofill was given.  */
   unsigned int palette_given ;	/**< @brief Whether palette was given.  */
   unsigned int land_given ;	/**< @brief Whether land was given.  */
