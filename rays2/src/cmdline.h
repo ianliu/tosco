@@ -51,12 +51,12 @@ struct gengetopt_args_info
   float zmax_arg;	/**< @brief z top box coordinate.  */
   char * zmax_orig;	/**< @brief z top box coordinate original value given at command line.  */
   const char *zmax_help; /**< @brief z top box coordinate help description.  */
-  int nx_arg;	/**< @brief number samples in x (for exporting the velocity model) (default='101').  */
-  char * nx_orig;	/**< @brief number samples in x (for exporting the velocity model) original value given at command line.  */
-  const char *nx_help; /**< @brief number samples in x (for exporting the velocity model) help description.  */
-  int nz_arg;	/**< @brief number samples in z (for exporting the velocity model) (default='101').  */
-  char * nz_orig;	/**< @brief number samples in z (for exporting the velocity model) original value given at command line.  */
-  const char *nz_help; /**< @brief number samples in z (for exporting the velocity model) help description.  */
+  int nx_arg;	/**< @brief number samples in x (default='101').  */
+  char * nx_orig;	/**< @brief number samples in x original value given at command line.  */
+  const char *nx_help; /**< @brief number samples in x help description.  */
+  int nz_arg;	/**< @brief number samples in z (default='101').  */
+  char * nz_orig;	/**< @brief number samples in z original value given at command line.  */
+  const char *nz_help; /**< @brief number samples in z help description.  */
   char * vfile_arg;	/**< @brief file to export the velocity model.  */
   char * vfile_orig;	/**< @brief file to export the velocity model original value given at command line.  */
   const char *vfile_help; /**< @brief file to export the velocity model help description.  */
