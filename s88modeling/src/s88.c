@@ -22,6 +22,7 @@
 
 #include "s88.h"
 #include "lu.h"
+#include "libagr.h"
 
 extern char AGR_title[100];
 
@@ -75,7 +76,7 @@ void s88_run(struct s88 *p)
         }
 
         /*-------------------------------------------------------------------------*/
-        /* Warm-up phase */
+        /* Warming-up phase */
         
         /* place source at surface */
         p->zsour = 0;
@@ -83,7 +84,7 @@ void s88_run(struct s88 *p)
         p->rmin  = p->xsour + p->rxmin;
 
         if (p->verbose)
-          fprintf (stderr, "Warm-up modeling\n");
+          fprintf (stderr, "Warming up\n");
         if (p->debug){
           fprintf (stderr, "\nSeis config:\n");
           write_s88_config (stderr, p);
@@ -125,7 +126,7 @@ void s88_run(struct s88 *p)
           p->rmin  = p->xsour + p->rxmin;
                  
           if (p->verbose)
-            fprintf (stderr, "Modeling for source at %f: ", p->xsour);
+                  fprintf (stderr, "Modeling for source at %f: ", p->xsour);
           if (p->debug){
             fprintf (stderr, "\nSeis config:\n");
             write_s88_config (stderr, p);
@@ -194,6 +195,8 @@ void s88_run(struct s88 *p)
                 g_string_free (cmd1, TRUE);
                 g_string_free (cmd2, TRUE);
         }
+
+        lu_free(&lu);
 }
 
 

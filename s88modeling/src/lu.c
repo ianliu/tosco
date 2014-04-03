@@ -181,9 +181,11 @@ int lu_parse(gchar *lufilename, lu_t *lu){
                         return EXIT_FAILURE;
                 }
                 namp = abs(namp);
-     
+
+                /*
                 fprintf(stderr,"%3i rays corresponding to wave code %2i (%5i)\n",
                         lu->ns[lu->nwavecode], lu->nwavecode+1, lu->nrays);
+                */
 
                 /** BLOCK 8
 
@@ -215,16 +217,19 @@ int lu_parse(gchar *lufilename, lu_t *lu){
                 
                 if (status == EOF)
                         icont = 0;
-
+                
                 lu->nwavecode++;
         }
         fclose(lufp);
+
+        /* Decrment by one to fix an addtional artificial code wave */
+        lu->nwavecode--;
 
         return EXIT_SUCCESS;
 }
 
 
-void lufree(lu_t *lu){
+void lu_free(lu_t *lu){
         
         int i;
         
@@ -235,8 +240,6 @@ void lufree(lu_t *lu){
         for (i=0; i<lu->nint; i++){
                 interface_free(&(lu->interf[i]));
         }
-        
-        free(lu);
 }
 
 /*-----------------------------------------------------------------------------*/

@@ -71,7 +71,7 @@ typedef struct{
 
 
 int lu_parse(gchar *lufilename, lu_t *lu);
-void lufree(lu_t *lu);
+void lu_free(lu_t *lu);
 int agr_write(gchar *agrfilename, lu_t *lu, struct s88 *p);
 
 #endif
