@@ -121,9 +121,13 @@ void s88_run (struct s88 *p)
 		}
 
 		if (p->raydiag) {
+                        gboolean norays = p->norays;
+                        p->norays = TRUE;
 			InitAGR ();
 			sprintf (AGR_title, "Model");
 			agr_write ("model.agr", &lu, p);
+
+                        p->norays = norays;
 		}
 	}
 
