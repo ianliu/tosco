@@ -304,6 +304,8 @@ int agr_write (gchar * agrfilename, lu_t * lu, struct s88 *p)
 
         fclose (agrfp);
 	FreeAGRPalette ();
+
+        return EXIT_SUCCESS;
 }
 
 int export_interf(lu_t * lu, struct s88 *p)
@@ -484,6 +486,29 @@ void interface_dummy_read (FILE * fp, int nn)
 float interf(interface_t * s, float x)
 {
         return seval ((int *) &(s->n), &x, s->x, s->z, s->b, s->c, s->d);
+}
+
+int which_layer(float x, float z, lu_t *lu)
+{
+        int i;
+        int layer;
+        float Z;
+                
+        layer = 0;
+        Z = interf(&(lu->interf[0]), x);
+        if (z <= Z)
+                layer = 1;
+        
+        i = 1;
+        while (i < lu->nint && layer == 0){
+                
+                Z = interf(&(lu->interf[i]), x);
+                if (z < Z)
+                        layer = i;
+                i++;
+        }
+
+        return layer;
 }
 
 

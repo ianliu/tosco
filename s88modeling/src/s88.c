@@ -26,7 +26,7 @@
 
 extern char AGR_title[100];
 
-void write_s88_config (FILE * fp, struct s88 *p);
+void write_s88_config (FILE * fp, struct s88 *p, int sourcelayer);
 void write_synt_config (FILE * fp, struct s88 *p);
 void synt2bin (struct s88 *p);
 
@@ -89,13 +89,13 @@ void s88_run (struct s88 *p)
 		fprintf (stderr, "Warming up\n");
 	if (p->debug) {
 		fprintf (stderr, "\nSeis config:\n");
-		write_s88_config (stderr, p);
+		write_s88_config (stderr, p, 0);
 		fprintf (stderr, "\n");
 	}
 
 	if (!p->dryrun) {
 		fp = fopen (fname1->str, "w");
-		write_s88_config (fp, p);
+		write_s88_config (fp, p, 0);
 		fclose (fp);
 
 		if (system (cmd1->str)) {
@@ -135,6 +135,10 @@ void s88_run (struct s88 *p)
 	/* De facto modeling */
 	p->zsour = p->sz;
 	for (ishot = 0; ishot < p->nshots; ishot++) {
+                int slayer;
+
+                slayer = which_layer(p->xsour, p->zsour, &lu);
+                fprintf( stderr, "tiro na camada %i\n", slayer);
 
 		newname = g_string_new (NULL);
 
@@ -146,13 +150,13 @@ void s88_run (struct s88 *p)
 				 p->xsour);
 		if (p->debug) {
 			fprintf (stderr, "\nSeis config:\n");
-			write_s88_config (stderr, p);
+			write_s88_config (stderr, p, slayer);
 			fprintf (stderr, "\n");
 		}
 
 		if (!p->dryrun) {
 			fp = fopen (fname1->str, "w");
-			write_s88_config (fp, p);
+			write_s88_config (fp, p, slayer);
 			fclose (fp);
 
 			if (!system (cmd1->str)) {
@@ -220,7 +224,7 @@ void s88_run (struct s88 *p)
 }
 
 
-void write_s88_config (FILE * fp, struct s88 *p)
+void write_s88_config (FILE * fp, struct s88 *p, int sourcelayer)
 {
 	gint ii, jj, aux;
 	gdouble vmin, vmax, bmin, bmax, bleft, bright;
