@@ -30,8 +30,8 @@
 #define PWAVE  1
 #define SWAVE -1
 
-#define CONVERTEDWAVE -1
-#define UNCONVERTEDWAVE 1
+#define CONVERTED -1
+#define UNCONVERTED 1
 
 extern char AGR_title[100];
 
@@ -44,7 +44,7 @@ void write_double_vector (FILE * fp, gdouble * vec, gint N, gchar * format,
 void write_int_vector (FILE * fp, gint * vec, gint N, gchar * format,
 		       gint auxin, gint max);
 GString *make_unique_filename (const gchar * template);
-void writecode(FILE *fp, gint updown, gboolean mult, gint inilayer, gint rlayer, gint ps, gint convert);
+void writecode(FILE *fp, gint updown, gint mult, gint inilayer, gint rlayer, gint ps, gint convert);
 
 void s88_run (struct s88 *p)
 {
@@ -99,13 +99,13 @@ void s88_run (struct s88 *p)
 		fprintf (stderr, "Warming up\n");
 	if (p->debug) {
 		fprintf (stderr, "\nSeis config:\n");
-		write_s88_config (stderr, p, 0);
+		write_s88_config (stderr, p, 1);
 		fprintf (stderr, "\n");
 	}
 
 	if (!p->dryrun) {
 		fp = fopen (fname1->str, "w");
-		write_s88_config (fp, p, 0);
+		write_s88_config (fp, p, 1);
 		fclose (fp);
 
 		if (system (cmd1->str)) {
@@ -236,7 +236,7 @@ void s88_run (struct s88 *p)
 
 void write_s88_config (FILE * fp, struct s88 *p, int sourcelayer)
 {
-	gint ii, jj, aux;
+	gint ii, jj, aux, imult;
 	gdouble vmin, vmax, bmin, bmax, bleft, bright;
 
 	bmin = p->z[0][0];
@@ -364,198 +364,44 @@ void write_s88_config (FILE * fp, struct s88 *p, int sourcelayer)
 
 
 	// CARD 13 (Wave codes)
-	// FIX-ME: Se a linha for muito comprida, tem que ser cortada (24I3)
-	if (p->ibp) {
-		gint ii, jj, imult;
+        for (imult = 0; imult <= (gint) p->mltp; imult++) {  /* Multiples */
+                for (ii = 1; ii <= p->nint - 2; ii++) {      /* Each layer */
+                
+                        if (p->ibp){ /* P Primary down unconverted */
+                                writecode(fp, STARTDOWN, imult, sourcelayer, ii, PWAVE, UNCONVERTED);
+                        }
+                        
+                        if (p->ibp == 2){ /* P Primary down converted */
+                                writecode(fp, STARTDOWN, imult, sourcelayer, ii, PWAVE, CONVERTED);     
+                        }
 
-		for (imult = 0; imult <= (gint) p->mltp; imult++) {
-			for (ii = 1; ii <= p->nint - 2; ii++) {
-				fprintf (fp, "%3i%3i", 1,
-					 2 * (imult + 1) * ii);
-				for (jj = 1; jj <= ii; jj++)
-					fprintf (fp, "%3i", jj);
-				for (jj = ii; jj >= 1; jj--)
-					fprintf (fp, "%3i", jj);
-				if (imult) {
-					for (jj = 1; jj <= ii; jj++)
-						fprintf (fp, "%3i", jj);
-					for (jj = ii; jj >= 1; jj--)
-						fprintf (fp, "%3i", jj);
-				}
-				fprintf (fp, "\n");
-			}
-		}
+                        if (p->ibp && p->sghost){ /* P Primary up (source ghost) unconverted */
+                                writecode(fp, STARTUP, imult, sourcelayer, ii, PWAVE, UNCONVERTED);                                
+                        }
+                        
+                        if (p->ibp == 2 && p->sghost){ /* P Primary up (source ghost) converted */
+                                writecode(fp, STARTUP, imult, sourcelayer, ii, PWAVE, CONVERTED);                                
+                        }
 
-		/* Also converted wave ? */
-		if (p->ibp == 2) {
-			for (imult = 0; imult <= (gint) p->mltp; imult++) {
-				for (ii = 1; ii <= p->nint - 2; ii++) {
-					fprintf (fp, "%3i%3i", 1,
-						 2 * (imult + 1) * ii);
-					for (jj = 1; jj <= ii; jj++)
-						fprintf (fp, "%3i", jj);
-					for (jj = ii; jj >= 1; jj--)
-						fprintf (fp, "%3i", -jj);
-					if (imult) {
-						for (jj = 1; jj <= ii;
-						     jj++)
-							fprintf (fp, "%3i",
-								 -jj);
-						for (jj = ii; jj >= 1;
-						     jj--)
-							fprintf (fp, "%3i",
-								 -jj);
-					}
-					fprintf (fp, "\n");
-				}
-			}
-		}
-	}
-	// Ghosts at source?
-	if (p->ibp && p->sghost) {
-		gint ii, jj, imult;
+                        if (p->ibs){ /* S Primary down unconverted */
+                                writecode(fp, STARTDOWN, imult, sourcelayer, ii, SWAVE, UNCONVERTED);
+                        }
+                        
+                        if (p->ibs == 2){ /* S Primary down converted */
+                                writecode(fp, STARTDOWN, imult, sourcelayer, ii, SWAVE, CONVERTED);     
+                        }
 
-		for (imult = 0; imult <= (gint) p->mltp; imult++) {
-			for (ii = 1; ii <= p->nint - 2; ii++) {
-				fprintf (fp, "%3i%3i%3i", -1,
-					 2 * (imult + 1) * ii + 1, 1);
-				for (jj = 1; jj <= ii; jj++)
-					fprintf (fp, "%3i", jj);
-				for (jj = ii; jj >= 1; jj--)
-					fprintf (fp, "%3i", jj);
-				if (imult) {
-					for (jj = 1; jj <= ii; jj++)
-						fprintf (fp, "%3i", jj);
-					for (jj = ii; jj >= 1; jj--)
-						fprintf (fp, "%3i", jj);
-				}
-				fprintf (fp, "\n");
-			}
-		}
-
-		/* Also converted wave ? */
-		if (p->ibp == 2) {
-			for (imult = 0; imult <= (gint) p->mltp; imult++) {
-				for (ii = 1; ii <= p->nint - 2; ii++) {
-					fprintf (fp, "%3i%3i%3i", -1,
-						 2 * (imult + 1) * ii + 1,
-						 1);
-					for (jj = 1; jj <= ii; jj++)
-						fprintf (fp, "%3i", jj);
-					for (jj = ii; jj >= 1; jj--)
-						fprintf (fp, "%3i", -jj);
-					if (imult) {
-						for (jj = 1; jj <= ii;
-						     jj++)
-							fprintf (fp, "%3i",
-								 -jj);
-						for (jj = ii; jj >= 1;
-						     jj--)
-							fprintf (fp, "%3i",
-								 -jj);
-					}
-					fprintf (fp, "\n");
-				}
-			}
-		}
-	}
-
-	if (p->ibs) {
-		gint ii, jj, imult;;
-
-		for (imult = 0; imult <= (gint) p->mltp; imult++) {
-			for (ii = 1; ii <= p->nint - 2; ii++) {
-				fprintf (fp, "%3i%3i", 1,
-					 2 * (imult + 1) * ii);
-				for (jj = 1; jj <= ii; jj++)
-					fprintf (fp, "%3i", -jj);
-				for (jj = ii; jj >= 1; jj--)
-					fprintf (fp, "%3i", -jj);
-				if (imult) {
-					for (jj = 1; jj <= ii; jj++)
-						fprintf (fp, "%3i", -jj);
-					for (jj = ii; jj >= 1; jj--)
-						fprintf (fp, "%3i", -jj);
-				}
-				fprintf (fp, "\n");
-			}
-		}
-
-		/* Also converted wave ? */
-		if (p->ibs == 2) {
-			for (imult = 0; imult <= (gint) p->mltp; imult++) {
-				for (ii = 1; ii <= p->nint - 2; ii++) {
-					fprintf (fp, "%3i%3i", 1,
-						 2 * (imult + 1) * ii);
-					for (jj = 1; jj <= ii; jj++)
-						fprintf (fp, "%3i", -jj);
-					for (jj = ii; jj >= 1; jj--)
-						fprintf (fp, "%3i", jj);
-					if (imult) {
-						for (jj = 1; jj <= ii;
-						     jj++)
-							fprintf (fp, "%3i",
-								 jj);
-						for (jj = ii; jj >= 1;
-						     jj--)
-							fprintf (fp, "%3i",
-								 jj);
-					}
-					fprintf (fp, "\n");
-				}
-			}
-		}
-	}
-	// Ghosts at source?
-	if (p->ibs && p->sghost) {
-		gint ii, jj, imult;;
-
-		for (imult = 0; imult <= (gint) p->mltp; imult++) {
-			for (ii = 1; ii <= p->nint - 2; ii++) {
-				fprintf (fp, "%3i%3i%3i", -1,
-					 2 * (imult + 1) * ii, 1);
-				for (jj = 1; jj <= ii; jj++)
-					fprintf (fp, "%3i", -jj);
-				for (jj = ii; jj >= 1; jj--)
-					fprintf (fp, "%3i", -jj);
-				if (imult) {
-					for (jj = 1; jj <= ii; jj++)
-						fprintf (fp, "%3i", -jj);
-					for (jj = ii; jj >= 1; jj--)
-						fprintf (fp, "%3i", -jj);
-				}
-				fprintf (fp, "\n");
-			}
-		}
-
-		/* Also converted wave ? */
-		if (p->ibs == 2) {
-			for (imult = 0; imult <= (gint) p->mltp; imult++) {
-				for (ii = 1; ii <= p->nint - 2; ii++) {
-					fprintf (fp, "%3i%3i%3i", -1,
-						 2 * (imult + 1) * ii, 1);
-					for (jj = 1; jj <= ii; jj++)
-						fprintf (fp, "%3i", -jj);
-					for (jj = ii; jj >= 1; jj--)
-						fprintf (fp, "%3i", jj);
-					if (imult) {
-						for (jj = 1; jj <= ii;
-						     jj++)
-							fprintf (fp, "%3i",
-								 jj);
-						for (jj = ii; jj >= 1;
-						     jj--)
-							fprintf (fp, "%3i",
-								 jj);
-					}
-					fprintf (fp, "\n");
-				}
-			}
-		}
-	}
-
+                        if (p->ibs && p->sghost){ /* S Primary up (source ghost) unconverted */
+                                writecode(fp, STARTUP, imult, sourcelayer, ii, SWAVE, UNCONVERTED);                                
+                        }
+                        
+                        if (p->ibs == 2 && p->sghost){ /* S Primary up (source ghost) converted */
+                                writecode(fp, STARTUP, imult, sourcelayer, ii, SWAVE, CONVERTED);                                
+                        }
+                }                
+        }
+       
 	fprintf (fp, "\n");
-
 
 	// CARD 9
 	fprintf (fp, "%3i%3i%3i%3i%3i", 0, p->mep, 0, p->mdim, p->method);
@@ -734,7 +580,7 @@ void synt2bin (struct s88 *p)
 
 }
 
-void writecode(FILE *fp, gint updown, gboolean mult, gint inilayer, gint rlayer, gint ps, gint convert)
+void writecode(FILE *fp, gint updown, gint mult, gint inilayer, gint rlayer, gint ps, gint convert)
 {
 
         int ii;
@@ -744,7 +590,7 @@ void writecode(FILE *fp, gint updown, gboolean mult, gint inilayer, gint rlayer,
         int factor;
 
         factor = ps;
-
+        
         /* Count segments up to reflector */
         if (updown == STARTDOWN){
                 segments = rlayer - inilayer + 1;
@@ -754,11 +600,11 @@ void writecode(FILE *fp, gint updown, gboolean mult, gint inilayer, gint rlayer,
         }
 
         /* All way up */
-        segments =+ rlayer;
+        segments += rlayer;
 
         /* If is multiple */
         if (mult)
-                segments =+ 2*rlayer;
+                segments += 2*rlayer;
 
         code = (int *) malloc (sizeof(int) * segments);
         
