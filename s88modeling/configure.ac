@@ -19,7 +19,7 @@ dnl Process this file with autoconf to produce a configure script.
 AC_INIT(src/s88modeling.c)
 
 dnl Every other copy of the package version number gets its value from here
-AM_INIT_AUTOMAKE(s88modeling,0.3.0)
+AM_INIT_AUTOMAKE(s88modeling,1.0.0)
 
 AC_SUBST(VERSION)
 
@@ -34,6 +34,7 @@ AC_PROG_CC
 
 dnl Checks for header files.
 AC_HEADER_STDC
+AC_CONFIG_HEADERS([src/config.h])
 
 AC_HEADER_MAJOR
 AC_FUNC_ALLOCA

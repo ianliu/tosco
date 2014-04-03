@@ -99,7 +99,6 @@ void s88_run(struct s88 *p)
           
           g_rename("lu1.dat", "model.dat");
           lu_parse("model.dat", &lu);
-          fprintf(stderr, "DEBUG: nwavecode = %i\n", lu.nwavecode);
           agr_write("model.agr", &lu, p);
         }
           

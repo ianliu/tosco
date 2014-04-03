@@ -220,7 +220,6 @@ int lu_parse(gchar *lufilename, lu_t *lu){
         }
         fclose(lufp);
 
-        fprintf(stderr, "DEBUG: nwavecode = %i\n", lu->nwavecode);
         return EXIT_SUCCESS;
 }
 
@@ -254,8 +253,6 @@ int agr_write(gchar *agrfilename, lu_t *lu, struct s88 *p){
         /*--------------------------------------------------------------*
          *                Writing the Gace Project File
          *--------------------------------------------------------------*/
-        fprintf(stderr, "DEBUG: nwavecode = %i\n", lu->nwavecode);
-   
         agrfp = fopen(agrfilename, "w");
         if (agrfp == NULL){
                 fprintf(stderr, "Unable to open %s for writing\n", agrfilename);

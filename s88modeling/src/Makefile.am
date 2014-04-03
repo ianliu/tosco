@@ -25,4 +25,5 @@ s88modeling_SOURCES=s88modeling.c \
 		    lu.c          \
 		    lu.h          \
 		    spline.c      \
-		    spline.h
+		    spline.h      \
+		    config.h

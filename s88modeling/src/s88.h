@@ -101,6 +101,7 @@ struct s88 {
         gboolean           verbose;
         gboolean           debug;
         gboolean           dryrun;
+        gboolean           version;
 
         /* Derived fields */
         gfloat             xmin;
