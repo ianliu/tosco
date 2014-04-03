@@ -151,7 +151,7 @@ struct s88* parse_command_line(int argc, char** argv)
         };
 
         static GOptionEntry entries_main[] = {
-                { "keeprays", 0, 0, G_OPTION_ARG_NONE,  &p.keeprays,"Preserve ray information", NULL },
+                { "showrays", 0, 0, G_OPTION_ARG_NONE,  &p.keeprays,"Preserve ray information", NULL },
                 { "workdir",0,0, G_OPTION_ARG_FILENAME, &p.workdir, "Working directory", "/tmp" },
                 { "verbose", 0,0, G_OPTION_ARG_NONE,    &p.verbose, "Verbose output", NULL },
                 { "debug",   'd',0, G_OPTION_ARG_NONE,  &p.debug,   "Debug output", NULL },
