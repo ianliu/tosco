@@ -44,7 +44,7 @@ void write_double_vector (FILE * fp, gdouble * vec, gint N, gchar * format,
 void write_int_vector (FILE * fp, gint * vec, gint N, gchar * format,
 		       gint auxin, gint max);
 GString *make_unique_filename (const gchar * template);
-void writecode(FILE *fp, gint updown, gint mult, gint inilayer, gint rlayer, gint ps, gint convert);
+void writecode(FILE *fp, gint updown, gint mult, gint srclayer, gint rlayer, gint ps, gint convert);
 
 void s88_run (struct s88 *p)
 {
@@ -590,7 +590,7 @@ void synt2bin (struct s88 *p)
 
 }
 
-void writecode(FILE *fp, gint updown, gint mult, gint inilayer, gint rlayer, gint ps, gint convert)
+void writecode(FILE *fp, gint updown, gint mult, gint srclayer, gint rlayer, gint ps, gint convert)
 {
 
         int ii;
@@ -603,10 +603,10 @@ void writecode(FILE *fp, gint updown, gint mult, gint inilayer, gint rlayer, gin
         
         /* Count segments up to reflector */
         if (updown == STARTDOWN){
-                segments = rlayer - inilayer + 1;
+                segments = rlayer - srclayer + 1;
         }
         else {
-                segments = inilayer + rlayer;
+                segments = srclayer + rlayer;
         }
 
         /* All way up */
@@ -622,11 +622,11 @@ void writecode(FILE *fp, gint updown, gint mult, gint inilayer, gint rlayer, gin
         count = 0;
         if (updown == STARTDOWN){
                 
-                for (ii=inilayer; ii<=rlayer; ii++)
+                for (ii=srclayer; ii<=rlayer; ii++)
                         code[count++] = factor * ii;
         }
         else {
-                for (ii=inilayer; ii>=1; ii--)
+                for (ii=srclayer; ii>=1; ii--)
                         code[count++] = factor * ii;
                 for (ii=1; ii<=rlayer; ii++)
                         code[count++] = factor * ii;
