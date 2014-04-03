@@ -1,5 +1,6 @@
-/*  S88modeling - Seismic modeler by rays theory
- *  Copyright (C) 2009-2013 Ricardo Biloti <biloti@ime.unicamp.br>
+/*  S99modeling - Seismic modeling tool by ray theory
+ *                with integrated ray diagram generation
+ *  Copyright (C) 2014 Ricardo Biloti <biloti@ime.unicamp.br>
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,6 +24,16 @@
 
 #include "s88.h"
 #include "parser.h"
+
+
+#ifndef max
+#define max(x,y)         ( ((x) < (y)) ? (y) : (x) )
+#endif
+
+#ifndef min
+#define min(x,y)         ( ((x) > (y)) ? (y) : (x) )
+#endif
+
 
 #define check_required(xx,yy)       if (xx == NULL){fprintf(stderr, "%s required.\n", yy); return EXIT_FAILURE;}
 #define convert_double(aa,bb,nn,cc) { check_required(aa,cc);            \
@@ -124,8 +135,21 @@ struct s88* parse_command_line(int argc, char** argv)
                 { NULL }
         };
 
+        static GOptionEntry entries_export[] = { 
+                { "interf",  0, 0, G_OPTION_ARG_FILENAME, &p.interf,  "File to save sampled interfaces", NULL },
+                { "velocity",0, 0, G_OPTION_ARG_FILENAME, &p.vel,     "File to save sampled velocity model", NULL },
+                { "raydiag", 0, 0, G_OPTION_ARG_NONE,     &p.raydiag, "Generate ray diagrams for each shot", NULL},
+                { "nx",      0, 0, G_OPTION_ARG_INT,      &p.nx,      "Number of samples in x", "101"},
+                { "nz",      0, 0, G_OPTION_ARG_INT,      &p.nz,      "Number of samples in z", "101"},
+                { "land",    0, 0, G_OPTION_ARG_NONE,     &p.land,    "Land color selection", NULL},
+                { "palette", 0, 0, G_OPTION_ARG_FILENAME, &p.palette, "Custom palette", NULL },
+                { "nofill",  0, 0, G_OPTION_ARG_NONE,     &p.nofill,  "Turn off filling in of layers", NULL},
+                { "norays",  0, 0, G_OPTION_ARG_NONE,     &p.norays,  "Suppress rays in diagram", NULL},
+                { "allblack",0, 0, G_OPTION_ARG_NONE,     &p.allblack,"All rays in black", NULL}
+        };
+
         static GOptionEntry entries_main[] = {
-                { "showrays", 0, 0, G_OPTION_ARG_NONE,  &p.showrays,"Preserve information for ray diagram generation", NULL },
+                { "keeprays", 0, 0, G_OPTION_ARG_NONE,  &p.keeprays,"Preserve ray information", NULL },
                 { "workdir",0,0, G_OPTION_ARG_FILENAME, &p.workdir, "Working directory", "/tmp" },
                 { "verbose", 'v',0, G_OPTION_ARG_NONE,  &p.verbose, "Verbose output", NULL },
                 { "debug",   'd',0, G_OPTION_ARG_NONE,  &p.debug,   "Debug output", NULL },
@@ -190,7 +214,7 @@ struct s88* parse_command_line(int argc, char** argv)
                                           "ns = (tmax - tmin)/dt samples per trace, printed to stdout.\n\n"
                                           "All temporary files are stored in the directory specified by --workdir\n"
                                           "parameter. Ray files (lu1-????.dat) are stored in that directory as well,\n"
-                                          "if --showrays flag is on.\n\n"
+                                          "if --keeprays flag is on.\n\n"
                                           "s88modeling relies on Seis88, a robust software developed by\n"
                                           "Vlastislav Cerveny, from Institute of Geophysics - Charles University, and\n"
                                           "Ivan Psencik, from Geophysical Institute - Czechosl. Acad. Sci.\n\n"
@@ -229,6 +253,11 @@ struct s88* parse_command_line(int argc, char** argv)
 
         group = g_option_group_new("config", "Detailed Seis88 setup:", "Show Seis88 setup options", NULL, NULL);
         g_option_group_add_entries(group, entries_config);
+        g_option_context_add_group(parser, group);
+
+
+        group = g_option_group_new("export", "Export setup:", "Show export options", NULL, NULL);
+        g_option_group_add_entries(group, entries_export);
         g_option_context_add_group(parser, group);
 
         group = g_option_group_new(NULL, NULL, NULL, NULL, NULL);
@@ -277,7 +306,16 @@ struct s88* parse_command_line(int argc, char** argv)
         p.gamma = 3.5;
         p.psi = 0;
         p.mag = 1;
-        p.showrays = FALSE;
+        
+        p.raydiag = TRUE;
+        p.nx = 101;
+        p.nz = 101;
+        p.land = FALSE;
+        p.nofill = FALSE;
+        p.norays = FALSE;
+        p.allblack = FALSE;
+
+        p.keeprays = FALSE;
         p.verbose = FALSE;
         p.debug = FALSE;
         p.dryrun = FALSE;
@@ -522,11 +560,30 @@ gint fill_in_s88(struct s88 *p, struct parse_params *pp)
                 }
         }
 
+        /* Compute bounding box of the model */
+        p->xmin = p->x[0][0];
+        p->xmax = p->x[0][0];
+        p->zmin = p->z[0][0];
+        p->zmax = p->z[0][0];
+
+        for (ii = 0; ii<p->nint; ii++){
+                int k;
+                
+                for (k=0; k<p->npnt[ii]; k++){
+                        p->xmin = min(p->xmin, p->x[ii][k]);
+                        p->xmax = max(p->xmax, p->x[ii][k]);
+                        p->zmin = min(p->zmin, p->x[ii][k]);
+                        p->zmax = min(p->zmax, p->x[ii][k]);
+                }
+        }
+
+        /* Velocities */        
         p->v1 = (gdouble *) malloc (sizeof (gdouble) * (p->nint-1));
         p->v2 = (gdouble *) malloc (sizeof (gdouble) * (p->nint-1));
         convert_double (pp->v1, p->v1, (p->nint-1), "v1");
         convert_double (pp->v2, p->v2, (p->nint-1), "v2");
 
+        /* Densities */
         if ((pp->rho1 != NULL) && (pp->rho2 != NULL)){
                 p->nro = TRUE;
                 p->rho1 = (gdouble *) malloc (sizeof (gdouble) * (p->nint-1));
@@ -539,6 +596,7 @@ gint fill_in_s88(struct s88 *p, struct parse_params *pp)
                 p->nro = FALSE;
         }
         
+        /* Quality factors */
         if (pp->qps != NULL){
                 p->nabs = TRUE;
 
@@ -559,12 +617,11 @@ gint fill_in_s88(struct s88 *p, struct parse_params *pp)
                 p->nabs = FALSE;
         }
 
-
         p->ptos = (gdouble *) malloc (sizeof (gdouble) * (p->nint-1));
         if (pp->ptos == NULL){
                 gint jj;
                 for (jj=0; jj<p->nint-1; jj++)
-                                p->ptos[jj] = 1.732;
+                        p->ptos[jj] = 1.732; /* default vp/vs = sqrt(3) */
         }
         else{
                 convert_double (pp->ptos, p->ptos, p->nint-1, "ptos");

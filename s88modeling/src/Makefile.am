@@ -18,6 +18,11 @@ bin_PROGRAMS=s88modeling
 s88modeling_SOURCES=s88modeling.c \
 		    parser.c      \
                     parser.h      \
- 	            s88.c         \
-                    s88.h
-
+	            s88.c         \
+                    s88.h         \
+		    libagr.c      \
+		    libagr.h      \
+		    lu.c          \
+		    lu.h          \
+		    spline.c      \
+		    spline.h

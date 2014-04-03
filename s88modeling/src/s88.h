@@ -84,11 +84,29 @@ struct s88 {
         gdouble            mag;
         gchar             *spath;
         gchar             *sypath;
-        gboolean           showrays;
+
+        gchar             *interf;
+        gchar             *vel;
+        gboolean           raydiag;
+        gint               nx;
+        gint               nz;
+        gboolean           land;
+        gchar             *palette;
+        gboolean           nofill;
+        gboolean           norays;
+        gboolean           allblack;
+
+        gboolean           keeprays;
         gchar             *workdir;
         gboolean           verbose;
         gboolean           debug;
         gboolean           dryrun;
+
+        /* Derived fields */
+        gfloat             xmin;
+        gfloat             xmax;
+        gfloat             zmin;
+        gfloat             zmax;
 };
 
 

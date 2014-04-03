@@ -1,5 +1,5 @@
-/*  S88modeling - Seismic modeler by rays theory
- *  Copyright (C) 2009-2013 Ricardo Biloti <biloti@ime.unicamp.br>
+/*  S99modeling - Seismic modeler by rays theory
+ *  Copyright (C) 2014 Ricardo Biloti <biloti@ime.unicamp.br>
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -70,24 +70,36 @@ void s88_run(struct s88 *p)
                 fprintf (stderr, "\n");
         }
 
-        /* Save velocities for rays2 */
-        if (!p->dryrun){
-          FILE *fpvel;
-          GString *velname;
-          int i;
+        /*-------------------------------------------------------------------------*/
+        /* Warm-up phase */
+        
+        /* place source at surface */
+        /* p->zsour = 0; */
+        /* p->xsour = p->sxmin; */
+        /* p->rmin  = p->xsour + p->rxmin; */
 
-          velname = g_string_new(NULL);
-          g_string_printf(velname,"%s/vel.rays2", p->workdir);
+        /* if (p->verbose) */
+        /*   fprintf (stderr, "Warm-up modeling\n"); */
+        /* if (p->debug){ */
+        /*   fprintf (stderr, "\nSeis config:\n"); */
+        /*   write_s88_config (stderr, p); */
+        /*   fprintf (stderr, "\n"); */
+        /* } */
           
-          fpvel = fopen(velname->str, "w");
-          for (i=0; i<p->nint-1; i++)
-            fprintf(fpvel, "%6.3f %6.3f\n",  p->v1[i], p->v2[i]);
-          fclose(fpvel);
-
-          g_string_free(velname, TRUE);          
-        }
-
-                
+        /* if (!p->dryrun){ */
+        /*   fp = fopen (fname1->str, "w"); */
+        /*   write_s88_config (fp, p); */
+        /*   fclose (fp); */
+          
+        /*   if (system (cmd1->str)){ */
+        /*     fprintf(stderr, "\nseis with problem\n"); */
+        /*   } */
+          
+        /*   g_rename("lu1.dat", "model.dat"); */
+        /* } */
+          
+        /*-------------------------------------------------------------------------*/
+        /* De facto modeling */
         p->zsour = p->sz;
         for (ishot=0; ishot<p->nshots; ishot++){
 
@@ -122,7 +134,7 @@ void s88_run(struct s88 *p)
               fprintf(stderr, "\nseis with problem\n");
             }
 
-            if (p->showrays){
+            if (p->keeprays){
               g_string_printf(newname, "lu1-%04i.dat", ishot+1);
               g_rename("lu1.dat", newname->str);
             }
@@ -135,7 +147,7 @@ void s88_run(struct s88 *p)
                 if (!p->debug){
                         g_unlink (fname1->str);
                         g_unlink (fname2->str);
-                        if (!p->showrays){
+                        if (!p->keeprays){
                                 g_unlink ("lu1.dat");
                         }
                         g_unlink ("lu2.dat");
@@ -558,7 +570,6 @@ make_unique_filename(const gchar * template)
 
 	return path;
 }
-
 
 
 void synt2bin (struct s88 *p)
