@@ -23,6 +23,8 @@
 #include "s88.h"
 #include "lu.h"
 
+extern char AGR_title[100];
+
 void write_s88_config(FILE *fp, struct s88 *p);
 void write_synt_config(FILE *fp, struct s88 *p);
 void synt2bin (struct s88 *p);
@@ -97,9 +99,19 @@ void s88_run(struct s88 *p)
             fprintf(stderr, "\nseis with problem\n");
           }
           
-          g_rename("lu1.dat", "model.dat");
-          lu_parse("model.dat", &lu);
-          agr_write("model.agr", &lu, p);
+          lu_parse("lu1.dat", &lu);
+
+          if (p->keeprays){
+                  g_rename("lu1.dat", "model.dat");
+          }else{
+                  g_unlink ("lu1.dat");
+          }
+          
+          if (p->raydiag){
+                  InitAGR();
+                  sprintf(AGR_title, "Model");
+                  agr_write("model.agr", &lu, p);
+          }
         }
           
         /*-------------------------------------------------------------------------*/
@@ -142,6 +154,20 @@ void s88_run(struct s88 *p)
               g_string_printf(newname, "lu1-%04i.dat", ishot+1);
               g_rename("lu1.dat", newname->str);
             }
+
+            if (p->raydiag){
+                    if (p->keeprays)
+                            lu_parse(newname->str, &lu);
+                    else
+                            lu_parse("lu1.dat", &lu);
+
+                    g_string_printf(newname, "shot-%04i.agr", ishot+1);
+
+                    InitAGR();
+                    sprintf(AGR_title, "Shot %i at %f", ishot+1, p->xsour);
+                    agr_write(newname->str, &lu, p);                    
+            }
+
           }
 
         }

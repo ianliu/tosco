@@ -259,8 +259,6 @@ int agr_write(gchar *agrfilename, lu_t *lu, struct s88 *p){
                 return EXIT_FAILURE;
         }
                 
-        InitAGR();
-  
         if (p->palette != NULL)
                 ImportAGRPalette(p->palette);
         else
@@ -269,8 +267,7 @@ int agr_write(gchar *agrfilename, lu_t *lu, struct s88 *p){
         WriteAGRHeader(agrfp);
 
         sprintf(AGR_yaxesinvert, "on");
-        sprintf(AGR_title, "S88Modeling");
-        sprintf(AGR_subtitle, "(Seis88)");
+        sprintf(AGR_subtitle, "S88Modeling");
         sprintf(AGR_xaxislabel, "Distance [km]");
         sprintf(AGR_yaxislabel, "Depth [km]");
         AGR_xaxislabelcharsize = 1.4;

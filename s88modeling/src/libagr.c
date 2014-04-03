@@ -24,6 +24,9 @@ int ReadLine(char *string, int n, FILE *fp);
 void InitAGR()
 {
 
+  AGR_graphindex=-1;
+
+
   AGR_defaultlinewidth = 1.0;
   AGR_defaultlinestyle = 1;
   AGR_defaultcolor = 1;
