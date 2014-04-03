@@ -1,5 +1,5 @@
-/*  s88modeling - Draw seismic rays using grace
- *  Copyright (C) 2014 Ricardo Biloti <biloti@ime.unicamp.br>
+/*  S88modeling - Seismic modeling tool
+ *  Copyright (C) 2009-2014 Ricardo Biloti <biloti@ime.unicamp.br>
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

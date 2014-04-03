@@ -1,9 +1,5 @@
-/*  rays2 - Draw seismic rays using grace
- *  Copyright (C) 2002-2009 Ricardo Biloti <biloti@ime.unicamp.br>
- *
- *  Based on spline.f and seval.f from the book Computer Methods for
- *  Mathematical Computations, by George Forsythe, Mike Malcolm, and
- *  Cleve Moler.
+/*  S88modeling - Seismic modeling tool
+ *  Copyright (C) 2009-2014 Ricardo Biloti <biloti@ime.unicamp.br>
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,7 +14,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 
 int spline(int *n, float *x, float *y, float *b,
 	   float *c, float *d)

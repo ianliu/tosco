@@ -1,5 +1,5 @@
-/*  S99modeling - Seismic modeler by rays theory
- *  Copyright (C) 2014 Ricardo Biloti <biloti@ime.unicamp.br>
+/*  S88modeling - Seismic modeling tool
+ *  Copyright (C) 2009-2014 Ricardo Biloti <biloti@ime.unicamp.br>
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -155,7 +155,7 @@ void s88_run(struct s88 *p)
               g_rename("lu1.dat", newname->str);
             }
 
-            if (p->raydiag){
+            if (p->raydiag && !p->norays){
                     if (p->keeprays)
                             lu_parse(newname->str, &lu);
                     else

@@ -1,6 +1,5 @@
-/*  S99modeling - Seismic modeling tool by ray theory
- *                with integrated ray diagram generation
- *  Copyright (C) 2014 Ricardo Biloti <biloti@ime.unicamp.br>
+/*  S88modeling - Seismic modeling tool
+ *  Copyright (C) 2009-2014 Ricardo Biloti <biloti@ime.unicamp.br>
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -217,8 +216,8 @@ struct s88* parse_command_line(int argc, char** argv)
                                           "ns = (tmax - tmin)/dt samples per trace, printed to stdout.\n\n"
                                           "Besides the data itself, s88modeling can produce ray diagrams for each shot.\n"
                                           "If the --raydiagram flag is used, files shot-????.agr and model.agr will be\n"
-                                          "produces. Those are AGR files, that can be displayed and edited with Grace,\n"
-                                          "a free scientific visualization tool.\n\n"
+                                          "produced in the temporary directory. Those are AGR files, that can be displayed\n"
+                                          "and edited with Grace, a free scientific visualization tool.\n\n"
                                           "All temporary files are stored in the directory specified by --workdir\n"
                                           "parameter. Ray files (lu1-????.dat) are stored in that directory as well,\n"
                                           "if --keeprays flag is on.\n\n"
