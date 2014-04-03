@@ -364,38 +364,48 @@ void write_s88_config (FILE * fp, struct s88 *p, int sourcelayer)
 
 
 	// CARD 13 (Wave codes)
+	// FIX-ME: Se a linha for muito comprida, tem que ser cortada (24I3)
+
         for (imult = 0; imult <= (gint) p->mltp; imult++) {  /* Multiples */
-                for (ii = 1; ii <= p->nint - 2; ii++) {      /* Each layer */
+                for (ii = sourcelayer; ii <= p->nint - 2; ii++) {      /* Each layer */
                 
                         if (p->ibp){ /* P Primary down unconverted */
+                                //writecode(stderr, STARTDOWN, imult, sourcelayer, ii, PWAVE, UNCONVERTED);
                                 writecode(fp, STARTDOWN, imult, sourcelayer, ii, PWAVE, UNCONVERTED);
                         }
                         
                         if (p->ibp == 2){ /* P Primary down converted */
+                                //writecode(stderr, STARTDOWN, imult, sourcelayer, ii, PWAVE, CONVERTED);
                                 writecode(fp, STARTDOWN, imult, sourcelayer, ii, PWAVE, CONVERTED);     
                         }
 
                         if (p->ibp && p->sghost){ /* P Primary up (source ghost) unconverted */
+                                //writecode(stderr, STARTUP, imult, sourcelayer, ii, PWAVE, UNCONVERTED);
                                 writecode(fp, STARTUP, imult, sourcelayer, ii, PWAVE, UNCONVERTED);                                
                         }
                         
                         if (p->ibp == 2 && p->sghost){ /* P Primary up (source ghost) converted */
+                                //writecode(stderr, STARTUP, imult, sourcelayer, ii, PWAVE, CONVERTED);
                                 writecode(fp, STARTUP, imult, sourcelayer, ii, PWAVE, CONVERTED);                                
                         }
 
                         if (p->ibs){ /* S Primary down unconverted */
+                                //writecode(stderr, STARTDOWN, imult, sourcelayer, ii, SWAVE, UNCONVERTED);
                                 writecode(fp, STARTDOWN, imult, sourcelayer, ii, SWAVE, UNCONVERTED);
                         }
                         
                         if (p->ibs == 2){ /* S Primary down converted */
+                                //writecode(stderr, STARTDOWN, imult, sourcelayer, ii, SWAVE, CONVERTED);
                                 writecode(fp, STARTDOWN, imult, sourcelayer, ii, SWAVE, CONVERTED);     
                         }
 
                         if (p->ibs && p->sghost){ /* S Primary up (source ghost) unconverted */
+                                //writecode(stderr, STARTUP, imult, sourcelayer, ii, SWAVE, UNCONVERTED);
                                 writecode(fp, STARTUP, imult, sourcelayer, ii, SWAVE, UNCONVERTED);                                
                         }
                         
                         if (p->ibs == 2 && p->sghost){ /* S Primary up (source ghost) converted */
+                                //writecode(stderr, STARTUP, imult, sourcelayer, ii, SWAVE, CONVERTED);
                                 writecode(fp, STARTUP, imult, sourcelayer, ii, SWAVE, CONVERTED);                                
                         }
                 }                
