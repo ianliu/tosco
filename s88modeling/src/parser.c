@@ -1,5 +1,5 @@
-/*  S88modeling - Seismic modeler by rays theory
- *  Copyright (C) 2009-2013 Ricardo Biloti <biloti@ime.unicamp.br>
+/*  S88modeling - Seismic modeling tool
+ *  Copyright (C) 2009-2014 Ricardo Biloti <biloti@ime.unicamp.br>
  * 
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,8 +21,19 @@
 #include <math.h>
 #include <glib.h>
 
+#include "config.h"
 #include "s88.h"
 #include "parser.h"
+
+
+#ifndef max
+#define max(x,y)         ( ((x) < (y)) ? (y) : (x) )
+#endif
+
+#ifndef min
+#define min(x,y)         ( ((x) > (y)) ? (y) : (x) )
+#endif
+
 
 #define check_required(xx,yy)       if (xx == NULL){fprintf(stderr, "%s required.\n", yy); return EXIT_FAILURE;}
 #define convert_double(aa,bb,nn,cc) { check_required(aa,cc);            \
@@ -30,17 +41,17 @@
         fprintf (stderr, "%s should have %i elements.\n", cc, nn);\
         return EXIT_FAILURE; }}
 
-gint list_to_int (gchar *list, gint *values, gint max);
-gint list_to_double (gchar *list, gdouble *values, gint max);
-gint list_size (gchar *list);
+gint list_to_int (gchar * list, gint * values, gint max);
+gint list_to_double (gchar * list, gdouble * values, gint max);
+gint list_size (gchar * list);
 gint check_parameters (struct s88 *p, struct parse_params *pp);
-gint fill_in_s88(struct s88 *p, struct parse_params *pp);
+gint fill_in_s88 (struct s88 *p, struct parse_params *pp);
 
-struct s88* parse_command_line(int argc, char** argv)
+struct s88 *parse_command_line (int argc, char **argv)
 {
 
-        static struct parse_params pp;
-        static struct s88 p;
+	static struct parse_params pp;
+	static struct s88 p;
 
         static GOptionEntry entries_interface[] = {
                 { "xcoord",0, 0, G_OPTION_ARG_STRING_ARRAY, &pp.xcoord, "List of x coordinates of interface knots", "x1,x2,...,xn" },
@@ -124,12 +135,27 @@ struct s88* parse_command_line(int argc, char** argv)
                 { NULL }
         };
 
+        static GOptionEntry entries_export[] = { 
+                { "interf",  0, 0, G_OPTION_ARG_FILENAME, &p.interf,  "File to save sampled interfaces", NULL },
+                { "velocity",0, 0, G_OPTION_ARG_FILENAME, &p.vel,     "File to save sampled velocity model", NULL },
+                { "raydiag", 0, 0, G_OPTION_ARG_NONE,     &p.raydiag, "Generate ray diagrams for each shot", NULL},
+                { "nx",      0, 0, G_OPTION_ARG_INT,      &p.nx,      "Number of samples in x", "101"},
+                { "nz",      0, 0, G_OPTION_ARG_INT,      &p.nz,      "Number of samples in z", "101"},
+                { "land",    0, 0, G_OPTION_ARG_NONE,     &p.land,    "Land color selection", NULL},
+                { "palette", 0, 0, G_OPTION_ARG_FILENAME, &p.palette, "Custom palette", NULL },
+                { "nofill",  0, 0, G_OPTION_ARG_NONE,     &p.nofill,  "Turn off filling in of layers", NULL},
+                { "norays",  0, 0, G_OPTION_ARG_NONE,     &p.norays,  "Suppress rays in diagram", NULL},
+                { "allblack",0, 0, G_OPTION_ARG_NONE,     &p.allblack,"All rays in black", NULL},
+                { NULL }
+        };
+
         static GOptionEntry entries_main[] = {
-                { "showrays", 0, 0, G_OPTION_ARG_NONE,  &p.showrays,"Preserve information for ray diagram generation", NULL },
+                { "showrays", 0, 0, G_OPTION_ARG_NONE,  &p.keeprays,"Preserve ray information", NULL },
                 { "workdir",0,0, G_OPTION_ARG_FILENAME, &p.workdir, "Working directory", "/tmp" },
-                { "verbose", 'v',0, G_OPTION_ARG_NONE,  &p.verbose, "Verbose output", NULL },
+                { "verbose", 0,0, G_OPTION_ARG_NONE,    &p.verbose, "Verbose output", NULL },
                 { "debug",   'd',0, G_OPTION_ARG_NONE,  &p.debug,   "Debug output", NULL },
                 { "dry-run",0,0, G_OPTION_ARG_NONE,     &p.dryrun,  "Perform a try run only", NULL },
+                { "version", 'v', 0, G_OPTION_ARG_NONE, &p.version, "Show the version", NULL },
                 { NULL }
         };
 
@@ -139,7 +165,7 @@ struct s88* parse_command_line(int argc, char** argv)
         
 
         /* Set a short description for the program */
-        parser = g_option_context_new ("- Ray tracing modeling through Seis88");
+        parser = g_option_context_new ("- Ray tracing modeling through Seis88 (" VERSION ")");
         
         /* Summary */
         g_option_context_set_summary (parser,
@@ -188,22 +214,28 @@ struct s88* parse_command_line(int argc, char** argv)
                                           "where omega = 2 * PI * freq.\n\n"
                                           "The output produced is a binary data, with nshots * nrec traces, with\n"
                                           "ns = (tmax - tmin)/dt samples per trace, printed to stdout.\n\n"
+                                          "Besides the data itself, s88modeling can produce ray diagrams for each shot.\n"
+                                          "If the --raydiagram flag is used, files shot-????.agr and model.agr will be\n"
+                                          "produced in the temporary directory. Those are AGR files, that can be displayed\n"
+                                          "and edited with Grace, a free scientific visualization tool.\n\n"
                                           "All temporary files are stored in the directory specified by --workdir\n"
                                           "parameter. Ray files (lu1-????.dat) are stored in that directory as well,\n"
-                                          "if --showrays flag is on.\n\n"
+                                          "if --keeprays flag is on.\n\n"
                                           "s88modeling relies on Seis88, a robust software developed by\n"
                                           "Vlastislav Cerveny, from Institute of Geophysics - Charles University, and\n"
                                           "Ivan Psencik, from Geophysical Institute - Czechosl. Acad. Sci.\n\n"
                                           "Only a small subset of Seis88 features is available through s88modeling.\n\n"
                                           "S88modeling is hosted by Tools for Scientific Computing (ToSCo) Project.\n"
                                           "Visit its site (http://codes.google.com/p/tosco) to obtain the latest version.\n"
-                                          "Also from ToSCo project, there is a program, called Rays, which is able to\n"
-                                          "parse lu1-????.dat files produced here and depicts ray diagrams.\n\n"
-                                          "Copyright (c) 2009-2010 Ricardo Biloti <biloti@ime.unicamp.br>\n"
+                                          "Also from ToSCo project, there is a program, called Rays2, which is able to\n"
+                                          "parse lu1-????.dat files produced here and depict ray diagrams.\n"
+                                          "** Since version 1.0.0, such rays diagrams are already generated by s88modeling.\n\n"
+                                          "Copyright (c) 2009-2014 Ricardo Biloti <biloti@ime.unicamp.br>\n"
                                           "Department of Applied Mathematics, IMECC, UNICAMP -- Brazil"
                                           );
         
-        group = g_option_group_new("geom", "Knots for cubic spline representation of interfaces:\n(one instance per interface)", "Show model geometry options ", NULL, NULL);
+        group = g_option_group_new("geom", "Knots for cubic spline representation of interfaces:\n(one instance per interface)",
+                                   "Show model geometry options ", NULL, NULL);
         g_option_group_add_entries(group, entries_interface);
         g_option_context_add_group(parser, group);
 
@@ -231,345 +263,411 @@ struct s88* parse_command_line(int argc, char** argv)
         g_option_group_add_entries(group, entries_config);
         g_option_context_add_group(parser, group);
 
+
+        group = g_option_group_new("export", "Export setup:", "Show export options", NULL, NULL);
+        g_option_group_add_entries(group, entries_export);
+        g_option_context_add_group(parser, group);
+
         group = g_option_group_new(NULL, NULL, NULL, NULL, NULL);
         g_option_group_add_entries(group, entries_main);
         g_option_context_set_main_group(parser, group);
 
-        //g_option_context_add_main_entries (parser, entries, NULL);
-        
-        /* Complain about unknown options */
-        g_option_context_set_ignore_unknown_options (parser, FALSE);
-        
-        /* Required */
-        p.rxmin  = 0.0 / 0.0;
-        p.rxstep = 0.0 / 0.0;
-        p.sxmin  = 0.0 / 0.0;
-        p.sxstep = 0.0 / 0.0;
-        p.sz     = 0.0 / 0.0;
-        p.nshots = 1;
+	//g_option_context_add_main_entries (parser, entries, NULL);
 
-        /* Default values */
-        p.mdim = 3;
-        p.mep = 10;
-        p.method = 0;
-        p.itmax = 20;
-        p.tsour = 0;
-        p.reps =  0.0005;
-        p.reps1 = 0.00002;
-        p.dtint = 0.1;
-        p.amin1 = -3.1415;
-        p.astep1 = 1.0e-3;
-        p.amax1 = M_PI;
-        p.amin2 = -3.1415;
-        p.astep2 = .001;
-        p.amax2 = M_PI;
-        p.ac = 1.0e-5;
-        p.ibp = 1;
-        p.ibs = 0;
-        p.mltp = FALSE;
-        p.sghost = FALSE;
-        p.rghost = FALSE;
+	/* Complain about unknown options */
+	g_option_context_set_ignore_unknown_options (parser, FALSE);
 
-        p.tmin = 0;
-        p.dt = 0.004;
-        p.tmax = 4.0;
-        p.freq = 25;
-        p.gamma = 3.5;
-        p.psi = 0;
-        p.mag = 1;
-        p.showrays = FALSE;
-        p.verbose = FALSE;
-        p.debug = FALSE;
-        p.dryrun = FALSE;
-        
-        /* Parse command line */
-        if (g_option_context_parse (parser, &argc, &argv, &error) == FALSE){
-                fprintf(stderr, "%s: syntax error\n", argv[0]);
-                fprintf(stderr, "Try %s --help\n", argv[0]);
-                return NULL;
-        }
-        
-        g_option_context_free (parser);
-        
-        /* Check for required parameters */
-        if (check_parameters(&p, &pp))
-                return NULL;
+	/* Required */
+	p.rxmin = 0.0 / 0.0;
+	p.rxstep = 0.0 / 0.0;
+	p.sxmin = 0.0 / 0.0;
+	p.sxstep = 0.0 / 0.0;
+	p.sz = 0.0 / 0.0;
+	p.nshots = 1;
 
-        /* Filling in vectors */
-        if (fill_in_s88(&p, &pp))
-                return NULL;
+	/* Default values */
+	p.mdim = 3;
+	p.mep = 10;
+	p.method = 0;
+	p.itmax = 20;
+	p.tsour = 0;
+	p.reps = 0.0005;
+	p.reps1 = 0.00002;
+	p.dtint = 0.1;
+	p.amin1 = -3.1415;
+	p.astep1 = 1.0e-3;
+	p.amax1 = M_PI;
+	p.amin2 = -3.1415;
+	p.astep2 = .001;
+	p.amax2 = M_PI;
+	p.ac = 1.0e-5;
+	p.ibp = 1;
+	p.ibs = 0;
+	p.mltp = FALSE;
+	p.sghost = FALSE;
+	p.rghost = FALSE;
 
-        return &p;
+	p.tmin = 0;
+	p.dt = 0.004;
+	p.tmax = 4.0;
+	p.freq = 25;
+	p.gamma = 3.5;
+	p.psi = 0;
+	p.mag = 1;
+
+	p.raydiag = TRUE;
+	p.nx = 101;
+	p.nz = 101;
+	p.land = FALSE;
+	p.nofill = FALSE;
+	p.norays = FALSE;
+	p.allblack = FALSE;
+
+	p.keeprays = FALSE;
+	p.verbose = FALSE;
+	p.debug = FALSE;
+	p.dryrun = FALSE;
+	p.version = FALSE;
+
+	/* Parse command line */
+	if (g_option_context_parse (parser, &argc, &argv, &error) == FALSE) {
+		fprintf (stderr, "%s: syntax error\n", argv[0]);
+		fprintf (stderr, "Try %s --help\n", argv[0]);
+		return NULL;
+	}
+
+	g_option_context_free (parser);
+
+	if (p.version) {
+		fprintf (stderr, PACKAGE " " VERSION "\n");
+		return EXIT_SUCCESS;
+	}
+
+	/* Check for required parameters */
+	if (check_parameters (&p, &pp))
+		return NULL;
+
+	/* Filling in vectors */
+	if (fill_in_s88 (&p, &pp))
+		return NULL;
+
+	return &p;
 }
 
 /* ======== Private functions ======== */
-gint list_to_int (gchar *list, gint *values, gint max)
+gint list_to_int (gchar * list, gint * values, gint max)
 {
-        gint n = 0;
-        gchar *strvalue;
+	gint n = 0;
+	gchar *strvalue;
 
-        strvalue = strtok(list, ",");
-        values[n++] = atoi(strvalue);
-        
-        while ((strvalue = strtok(NULL, ",")) != NULL && n < max)
-                values[n++] = atoi(strvalue);
+	strvalue = strtok (list, ",");
+	values[n++] = atoi (strvalue);
 
-        return (strvalue == NULL ? n : -1);
+	while ((strvalue = strtok (NULL, ",")) != NULL && n < max)
+		values[n++] = atoi (strvalue);
+
+	return (strvalue == NULL ? n : -1);
 }
 
-gint list_to_double (gchar *list, gdouble *values, gint max)
+gint list_to_double (gchar * list, gdouble * values, gint max)
 {
-        gint n = 0;
-        gchar *strvalue;
+	gint n = 0;
+	gchar *strvalue;
 
-        strvalue = strtok(list, ",");
-        values[n++] = atof(strvalue);
-        
-        while ((strvalue = strtok(NULL, ",")) != NULL && n < max)
-                values[n++] = atof(strvalue);
+	strvalue = strtok (list, ",");
+	values[n++] = atof (strvalue);
 
-        return (strvalue == NULL ? n : -1);
+	while ((strvalue = strtok (NULL, ",")) != NULL && n < max)
+		values[n++] = atof (strvalue);
+
+	return (strvalue == NULL ? n : -1);
 
 }
 
-gint list_size (gchar *list)
+gint list_size (gchar * list)
 {
-        gint n;
-        gchar *aux;
-        gchar *iter;
+	gint n;
+	gchar *aux;
+	gchar *iter;
 
-        if (list == NULL)
-                return 0;
-        
-        aux = (gchar *) malloc (sizeof(char) * (strlen(list)+1));
-        memcpy(aux, list, (strlen(list)+1));
-        
-        iter = strtok(aux, ",");
-        n = 1;
+	if (list == NULL)
+		return 0;
 
-        while ((iter = strtok(NULL, ",")) != NULL)
-                n++;
+	aux = (gchar *) malloc (sizeof (char) * (strlen (list) + 1));
+	memcpy (aux, list, (strlen (list) + 1));
 
-        free(aux);
+	iter = strtok (aux, ",");
+	n = 1;
 
-        return n;
+	while ((iter = strtok (NULL, ",")) != NULL)
+		n++;
+
+	free (aux);
+
+	return n;
 }
 
 
-gint check_parameters (struct s88 *p, struct parse_params *pp)
+gint check_parameters (struct s88 * p, struct parse_params * pp)
 {
-        
-        static gchar *seis  = "seis";
-        static gchar *synt = "syntpl";
-        static gchar *tmp = "/tmp";
 
-        if (p->spath == NULL)
-                p->spath = seis;
+	static gchar *seis = "seis";
+	static gchar *synt = "syntpl";
+	static gchar *tmp = "/tmp";
 
-        if (p->sypath == NULL)
-                p->sypath = synt;
+	if (p->spath == NULL)
+		p->spath = seis;
 
-        if (p->workdir == NULL)
-                p->workdir = tmp;
+	if (p->sypath == NULL)
+		p->sypath = synt;
 
-        if (pp->xcoord == NULL){
-                fprintf (stderr, "xcoord should be provided.\n");
-                return 1;
-        }
+	if (p->workdir == NULL)
+		p->workdir = tmp;
 
-        if (pp->zcoord == NULL){
-                fprintf (stderr, "zcoord should be provided.\n");
-                return 1;
-        }
+	if (pp->xcoord == NULL) {
+		fprintf (stderr, "xcoord should be provided.\n");
+		return 1;
+	}
 
-        if (pp->v1 == NULL){
-                fprintf (stderr, "v1 should be provided.\n");
-                return 1;
-        }
+	if (pp->zcoord == NULL) {
+		fprintf (stderr, "zcoord should be provided.\n");
+		return 1;
+	}
 
-        if (pp->v2 == NULL){
-                fprintf (stderr, "v2 should be provided.\n");
-                return 1;
-        }
+	if (pp->v1 == NULL) {
+		fprintf (stderr, "v1 should be provided.\n");
+		return 1;
+	}
 
-        if ((pp->rho1 != NULL) && (pp->rho2 == NULL)){
-                fprintf (stderr, "rho2 should be provided, whenever rho1 is provided.\n");
-                return 1;
-        }
+	if (pp->v2 == NULL) {
+		fprintf (stderr, "v2 should be provided.\n");
+		return 1;
+	}
 
-        if ((pp->rho1 == NULL) && (pp->rho2 != NULL)){
-                fprintf (stderr, "rho1 should be provided, whenever rho2 is provided.\n");
-                return 1;
-        }
-        
-        if (p->mep < 2){
-                fprintf (stderr, "mep should be provided and greater than 1.\n");
-                return 1;
-        }
+	if ((pp->rho1 != NULL) && (pp->rho2 == NULL)) {
+		fprintf (stderr,
+			 "rho2 should be provided, whenever rho1 is provided.\n");
+		return 1;
+	}
 
-        if ((p->method < 0) || (p->method>4)){
-                fprintf (stderr, "method should be 0, 1, 2 or 3.\n");
-                return 1;
-        }
+	if ((pp->rho1 == NULL) && (pp->rho2 != NULL)) {
+		fprintf (stderr,
+			 "rho1 should be provided, whenever rho2 is provided.\n");
+		return 1;
+	}
 
-        if (p->itmax < 0){
-                fprintf (stderr, "itmax should be greater than or equal to 0.\n");
-                return 1;
-        }
+	if (p->mep < 2) {
+		fprintf (stderr,
+			 "mep should be provided and greater than 1.\n");
+		return 1;
+	}
 
-        if (isnan(p->rxmin)){
-                fprintf (stderr, "rxmin should be provided.\n");
-                return 1;
-        }
+	if ((p->method < 0) || (p->method > 4)) {
+		fprintf (stderr, "method should be 0, 1, 2 or 3.\n");
+		return 1;
+	}
 
-        if (isnan(p->rxstep)){
-                fprintf (stderr, "rxstep should be provided.\n");
-                return 1;
-        }
+	if (p->itmax < 0) {
+		fprintf (stderr,
+			 "itmax should be greater than or equal to 0.\n");
+		return 1;
+	}
 
-        if (isnan(p->sxmin)){
-                fprintf (stderr, "sxmin should be provided.\n");
-                return 1;
-        }
+	if (isnan (p->rxmin)) {
+		fprintf (stderr, "rxmin should be provided.\n");
+		return 1;
+	}
 
-        if (isnan(p->sxstep)){
-                fprintf (stderr, "sxstep should be provided.\n");
-                return 1;                
-        }
+	if (isnan (p->rxstep)) {
+		fprintf (stderr, "rxstep should be provided.\n");
+		return 1;
+	}
 
-        if (isnan(p->sz)){
-                fprintf (stderr, "sz should be provided.\n");
-                return 1;
-        }
+	if (isnan (p->sxmin)) {
+		fprintf (stderr, "sxmin should be provided.\n");
+		return 1;
+	}
+
+	if (isnan (p->sxstep)) {
+		fprintf (stderr, "sxstep should be provided.\n");
+		return 1;
+	}
+
+	if (isnan (p->sz)) {
+		fprintf (stderr, "sz should be provided.\n");
+		return 1;
+	}
 
 
-        if (!( p->ibp || p->ibs )){
-                fprintf (stderr, "No wave code selected for generation.\n");
-                return 1;
-        }
+	if (!(p->ibp || p->ibs)) {
+		fprintf (stderr,
+			 "No wave code selected for generation.\n");
+		return 1;
+	}
 
-        if ( (p->ibp < 0) || (p->ibp >2) ){
-                fprintf (stderr, "ibp out of range.\n");
-                return 1;
-        }
+	if ((p->ibp < 0) || (p->ibp > 2)) {
+		fprintf (stderr, "ibp out of range.\n");
+		return 1;
+	}
 
-        if ( (p->ibs < 0) || (p->ibs >2) ){
-                fprintf (stderr, "ibs out of range.\n");
-                return 1;
-        }
-        
-        if (p->debug)
-                p->verbose = TRUE;
+	if ((p->ibs < 0) || (p->ibs > 2)) {
+		fprintf (stderr, "ibs out of range.\n");
+		return 1;
+	}
 
-        return 0;
+	if (p->debug)
+		p->verbose = TRUE;
+
+	return 0;
 }
 
-gint fill_in_s88(struct s88 *p, struct parse_params *pp)
+gint fill_in_s88 (struct s88 * p, struct parse_params * pp)
 {
 
-        gint ii;
+	gint ii;
 
-        /* Figure out how many interfaces are provided */
-        p->nint = 0;
-        while (pp->xcoord[p->nint] != NULL)
-                p->nint++;
+	/* Figure out how many interfaces are provided */
+	p->nint = 0;
+	while (pp->xcoord[p->nint] != NULL)
+		p->nint++;
 
-        p->npnt = (gint *) malloc (sizeof (gint) * p->nint);
-        p->x = (gdouble **) malloc (sizeof (gdouble*) * p->nint);
-        p->z = (gdouble **) malloc (sizeof (gdouble*) * p->nint);
-        p->iii = (gint **)  malloc (sizeof (gint*)    * p->nint);
-        for (ii=0; ii<p->nint; ii++){
+	p->npnt = (gint *) malloc (sizeof (gint) * p->nint);
+	p->x = (gdouble **) malloc (sizeof (gdouble *) * p->nint);
+	p->z = (gdouble **) malloc (sizeof (gdouble *) * p->nint);
+	p->iii = (gint **) malloc (sizeof (gint *) * p->nint);
+	for (ii = 0; ii < p->nint; ii++) {
 
-                p->npnt[ii] = list_size(pp->xcoord[ii]);
+		p->npnt[ii] = list_size (pp->xcoord[ii]);
 
-                if (pp->xcoord[ii] == NULL){
-                        fprintf(stderr, "Missing xcoord for interface %i.\n", ii+1);
-                        return 1;
-                }
-                p->x[ii] = (gdouble *) malloc (sizeof (gdouble) * p->npnt[ii]);
-                if (list_to_double(pp->xcoord[ii], p->x[ii], p->npnt[ii])!= p->npnt[ii]){
-                        fprintf(stderr, "xcoord should have %i elements for interface %i.\n", p->npnt[ii], ii+1);
-                        return 1;
-                }
+		if (pp->xcoord[ii] == NULL) {
+			fprintf (stderr,
+				 "Missing xcoord for interface %i.\n",
+				 ii + 1);
+			return 1;
+		}
+		p->x[ii] =
+		    (gdouble *) malloc (sizeof (gdouble) * p->npnt[ii]);
+		if (list_to_double (pp->xcoord[ii], p->x[ii], p->npnt[ii])
+		    != p->npnt[ii]) {
+			fprintf (stderr,
+				 "xcoord should have %i elements for interface %i.\n",
+				 p->npnt[ii], ii + 1);
+			return 1;
+		}
 
-                if (pp->zcoord[ii] == NULL){
-                        fprintf(stderr, "Missing zcoord for interface %i.\n", ii+1);
-                        return 1;
-                }
-                p->z[ii] = (gdouble *) malloc (sizeof (gdouble) * p->npnt[ii]);
-                if (list_to_double(pp->zcoord[ii], p->z[ii], p->npnt[ii])!= p->npnt[ii]){
-                        fprintf(stderr, "zcoord should have %i elements for interface %i.\n", p->npnt[ii], ii+1);
-                        return 1;
-                }
+		if (pp->zcoord[ii] == NULL) {
+			fprintf (stderr,
+				 "Missing zcoord for interface %i.\n",
+				 ii + 1);
+			return 1;
+		}
+		p->z[ii] =
+		    (gdouble *) malloc (sizeof (gdouble) * p->npnt[ii]);
+		if (list_to_double (pp->zcoord[ii], p->z[ii], p->npnt[ii])
+		    != p->npnt[ii]) {
+			fprintf (stderr,
+				 "zcoord should have %i elements for interface %i.\n",
+				 p->npnt[ii], ii + 1);
+			return 1;
+		}
 
-                if (pp->iii[ii] == NULL){
-                        fprintf(stderr, "Missing iii for interface %i.\n", ii+1);
-                        return 1;
-                }                
-                p->iii[ii] = (gint *)  malloc (sizeof (gint)    * p->npnt[ii]);
-                if (strcmp(pp->iii[ii], "auto") == 0){
-                        gint jj;
-                        p->iii[ii][0] = -1;
-                        for (jj=1; jj<p->npnt[ii]-1; jj++)
-                                p->iii[ii][jj] = 0;
-                        p->iii[ii][p->npnt[ii]-1] = -1;
-                }
-                else{
-                        if (list_to_int (pp->iii[ii], p->iii[ii], p->npnt[ii])!= p->npnt[ii]){
-                                fprintf (stderr, "iii should have %i elements for interface %i or be set to \"auto\".\n", p->npnt[ii], ii+1);
-                                return 1;
-                        }
-                }
-        }
+		if (pp->iii[ii] == NULL) {
+			fprintf (stderr, "Missing iii for interface %i.\n",
+				 ii + 1);
+			return 1;
+		}
+		p->iii[ii] = (gint *) malloc (sizeof (gint) * p->npnt[ii]);
+		if (strcmp (pp->iii[ii], "auto") == 0) {
+			gint jj;
+			p->iii[ii][0] = -1;
+			for (jj = 1; jj < p->npnt[ii] - 1; jj++)
+				p->iii[ii][jj] = 0;
+			p->iii[ii][p->npnt[ii] - 1] = -1;
+		} else {
+			if (list_to_int
+			    (pp->iii[ii], p->iii[ii],
+			     p->npnt[ii]) != p->npnt[ii]) {
+				fprintf (stderr,
+					 "iii should have %i elements for interface %i or be set to \"auto\".\n",
+					 p->npnt[ii], ii + 1);
+				return 1;
+			}
+		}
+	}
 
-        p->v1 = (gdouble *) malloc (sizeof (gdouble) * (p->nint-1));
-        p->v2 = (gdouble *) malloc (sizeof (gdouble) * (p->nint-1));
-        convert_double (pp->v1, p->v1, (p->nint-1), "v1");
-        convert_double (pp->v2, p->v2, (p->nint-1), "v2");
+	/* Compute bounding box of the model */
+	p->xmin = p->x[0][0];
+	p->xmax = p->x[0][0];
+	p->zmin = p->z[0][0];
+	p->zmax = p->z[0][0];
 
-        if ((pp->rho1 != NULL) && (pp->rho2 != NULL)){
-                p->nro = TRUE;
-                p->rho1 = (gdouble *) malloc (sizeof (gdouble) * (p->nint-1));
-                p->rho2 = (gdouble *) malloc (sizeof (gdouble) * (p->nint-1));
+	for (ii = 0; ii < p->nint; ii++) {
+		int k;
 
-                convert_double (pp->rho1, p->rho1, p->nint-1, "rho1");
-                convert_double (pp->rho2, p->rho2, p->nint-1, "rho2");
-        }
-        else{
-                p->nro = FALSE;
-        }
-        
-        if (pp->qps != NULL){
-                p->nabs = TRUE;
+		for (k = 0; k < p->npnt[ii]; k++) {
+			p->xmin = min (p->xmin, p->x[ii][k]);
+			p->xmax = max (p->xmax, p->x[ii][k]);
+			p->zmin = min (p->zmin, p->z[ii][k]);
+			p->zmax = max (p->zmax, p->z[ii][k]);
+		}
+	}
 
-                p->nqp = (gdouble *) malloc (sizeof (gdouble) * (p->nint-1));
-                p->nqs = (gdouble *) malloc (sizeof (gdouble) * (p->nint-1));
-                p->qps = (gdouble **) malloc (sizeof (gdouble*) * (p->nint-1));
+	/* Velocities */
+	p->v1 = (gdouble *) malloc (sizeof (gdouble) * (p->nint - 1));
+	p->v2 = (gdouble *) malloc (sizeof (gdouble) * (p->nint - 1));
+	convert_double (pp->v1, p->v1, (p->nint - 1), "v1");
+	convert_double (pp->v2, p->v2, (p->nint - 1), "v2");
 
-                for (ii=0; ii < p->nint-1; ii++){
+	/* Densities */
+	if ((pp->rho1 != NULL) && (pp->rho2 != NULL)) {
+		p->nro = TRUE;
+		p->rho1 =
+		    (gdouble *) malloc (sizeof (gdouble) * (p->nint - 1));
+		p->rho2 =
+		    (gdouble *) malloc (sizeof (gdouble) * (p->nint - 1));
 
-                        p->qps[ii]  = (gdouble *) malloc (sizeof (gdouble*) * 6);
+		convert_double (pp->rho1, p->rho1, p->nint - 1, "rho1");
+		convert_double (pp->rho2, p->rho2, p->nint - 1, "rho2");
+	} else {
+		p->nro = FALSE;
+	}
 
-                        convert_double(pp->nqp[ii], &(p->nqp[ii]), 1, "nqp");
-                        convert_double(pp->nqs[ii], &(p->nqs[ii]), 1, "nqs");
-                        convert_double(pp->qps[ii], p->qps[ii], 6, "qps");
-                }
-        }
-        else{
-                p->nabs = FALSE;
-        }
+	/* Quality factors */
+	if (pp->qps != NULL) {
+		p->nabs = TRUE;
 
+		p->nqp =
+		    (gdouble *) malloc (sizeof (gdouble) * (p->nint - 1));
+		p->nqs =
+		    (gdouble *) malloc (sizeof (gdouble) * (p->nint - 1));
+		p->qps =
+		    (gdouble **) malloc (sizeof (gdouble *) *
+					 (p->nint - 1));
 
-        p->ptos = (gdouble *) malloc (sizeof (gdouble) * (p->nint-1));
-        if (pp->ptos == NULL){
-                gint jj;
-                for (jj=0; jj<p->nint-1; jj++)
-                                p->ptos[jj] = 1.732;
-        }
-        else{
-                convert_double (pp->ptos, p->ptos, p->nint-1, "ptos");
-        }
+		for (ii = 0; ii < p->nint - 1; ii++) {
 
-        return 0;
+			p->qps[ii] =
+			    (gdouble *) malloc (sizeof (gdouble *) * 6);
+
+			convert_double (pp->nqp[ii], &(p->nqp[ii]), 1,
+					"nqp");
+			convert_double (pp->nqs[ii], &(p->nqs[ii]), 1,
+					"nqs");
+			convert_double (pp->qps[ii], p->qps[ii], 6, "qps");
+		}
+	} else {
+		p->nabs = FALSE;
+	}
+
+	p->ptos = (gdouble *) malloc (sizeof (gdouble) * (p->nint - 1));
+	if (pp->ptos == NULL) {
+		gint jj;
+		for (jj = 0; jj < p->nint - 1; jj++)
+			p->ptos[jj] = 1.732;	/* default vp/vs = sqrt(3) */
+	} else {
+		convert_double (pp->ptos, p->ptos, p->nint - 1, "ptos");
+	}
+
+	return 0;
 
 }

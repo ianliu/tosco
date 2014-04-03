@@ -15,26 +15,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <glib.h>
-#include <glib/gstdio.h>
+int spline (int *n, float *x, float *y, float *b, float *c, float *d);
 
-#include "s88.h"
-#include "parser.h"
+double seval (int *n, float *u, float *x, float *y,
+	      float *b, float *c, float *d);
 
-int main (int argc, char **argv)
-{
-
-	struct s88 *p;
-
-	p = parse_command_line (argc, argv);
-	if (p == NULL)
-		return EXIT_FAILURE;
-
-	g_chdir (p->workdir);
-	s88_run (p);
-
-	return EXIT_SUCCESS;
-}
+int sgheval (int *n, float *u, float *x, float *y,
+	     float *b, float *c, float *d, float *s, float *g, float *h);
