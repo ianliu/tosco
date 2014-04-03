@@ -1,4 +1,4 @@
-/*  rays2 - Draw seismic rays using grace
+/*  s88modeling - Draw seismic rays using grace
  *  Copyright (C) 2014 Ricardo Biloti <biloti@ime.unicamp.br>
  * 
  *  This program is free software: you can redistribute it and/or modify
@@ -56,8 +56,6 @@ int lu_parse(gchar *lufilename, lu_t *lu){
                 fprintf(stderr, "Unable to open %s\n", lufilename);
                 return EXIT_FAILURE;
         }
-
-        lu = (lu_t *) malloc(sizeof(lu_t));
 
         lu->nrays =   0;
         lu->nwavecode = 0;
@@ -222,6 +220,7 @@ int lu_parse(gchar *lufilename, lu_t *lu){
         }
         fclose(lufp);
 
+        fprintf(stderr, "DEBUG: nwavecode = %i\n", lu->nwavecode);
         return EXIT_SUCCESS;
 }
 
@@ -255,6 +254,7 @@ int agr_write(gchar *agrfilename, lu_t *lu, struct s88 *p){
         /*--------------------------------------------------------------*
          *                Writing the Gace Project File
          *--------------------------------------------------------------*/
+        fprintf(stderr, "DEBUG: nwavecode = %i\n", lu->nwavecode);
    
         agrfp = fopen(agrfilename, "w");
         if (agrfp == NULL){
@@ -342,7 +342,7 @@ int agr_write(gchar *agrfilename, lu_t *lu, struct s88 *p){
 
           fp = fopen(p->vel, "w");
           if (fp == NULL){
-                  fprintf(stderr, "Unavble to open %s for writing\n", p->vel);
+                  fprintf(stderr, "Unable to open %s for writing\n", p->vel);
                   return EXIT_FAILURE;
           }
 

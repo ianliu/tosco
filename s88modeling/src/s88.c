@@ -21,6 +21,7 @@
 #include <glib/gstdio.h>
 
 #include "s88.h"
+#include "lu.h"
 
 void write_s88_config(FILE *fp, struct s88 *p);
 void write_synt_config(FILE *fp, struct s88 *p);
@@ -38,6 +39,7 @@ void s88_run(struct s88 *p)
         GString *fname1;
         GString *fname2;
         GString *newname;
+        lu_t     lu;
         gint ishot;
 
         if (!p->dryrun){
@@ -74,29 +76,32 @@ void s88_run(struct s88 *p)
         /* Warm-up phase */
         
         /* place source at surface */
-        /* p->zsour = 0; */
-        /* p->xsour = p->sxmin; */
-        /* p->rmin  = p->xsour + p->rxmin; */
+        p->zsour = 0;
+        p->xsour = p->sxmin;
+        p->rmin  = p->xsour + p->rxmin;
 
-        /* if (p->verbose) */
-        /*   fprintf (stderr, "Warm-up modeling\n"); */
-        /* if (p->debug){ */
-        /*   fprintf (stderr, "\nSeis config:\n"); */
-        /*   write_s88_config (stderr, p); */
-        /*   fprintf (stderr, "\n"); */
-        /* } */
+        if (p->verbose)
+          fprintf (stderr, "Warm-up modeling\n");
+        if (p->debug){
+          fprintf (stderr, "\nSeis config:\n");
+          write_s88_config (stderr, p);
+          fprintf (stderr, "\n");
+        }
           
-        /* if (!p->dryrun){ */
-        /*   fp = fopen (fname1->str, "w"); */
-        /*   write_s88_config (fp, p); */
-        /*   fclose (fp); */
+        if (!p->dryrun){
+          fp = fopen (fname1->str, "w");
+          write_s88_config (fp, p);
+          fclose (fp);
           
-        /*   if (system (cmd1->str)){ */
-        /*     fprintf(stderr, "\nseis with problem\n"); */
-        /*   } */
+          if (system (cmd1->str)){
+            fprintf(stderr, "\nseis with problem\n");
+          }
           
-        /*   g_rename("lu1.dat", "model.dat"); */
-        /* } */
+          g_rename("lu1.dat", "model.dat");
+          lu_parse("model.dat", &lu);
+          fprintf(stderr, "DEBUG: nwavecode = %i\n", lu.nwavecode);
+          agr_write("model.agr", &lu, p);
+        }
           
         /*-------------------------------------------------------------------------*/
         /* De facto modeling */

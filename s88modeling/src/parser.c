@@ -572,8 +572,8 @@ gint fill_in_s88(struct s88 *p, struct parse_params *pp)
                 for (k=0; k<p->npnt[ii]; k++){
                         p->xmin = min(p->xmin, p->x[ii][k]);
                         p->xmax = max(p->xmax, p->x[ii][k]);
-                        p->zmin = min(p->zmin, p->x[ii][k]);
-                        p->zmax = min(p->zmax, p->x[ii][k]);
+                        p->zmin = min(p->zmin, p->z[ii][k]);
+                        p->zmax = max(p->zmax, p->z[ii][k]);
                 }
         }
 
