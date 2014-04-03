@@ -24,6 +24,15 @@
 #include "lu.h"
 #include "libagr.h"
 
+#define STARTUP -1
+#define STARTDOWN 1
+
+#define PWAVE  1
+#define SWAVE -1
+
+#define CONVERTEDWAVE -1
+#define UNCONVERTEDWAVE 1
+
 extern char AGR_title[100];
 
 void write_s88_config (FILE * fp, struct s88 *p, int sourcelayer);
@@ -35,6 +44,7 @@ void write_double_vector (FILE * fp, gdouble * vec, gint N, gchar * format,
 void write_int_vector (FILE * fp, gint * vec, gint N, gchar * format,
 		       gint auxin, gint max);
 GString *make_unique_filename (const gchar * template);
+void writecode(FILE *fp, gint updown, gboolean mult, gint inilayer, gint rlayer, gint ps, gint convert);
 
 void s88_run (struct s88 *p)
 {
@@ -722,5 +732,79 @@ void synt2bin (struct s88 *p)
 		 "Problem with syntpl output.\nAborting.\n");
 	exit (EXIT_FAILURE);
 
+}
 
+void writecode(FILE *fp, gint updown, gboolean mult, gint inilayer, gint rlayer, gint ps, gint convert)
+{
+
+        int ii;
+        int count;
+        int segments;
+        int *code;
+        int factor;
+
+        factor = ps;
+
+        /* Count segments up to reflector */
+        if (updown == STARTDOWN){
+                segments = rlayer - inilayer + 1;
+        }
+        else {
+                segments = inilayer + rlayer;
+        }
+
+        /* All way up */
+        segments =+ rlayer;
+
+        /* If is multiple */
+        if (mult)
+                segments =+ 2*rlayer;
+
+        code = (int *) malloc (sizeof(int) * segments);
+        
+
+        count = 0;
+        if (updown == STARTDOWN){
+                
+                for (ii=inilayer; ii<=rlayer; ii++)
+                        code[count++] = factor * ii;
+        }
+        else {
+                for (ii=inilayer; ii>=1; ii--)
+                        code[count++] = factor * ii;
+                for (ii=1; ii<=rlayer; ii++)
+                        code[count++] = factor * ii;
+        }
+        
+        /* First reflection */
+        factor =  convert * factor;
+        
+        /* All way up */
+        for (ii=rlayer; ii>=1; ii--)
+                code[count++] = factor * ii;
+
+        /* If is multiple */
+        if (mult){
+                for (ii=1; ii<=rlayer; ii++)
+                        code[count++] = factor * ii;
+                for (ii=rlayer; ii>=1; ii--)
+                        code[count++] = factor * ii;
+        }
+
+        count=1;
+        fprintf (fp, "%3i%3i", updown, segments); 
+
+        for (ii=0; ii<segments; ii++){
+                fprintf (fp, "%3i", code[ii]);
+                count++;
+                if (count == 24){
+                        fprintf (fp,"\n");
+                        count = 0;
+                }
+        }
+        if (count > 0)
+                fprintf (fp,"\n");
+
+        free(code);
+        
 }
