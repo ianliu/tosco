@@ -117,6 +117,20 @@ void s88_run (struct s88 *p)
 		}
 	}
 
+        /* Export interfaces */
+        if (p->interf != NULL){
+                if (p->verbose)
+                        fprintf (stderr, "Interfaces saved to %s\n", p->interf);
+                export_interf (&lu, p);
+        }
+
+        /* Export the velocity model */
+        if (p->vel != NULL){
+                if (p->verbose)
+                        fprintf (stderr, "Velocity model saved to %s\n", p->vel);
+                export_velocity (&lu, p);
+        }
+
 	/*-------------------------------------------------------------------------*/
 	/* De facto modeling */
 	p->zsour = p->sz;

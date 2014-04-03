@@ -31,10 +31,7 @@ void interface_free (interface_t * interf);
 void interface_read (FILE * fp, interface_t * interf);
 void interface_dummy_read (FILE * fp, int nn);
 void SetAGRMyPalette (void);
-void strip (FILE * agrfp,
-	    float xmin,
-	    float xmax,
-	    interface_t * s1, interface_t * s2, unsigned int cor);
+void strip (FILE * agrfp, float xmin, float xmax, interface_t * s1, interface_t * s2, unsigned int cor);
 
 /* ---------------------------------------------------- */
 
@@ -71,8 +68,7 @@ int lu_parse (gchar * lufilename, lu_t * lu)
 	line++;
 	if (fscanf (lufp, "%3i%*3i", &icont) != 1) {
 		fprintf (stderr, "Block 1 corrupted in input file.\n"
-			 "Expecting 2 integers on line %i\n"
-			 "Aborting.\n", (int) line);
+			 "Expecting 2 integers on line %i\n" "Aborting.\n", (int) line);
 		return EXIT_FAILURE;
 	}
 
@@ -90,8 +86,7 @@ int lu_parse (gchar * lufilename, lu_t * lu)
 		if (fscanf (lufp, "%d", &lu->nint) != 1) {
 			fprintf (stderr,
 				 "Block 2 corrupted in input file.\n"
-				 "Expecting at least one integer on line %i.\n"
-				 "Aborting.\n", (int) line);
+				 "Expecting at least one integer on line %i.\n" "Aborting.\n", (int) line);
 			return EXIT_FAILURE;
 		}
 
@@ -106,9 +101,7 @@ int lu_parse (gchar * lufilename, lu_t * lu)
 			if (fscanf (lufp, "%i", &npts) != 1) {
 				fprintf (stderr,
 					 "Block 3 corrupted in input file.\n"
-					 "Expecting %i integers on line %i.\n"
-					 "Aborting.\n", lu->nint + 1,
-					 (int) line);
+					 "Expecting %i integers on line %i.\n" "Aborting.\n", lu->nint + 1, (int) line);
 				return EXIT_FAILURE;
 			}
 
@@ -124,8 +117,7 @@ int lu_parse (gchar * lufilename, lu_t * lu)
 			}
 		} else {
 			for (i = 0; i < lu->nint; i++) {
-				interface_dummy_read (lufp,
-						      lu->interf[i].n);
+				interface_dummy_read (lufp, lu->interf[i].n);
 			}
 		}
 
@@ -138,8 +130,7 @@ int lu_parse (gchar * lufilename, lu_t * lu)
 		if (fscanf (lufp, "%*f %*f %*f %*f %*f") != 0) {
 			fprintf (stderr,
 				 "Block 4 corrupted in input file.\n"
-				 "Expecting five floats on line %i.\n"
-				 "Aborting.\n", (int) line);
+				 "Expecting five floats on line %i.\n" "Aborting.\n", (int) line);
 			return EXIT_FAILURE;
 		}
 
@@ -152,8 +143,7 @@ int lu_parse (gchar * lufilename, lu_t * lu)
 		if (fscanf (lufp, "%5i%5i", &n, &ind) != 2) {
 			fprintf (stderr,
 				 "Block 5 corrupted in input file.\n"
-				 "Expecting two floats on line %i.\n"
-				 "Aborting.\n", (int) line);
+				 "Expecting two floats on line %i.\n" "Aborting.\n", (int) line);
 			return EXIT_FAILURE;
 		}
 
@@ -167,8 +157,7 @@ int lu_parse (gchar * lufilename, lu_t * lu)
 			if (fscanf (lufp, "%5i%5i", &n, &ind) != 2) {
 				fprintf (stderr,
 					 "Block 6 corrupted in input file.\n"
-					 "Expecting two integers on line %i.\n"
-					 "Aborting.\n", (int) line);
+					 "Expecting two integers on line %i.\n" "Aborting.\n", (int) line);
 				return EXIT_FAILURE;
 			}
 
@@ -182,8 +171,7 @@ int lu_parse (gchar * lufilename, lu_t * lu)
 		if (fscanf (lufp, "%i", &namp) != 1) {
 			fprintf (stderr,
 				 "Block 7 corrupted in input file.\n"
-				 "Expecting one integer on line %i.\n"
-				 "Aborting.\n", (int) line);
+				 "Expecting one integer on line %i.\n" "Aborting.\n", (int) line);
 			return EXIT_FAILURE;
 		}
 		namp = abs (namp);
@@ -200,10 +188,8 @@ int lu_parse (gchar * lufilename, lu_t * lu)
 		for (i = 0; i < namp; i++) {
 			float traveltime;
 			line++;
-			if (fscanf
-			    (lufp,
-			     "%*i %*f %f %*f %*f %*f %*f %*f %*f %*f %*f",
-			     &traveltime) != 1) {
+			if (fscanf (lufp, "%*i %*f %f %*f %*f %*f %*f %*f %*f %*f %*f", &traveltime)
+			    != 1) {
 				fprintf (stderr,
 					 "Block 8 corrupted in input file.\n"
 					 "Expecting one integer and ten floats on line %i.\n"
@@ -220,8 +206,7 @@ int lu_parse (gchar * lufilename, lu_t * lu)
 		if (status != 1 && status != EOF) {
 			fprintf (stderr,
 				 "Block 1 corrupted in input file.\n"
-				 "Expecting two integers on line %i.\n"
-				 "Aborting.\n", (int) line);
+				 "Expecting two integers on line %i.\n" "Aborting.\n", (int) line);
 			return EXIT_FAILURE;
 		}
 
@@ -261,9 +246,9 @@ int agr_write (gchar * agrfilename, lu_t * lu, struct s88 *p)
 	FILE *agrfp;
 
 	const int cor[] = { 1, 36, 9, 41, 28, 8, 14, 5, 4,
-		31, 6, 29, 7, 9, 10, 11, 12, 13,
-		16, 17, 18, 19, 20, 21, 22, 23, 24,
-		25, 26, 27, 28, 32, 33, 34, 35, 0
+                            31, 6, 29, 7, 9, 10, 11, 12, 13,
+                            16, 17, 18, 19, 20, 21, 22, 23, 24,
+                            25, 26, 27, 28, 32, 33, 34, 35, 0
 	};
 
 	/*--------------------------------------------------------------*
@@ -271,8 +256,7 @@ int agr_write (gchar * agrfilename, lu_t * lu, struct s88 *p)
          *--------------------------------------------------------------*/
 	agrfp = fopen (agrfilename, "w");
 	if (agrfp == NULL) {
-		fprintf (stderr, "Unable to open %s for writing\n",
-			 agrfilename);
+		fprintf (stderr, "Unable to open %s for writing\n", agrfilename);
 		return EXIT_FAILURE;
 	}
 
@@ -297,8 +281,7 @@ int agr_write (gchar * agrfilename, lu_t * lu, struct s88 *p)
 	AGR_linecolor = 1;	/* Interfaces in black */
 
 	for (i = 0; i < lu->nint - 1; i++)
-		strip (agrfp, p->xmin, p->xmax, &(lu->interf[i]),
-		       &(lu->interf[i + 1]), i + 2 + p->land);
+		strip (agrfp, p->xmin, p->xmax, &(lu->interf[i]), &(lu->interf[i + 1]), i + 2 + p->land);
 
 	if (!p->norays) {
 		/**** Writing Rays ****/
@@ -313,46 +296,47 @@ int agr_write (gchar * agrfilename, lu_t * lu, struct s88 *p)
 			for (nr = 0; nr < lu->ns[ni]; nr++, naux++) {
 
 				WriteAGRDataXY (agrfp,
-						lu->ray[lu->nrays -
-							naux].x,
-						lu->ray[lu->nrays -
-							naux].z,
-						lu->ray[lu->nrays -
-							naux].n);
+						lu->ray[lu->nrays - naux].x,
+						lu->ray[lu->nrays - naux].z, lu->ray[lu->nrays - naux].n);
 			}
 		}
 	}
 
+        fclose (agrfp);
+	FreeAGRPalette ();
+}
+
+int export_interf(lu_t * lu, struct s88 *p)
+{
 	/* Export the interfaces */
-	if (p->interf != NULL) {
-		FILE *fp;
-		int ii;
+        FILE *fp;
+        int ii;
+        
+        fp = fopen (p->interf, "w");
+        if (fp == NULL){
+                fprintf (stderr, "Unable to open %s for writing\n", p->interf);
+                return EXIT_FAILURE;
+        }
+        
+        for (ii = 0; ii < lu->nint; ii++) {
+                int ix;
+                float x;
+                
+                for (ix = 0; ix < p->nx; ix++) {
 
-		fp = fopen (p->interf, "w");
+                        x = p->xmin + ix * (p->xmax - p->xmin) / (p->nx - 1);
+                        
+                        fprintf (fp, "% .4f %.4f\n", x, interf(&(lu->interf[ii]), x));
+                }
+                fprintf (fp, "\n");
+        }
+        fclose (fp);
+        
+        return EXIT_SUCCESS;
+}
 
-		for (ii = 0; ii < lu->nint; ii++) {
-			int ix;
-			float x;
-
-			for (ix = 0; ix < p->nx; ix++) {
-
-				x = p->xmin + ix * (p->xmax -
-						    p->xmin) / (p->nx - 1);
-
-				fprintf (fp, "% .4f %.4f\n", x,
-					 seval ((int *)
-						&(lu->interf[ii].n), &x,
-						lu->interf[ii].x,
-						lu->interf[ii].z,
-						lu->interf[ii].b,
-						lu->interf[ii].c,
-						lu->interf[ii].d));
-			}
-			fprintf (fp, "\n");
-		}
-		fclose (fp);
-	}
-
+int export_velocity(lu_t * lu, struct s88 *p)
+{
 	/* Export the velocity model */
 	if (p->vel != NULL) {
 		float *v;
@@ -362,8 +346,7 @@ int agr_write (gchar * agrfilename, lu_t * lu, struct s88 *p)
 
 		fp = fopen (p->vel, "w");
 		if (fp == NULL) {
-			fprintf (stderr, "Unable to open %s for writing\n",
-				 p->vel);
+			fprintf (stderr, "Unable to open %s for writing\n", p->vel);
 			return EXIT_FAILURE;
 		}
 
@@ -371,26 +354,18 @@ int agr_write (gchar * agrfilename, lu_t * lu, struct s88 *p)
 
 		for (ix = 0; ix < p->nx; ix++) {
 			float x;
-			double depth[MAX_NINTERF];
+			float depth[MAX_NINTERF];
 
-			x = p->xmin + ix * (p->xmax - p->xmin) / (p->nx -
-								  1);
+			x = p->xmin + ix * (p->xmax - p->xmin) / (p->nx - 1);
 
 			for (ilayer = 0; ilayer < lu->nint; ilayer++) {
-				depth[ilayer] =
-				    seval ((int *) &(lu->interf[ilayer].n),
-					   &x, lu->interf[ilayer].x,
-					   lu->interf[ilayer].z,
-					   lu->interf[ilayer].b,
-					   lu->interf[ilayer].c,
-					   lu->interf[ilayer].d);
+				depth[ilayer] = interf(&(lu->interf[ilayer]), x);
 			}
 
 			ilayer = 0;
 			for (iz = 0; iz < p->nz; iz++) {
 				double z;
-				z = p->zmin + iz * (p->zmax -
-						    p->zmin) / (p->nz - 1);
+				z = p->zmin + iz * (p->zmax - p->zmin) / (p->nz - 1);
 
 				while ((z >= depth[ilayer])
 				       && (ilayer < lu->nint)) {
@@ -399,16 +374,9 @@ int agr_write (gchar * agrfilename, lu_t * lu, struct s88 *p)
 
 				if (ilayer < lu->nint) {
 					v[iz] =
-					    p->v1[ilayer - 1] + (z -
-								 depth
-								 [ilayer -
-								  1]) /
+					    p->v1[ilayer - 1] + (z - depth[ilayer - 1]) /
 					    (depth[ilayer] -
-					     depth[ilayer -
-						   1]) * (p->v2[ilayer -
-								1] -
-							  p->v1[ilayer -
-								1]);
+					     depth[ilayer - 1]) * (p->v2[ilayer - 1] - p->v1[ilayer - 1]);
 				} else {
 					v[iz] = p->v2[lu->nint - 2];
 				}
@@ -419,12 +387,7 @@ int agr_write (gchar * agrfilename, lu_t * lu, struct s88 *p)
 		}
 		free (v);
 		fclose (fp);
-		fprintf (stderr, "Velocity model was exported\n");
 	}
-
-	fclose (agrfp);
-
-	FreeAGRPalette ();
 
 	return EXIT_SUCCESS;
 }
@@ -446,8 +409,7 @@ void ray_read (FILE * fp, int n, int ind, ray_t * ray)
 		if (fscanf (fp, "%f %f", &(ray->x[i]), &(ray->z[i])) != 2) {
 			fprintf (stderr,
 				 "Block 6 corrupted in input file.\n"
-				 "Expecting two floats on line %i\n."
-				 "Aborting.\n", (int) line);
+				 "Expecting two floats on line %i\n." "Aborting.\n", (int) line);
 			exit (EXIT_FAILURE);
 		}
 	}
@@ -493,13 +455,11 @@ void interface_read (FILE * fp, interface_t * interf)
 	for (j = 0; j < interf->n; j++) {
 		line++;
 		if (fscanf (fp, "%f %f %f %f %f %i",
-			    &(interf->z[j]), &(interf->b[j]),
-			    &(interf->c[j]), &(interf->d[j]),
+			    &(interf->z[j]), &(interf->b[j]), &(interf->c[j]), &(interf->d[j]),
 			    &(interf->x[j]), &(interf->iii[j])) != 6) {
 			fprintf (stderr,
 				 "Block 3 corrupted in input file.\n"
-				 "Expecting six integers on line %i.\n"
-				 "Aborting.\n", (int) line);
+				 "Expecting six integers on line %i.\n" "Aborting.\n", (int) line);
 			exit (EXIT_FAILURE);
 		}
 	}
@@ -515,18 +475,20 @@ void interface_dummy_read (FILE * fp, int nn)
 		if (fscanf (fp, "%*f %*f %*f %*f %*f %*i")) {
 			fprintf (stderr,
 				 "Block 3 corrupted in input file.\n"
-				 "Expecting six integers on line %i.\n"
-				 "Aborting.\n", (int) line);
+				 "Expecting six integers on line %i.\n" "Aborting.\n", (int) line);
 			exit (EXIT_FAILURE);
 		}
 	}
 }
 
+float interf(interface_t * s, float x)
+{
+        return seval ((int *) &(s->n), &x, s->x, s->z, s->b, s->c, s->d);
+}
+
+
 /*--------------------------------------------------------------*/
-void
-strip (FILE * agrfp,
-       float xmin,
-       float xmax, interface_t * s1, interface_t * s2, unsigned int cor)
+void strip (FILE * agrfp, float xmin, float xmax, interface_t * s1, interface_t * s2, unsigned int cor)
 {
 	int n, i;
 	float *x, *z, lambda, xx;
@@ -541,20 +503,16 @@ strip (FILE * agrfp,
 
 		xx = lambda * xmax + (1 - lambda) * xmin;
 		x[i] = xx;
-		z[i] = seval ((int *) &(s1->n), &xx,
-			      s1->x, s1->z, s1->b, s1->c, s1->d);
+		z[i] = interf(s1, xx);
 
 		xx = lambda * xmin + (1 - lambda) * xmax;
 		x[NSAMPLEX + i] = xx;
-		z[NSAMPLEX + i] = seval ((int *) &(s2->n), &xx,
-					 s2->x, s2->z, s2->b, s2->c,
-					 s2->d);
+		z[NSAMPLEX + i] = interf(s2, xx);
 	}
 
 	xx = xmin;
 	x[n - 1] = xmin;
-	z[n - 1] = seval ((int *) &(s1->n), &xx,
-			  s1->x, s1->z, s1->b, s1->c, s1->d);
+	z[n - 1] = interf(s1, xx);
 
 	AGR_fillcolor = cor;
 	WriteAGRDataXY (agrfp, x, z, n);
@@ -573,13 +531,10 @@ void SetAGRMyPalette (void)
 
 	AGR_palette = (unsigned short **)
 	    malloc (AGR_numberofcolors * sizeof (unsigned short *));
-	AGR_colorname =
-	    (char **) malloc (AGR_numberofcolors * sizeof (char *));
+	AGR_colorname = (char **) malloc (AGR_numberofcolors * sizeof (char *));
 
 	for (i = 0; i < AGR_numberofcolors; i++) {
-		AGR_palette[i] =
-		    (unsigned short *) malloc (3 *
-					       sizeof (unsigned short));
+		AGR_palette[i] = (unsigned short *) malloc (3 * sizeof (unsigned short));
 		AGR_colorname[i] = (char *) malloc (25 * sizeof (char));
 	}
 
