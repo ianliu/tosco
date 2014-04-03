@@ -34,44 +34,44 @@
 #define MAX_NINTERF      100
 #define NSAMPLEX         151
 
-typedef struct{
+typedef struct {
 
-        int n;
-        float *x;
-        float *z;
-        float *b;
-        float *c;
-        float *d;
-        int *iii;
+	int n;
+	float *x;
+	float *z;
+	float *b;
+	float *c;
+	float *d;
+	int *iii;
 
 } interface_t;
 
 typedef struct {
 
-        int n;
-        int ind;
+	int n;
+	int ind;
 
-        float *x;
-        float *z;
+	float *x;
+	float *z;
 
 } ray_t;
 
 
-typedef struct{
+typedef struct {
 
-        int            nint;
-        int            nrays;
-        int            nwavecode;
-        int            ns[MAX_CODEWAVES];
-        ray_t          ray[MAX_NRAYS];
-        interface_t    interf[MAX_NINTERF];
-        float          tmax;
+	int nint;
+	int nrays;
+	int nwavecode;
+	int ns[MAX_CODEWAVES];
+	ray_t ray[MAX_NRAYS];
+	interface_t interf[MAX_NINTERF];
+	float tmax;
 
 } lu_t;
 
 
-int lu_parse(gchar *lufilename, lu_t *lu);
-void lu_free(lu_t *lu);
-int agr_write(gchar *agrfilename, lu_t *lu, struct s88 *p);
+int lu_parse (gchar * lufilename, lu_t * lu);
+void lu_free (lu_t * lu);
+int agr_write (gchar * agrfilename, lu_t * lu, struct s88 *p);
 
 #endif

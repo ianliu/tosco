@@ -41,17 +41,17 @@
         fprintf (stderr, "%s should have %i elements.\n", cc, nn);\
         return EXIT_FAILURE; }}
 
-gint list_to_int (gchar *list, gint *values, gint max);
-gint list_to_double (gchar *list, gdouble *values, gint max);
-gint list_size (gchar *list);
+gint list_to_int (gchar * list, gint * values, gint max);
+gint list_to_double (gchar * list, gdouble * values, gint max);
+gint list_size (gchar * list);
 gint check_parameters (struct s88 *p, struct parse_params *pp);
-gint fill_in_s88(struct s88 *p, struct parse_params *pp);
+gint fill_in_s88 (struct s88 *p, struct parse_params *pp);
 
-struct s88* parse_command_line(int argc, char** argv)
+struct s88 *parse_command_line (int argc, char **argv)
 {
 
-        static struct parse_params pp;
-        static struct s88 p;
+	static struct parse_params pp;
+	static struct s88 p;
 
         static GOptionEntry entries_interface[] = {
                 { "xcoord",0, 0, G_OPTION_ARG_STRING_ARRAY, &pp.xcoord, "List of x coordinates of interface knots", "x1,x2,...,xn" },
@@ -272,375 +272,402 @@ struct s88* parse_command_line(int argc, char** argv)
         g_option_group_add_entries(group, entries_main);
         g_option_context_set_main_group(parser, group);
 
-        //g_option_context_add_main_entries (parser, entries, NULL);
-        
-        /* Complain about unknown options */
-        g_option_context_set_ignore_unknown_options (parser, FALSE);
-        
-        /* Required */
-        p.rxmin  = 0.0 / 0.0;
-        p.rxstep = 0.0 / 0.0;
-        p.sxmin  = 0.0 / 0.0;
-        p.sxstep = 0.0 / 0.0;
-        p.sz     = 0.0 / 0.0;
-        p.nshots = 1;
+	//g_option_context_add_main_entries (parser, entries, NULL);
 
-        /* Default values */
-        p.mdim = 3;
-        p.mep = 10;
-        p.method = 0;
-        p.itmax = 20;
-        p.tsour = 0;
-        p.reps =  0.0005;
-        p.reps1 = 0.00002;
-        p.dtint = 0.1;
-        p.amin1 = -3.1415;
-        p.astep1 = 1.0e-3;
-        p.amax1 = M_PI;
-        p.amin2 = -3.1415;
-        p.astep2 = .001;
-        p.amax2 = M_PI;
-        p.ac = 1.0e-5;
-        p.ibp = 1;
-        p.ibs = 0;
-        p.mltp = FALSE;
-        p.sghost = FALSE;
-        p.rghost = FALSE;
+	/* Complain about unknown options */
+	g_option_context_set_ignore_unknown_options (parser, FALSE);
 
-        p.tmin = 0;
-        p.dt = 0.004;
-        p.tmax = 4.0;
-        p.freq = 25;
-        p.gamma = 3.5;
-        p.psi = 0;
-        p.mag = 1;
-        
-        p.raydiag = TRUE;
-        p.nx = 101;
-        p.nz = 101;
-        p.land = FALSE;
-        p.nofill = FALSE;
-        p.norays = FALSE;
-        p.allblack = FALSE;
+	/* Required */
+	p.rxmin = 0.0 / 0.0;
+	p.rxstep = 0.0 / 0.0;
+	p.sxmin = 0.0 / 0.0;
+	p.sxstep = 0.0 / 0.0;
+	p.sz = 0.0 / 0.0;
+	p.nshots = 1;
 
-        p.keeprays = FALSE;
-        p.verbose = FALSE;
-        p.debug = FALSE;
-        p.dryrun = FALSE;
-        p.version = FALSE;
-        
-        /* Parse command line */
-        if (g_option_context_parse (parser, &argc, &argv, &error) == FALSE){
-                fprintf(stderr, "%s: syntax error\n", argv[0]);
-                fprintf(stderr, "Try %s --help\n", argv[0]);
-                return NULL;
-        }
-        
-        g_option_context_free (parser);
+	/* Default values */
+	p.mdim = 3;
+	p.mep = 10;
+	p.method = 0;
+	p.itmax = 20;
+	p.tsour = 0;
+	p.reps = 0.0005;
+	p.reps1 = 0.00002;
+	p.dtint = 0.1;
+	p.amin1 = -3.1415;
+	p.astep1 = 1.0e-3;
+	p.amax1 = M_PI;
+	p.amin2 = -3.1415;
+	p.astep2 = .001;
+	p.amax2 = M_PI;
+	p.ac = 1.0e-5;
+	p.ibp = 1;
+	p.ibs = 0;
+	p.mltp = FALSE;
+	p.sghost = FALSE;
+	p.rghost = FALSE;
 
-        if (p.version){
-                fprintf(stderr, PACKAGE " " VERSION "\n");
-                return EXIT_SUCCESS;
-        }
-        
-        /* Check for required parameters */
-        if (check_parameters(&p, &pp))
-                return NULL;
+	p.tmin = 0;
+	p.dt = 0.004;
+	p.tmax = 4.0;
+	p.freq = 25;
+	p.gamma = 3.5;
+	p.psi = 0;
+	p.mag = 1;
 
-        /* Filling in vectors */
-        if (fill_in_s88(&p, &pp))
-                return NULL;
+	p.raydiag = TRUE;
+	p.nx = 101;
+	p.nz = 101;
+	p.land = FALSE;
+	p.nofill = FALSE;
+	p.norays = FALSE;
+	p.allblack = FALSE;
 
-        return &p;
+	p.keeprays = FALSE;
+	p.verbose = FALSE;
+	p.debug = FALSE;
+	p.dryrun = FALSE;
+	p.version = FALSE;
+
+	/* Parse command line */
+	if (g_option_context_parse (parser, &argc, &argv, &error) == FALSE) {
+		fprintf (stderr, "%s: syntax error\n", argv[0]);
+		fprintf (stderr, "Try %s --help\n", argv[0]);
+		return NULL;
+	}
+
+	g_option_context_free (parser);
+
+	if (p.version) {
+		fprintf (stderr, PACKAGE " " VERSION "\n");
+		return EXIT_SUCCESS;
+	}
+
+	/* Check for required parameters */
+	if (check_parameters (&p, &pp))
+		return NULL;
+
+	/* Filling in vectors */
+	if (fill_in_s88 (&p, &pp))
+		return NULL;
+
+	return &p;
 }
 
 /* ======== Private functions ======== */
-gint list_to_int (gchar *list, gint *values, gint max)
+gint list_to_int (gchar * list, gint * values, gint max)
 {
-        gint n = 0;
-        gchar *strvalue;
+	gint n = 0;
+	gchar *strvalue;
 
-        strvalue = strtok(list, ",");
-        values[n++] = atoi(strvalue);
-        
-        while ((strvalue = strtok(NULL, ",")) != NULL && n < max)
-                values[n++] = atoi(strvalue);
+	strvalue = strtok (list, ",");
+	values[n++] = atoi (strvalue);
 
-        return (strvalue == NULL ? n : -1);
+	while ((strvalue = strtok (NULL, ",")) != NULL && n < max)
+		values[n++] = atoi (strvalue);
+
+	return (strvalue == NULL ? n : -1);
 }
 
-gint list_to_double (gchar *list, gdouble *values, gint max)
+gint list_to_double (gchar * list, gdouble * values, gint max)
 {
-        gint n = 0;
-        gchar *strvalue;
+	gint n = 0;
+	gchar *strvalue;
 
-        strvalue = strtok(list, ",");
-        values[n++] = atof(strvalue);
-        
-        while ((strvalue = strtok(NULL, ",")) != NULL && n < max)
-                values[n++] = atof(strvalue);
+	strvalue = strtok (list, ",");
+	values[n++] = atof (strvalue);
 
-        return (strvalue == NULL ? n : -1);
+	while ((strvalue = strtok (NULL, ",")) != NULL && n < max)
+		values[n++] = atof (strvalue);
+
+	return (strvalue == NULL ? n : -1);
 
 }
 
-gint list_size (gchar *list)
+gint list_size (gchar * list)
 {
-        gint n;
-        gchar *aux;
-        gchar *iter;
+	gint n;
+	gchar *aux;
+	gchar *iter;
 
-        if (list == NULL)
-                return 0;
-        
-        aux = (gchar *) malloc (sizeof(char) * (strlen(list)+1));
-        memcpy(aux, list, (strlen(list)+1));
-        
-        iter = strtok(aux, ",");
-        n = 1;
+	if (list == NULL)
+		return 0;
 
-        while ((iter = strtok(NULL, ",")) != NULL)
-                n++;
+	aux = (gchar *) malloc (sizeof (char) * (strlen (list) + 1));
+	memcpy (aux, list, (strlen (list) + 1));
 
-        free(aux);
+	iter = strtok (aux, ",");
+	n = 1;
 
-        return n;
+	while ((iter = strtok (NULL, ",")) != NULL)
+		n++;
+
+	free (aux);
+
+	return n;
 }
 
 
-gint check_parameters (struct s88 *p, struct parse_params *pp)
+gint check_parameters (struct s88 * p, struct parse_params * pp)
 {
-        
-        static gchar *seis  = "seis";
-        static gchar *synt = "syntpl";
-        static gchar *tmp = "/tmp";
 
-        if (p->spath == NULL)
-                p->spath = seis;
+	static gchar *seis = "seis";
+	static gchar *synt = "syntpl";
+	static gchar *tmp = "/tmp";
 
-        if (p->sypath == NULL)
-                p->sypath = synt;
+	if (p->spath == NULL)
+		p->spath = seis;
 
-        if (p->workdir == NULL)
-                p->workdir = tmp;
+	if (p->sypath == NULL)
+		p->sypath = synt;
 
-        if (pp->xcoord == NULL){
-                fprintf (stderr, "xcoord should be provided.\n");
-                return 1;
-        }
+	if (p->workdir == NULL)
+		p->workdir = tmp;
 
-        if (pp->zcoord == NULL){
-                fprintf (stderr, "zcoord should be provided.\n");
-                return 1;
-        }
+	if (pp->xcoord == NULL) {
+		fprintf (stderr, "xcoord should be provided.\n");
+		return 1;
+	}
 
-        if (pp->v1 == NULL){
-                fprintf (stderr, "v1 should be provided.\n");
-                return 1;
-        }
+	if (pp->zcoord == NULL) {
+		fprintf (stderr, "zcoord should be provided.\n");
+		return 1;
+	}
 
-        if (pp->v2 == NULL){
-                fprintf (stderr, "v2 should be provided.\n");
-                return 1;
-        }
+	if (pp->v1 == NULL) {
+		fprintf (stderr, "v1 should be provided.\n");
+		return 1;
+	}
 
-        if ((pp->rho1 != NULL) && (pp->rho2 == NULL)){
-                fprintf (stderr, "rho2 should be provided, whenever rho1 is provided.\n");
-                return 1;
-        }
+	if (pp->v2 == NULL) {
+		fprintf (stderr, "v2 should be provided.\n");
+		return 1;
+	}
 
-        if ((pp->rho1 == NULL) && (pp->rho2 != NULL)){
-                fprintf (stderr, "rho1 should be provided, whenever rho2 is provided.\n");
-                return 1;
-        }
-        
-        if (p->mep < 2){
-                fprintf (stderr, "mep should be provided and greater than 1.\n");
-                return 1;
-        }
+	if ((pp->rho1 != NULL) && (pp->rho2 == NULL)) {
+		fprintf (stderr,
+			 "rho2 should be provided, whenever rho1 is provided.\n");
+		return 1;
+	}
 
-        if ((p->method < 0) || (p->method>4)){
-                fprintf (stderr, "method should be 0, 1, 2 or 3.\n");
-                return 1;
-        }
+	if ((pp->rho1 == NULL) && (pp->rho2 != NULL)) {
+		fprintf (stderr,
+			 "rho1 should be provided, whenever rho2 is provided.\n");
+		return 1;
+	}
 
-        if (p->itmax < 0){
-                fprintf (stderr, "itmax should be greater than or equal to 0.\n");
-                return 1;
-        }
+	if (p->mep < 2) {
+		fprintf (stderr,
+			 "mep should be provided and greater than 1.\n");
+		return 1;
+	}
 
-        if (isnan(p->rxmin)){
-                fprintf (stderr, "rxmin should be provided.\n");
-                return 1;
-        }
+	if ((p->method < 0) || (p->method > 4)) {
+		fprintf (stderr, "method should be 0, 1, 2 or 3.\n");
+		return 1;
+	}
 
-        if (isnan(p->rxstep)){
-                fprintf (stderr, "rxstep should be provided.\n");
-                return 1;
-        }
+	if (p->itmax < 0) {
+		fprintf (stderr,
+			 "itmax should be greater than or equal to 0.\n");
+		return 1;
+	}
 
-        if (isnan(p->sxmin)){
-                fprintf (stderr, "sxmin should be provided.\n");
-                return 1;
-        }
+	if (isnan (p->rxmin)) {
+		fprintf (stderr, "rxmin should be provided.\n");
+		return 1;
+	}
 
-        if (isnan(p->sxstep)){
-                fprintf (stderr, "sxstep should be provided.\n");
-                return 1;                
-        }
+	if (isnan (p->rxstep)) {
+		fprintf (stderr, "rxstep should be provided.\n");
+		return 1;
+	}
 
-        if (isnan(p->sz)){
-                fprintf (stderr, "sz should be provided.\n");
-                return 1;
-        }
+	if (isnan (p->sxmin)) {
+		fprintf (stderr, "sxmin should be provided.\n");
+		return 1;
+	}
+
+	if (isnan (p->sxstep)) {
+		fprintf (stderr, "sxstep should be provided.\n");
+		return 1;
+	}
+
+	if (isnan (p->sz)) {
+		fprintf (stderr, "sz should be provided.\n");
+		return 1;
+	}
 
 
-        if (!( p->ibp || p->ibs )){
-                fprintf (stderr, "No wave code selected for generation.\n");
-                return 1;
-        }
+	if (!(p->ibp || p->ibs)) {
+		fprintf (stderr,
+			 "No wave code selected for generation.\n");
+		return 1;
+	}
 
-        if ( (p->ibp < 0) || (p->ibp >2) ){
-                fprintf (stderr, "ibp out of range.\n");
-                return 1;
-        }
+	if ((p->ibp < 0) || (p->ibp > 2)) {
+		fprintf (stderr, "ibp out of range.\n");
+		return 1;
+	}
 
-        if ( (p->ibs < 0) || (p->ibs >2) ){
-                fprintf (stderr, "ibs out of range.\n");
-                return 1;
-        }
-        
-        if (p->debug)
-                p->verbose = TRUE;
+	if ((p->ibs < 0) || (p->ibs > 2)) {
+		fprintf (stderr, "ibs out of range.\n");
+		return 1;
+	}
 
-        return 0;
+	if (p->debug)
+		p->verbose = TRUE;
+
+	return 0;
 }
 
-gint fill_in_s88(struct s88 *p, struct parse_params *pp)
+gint fill_in_s88 (struct s88 * p, struct parse_params * pp)
 {
 
-        gint ii;
+	gint ii;
 
-        /* Figure out how many interfaces are provided */
-        p->nint = 0;
-        while (pp->xcoord[p->nint] != NULL)
-                p->nint++;
+	/* Figure out how many interfaces are provided */
+	p->nint = 0;
+	while (pp->xcoord[p->nint] != NULL)
+		p->nint++;
 
-        p->npnt = (gint *) malloc (sizeof (gint) * p->nint);
-        p->x = (gdouble **) malloc (sizeof (gdouble*) * p->nint);
-        p->z = (gdouble **) malloc (sizeof (gdouble*) * p->nint);
-        p->iii = (gint **)  malloc (sizeof (gint*)    * p->nint);
-        for (ii=0; ii<p->nint; ii++){
+	p->npnt = (gint *) malloc (sizeof (gint) * p->nint);
+	p->x = (gdouble **) malloc (sizeof (gdouble *) * p->nint);
+	p->z = (gdouble **) malloc (sizeof (gdouble *) * p->nint);
+	p->iii = (gint **) malloc (sizeof (gint *) * p->nint);
+	for (ii = 0; ii < p->nint; ii++) {
 
-                p->npnt[ii] = list_size(pp->xcoord[ii]);
+		p->npnt[ii] = list_size (pp->xcoord[ii]);
 
-                if (pp->xcoord[ii] == NULL){
-                        fprintf(stderr, "Missing xcoord for interface %i.\n", ii+1);
-                        return 1;
-                }
-                p->x[ii] = (gdouble *) malloc (sizeof (gdouble) * p->npnt[ii]);
-                if (list_to_double(pp->xcoord[ii], p->x[ii], p->npnt[ii])!= p->npnt[ii]){
-                        fprintf(stderr, "xcoord should have %i elements for interface %i.\n", p->npnt[ii], ii+1);
-                        return 1;
-                }
+		if (pp->xcoord[ii] == NULL) {
+			fprintf (stderr,
+				 "Missing xcoord for interface %i.\n",
+				 ii + 1);
+			return 1;
+		}
+		p->x[ii] =
+		    (gdouble *) malloc (sizeof (gdouble) * p->npnt[ii]);
+		if (list_to_double (pp->xcoord[ii], p->x[ii], p->npnt[ii])
+		    != p->npnt[ii]) {
+			fprintf (stderr,
+				 "xcoord should have %i elements for interface %i.\n",
+				 p->npnt[ii], ii + 1);
+			return 1;
+		}
 
-                if (pp->zcoord[ii] == NULL){
-                        fprintf(stderr, "Missing zcoord for interface %i.\n", ii+1);
-                        return 1;
-                }
-                p->z[ii] = (gdouble *) malloc (sizeof (gdouble) * p->npnt[ii]);
-                if (list_to_double(pp->zcoord[ii], p->z[ii], p->npnt[ii])!= p->npnt[ii]){
-                        fprintf(stderr, "zcoord should have %i elements for interface %i.\n", p->npnt[ii], ii+1);
-                        return 1;
-                }
+		if (pp->zcoord[ii] == NULL) {
+			fprintf (stderr,
+				 "Missing zcoord for interface %i.\n",
+				 ii + 1);
+			return 1;
+		}
+		p->z[ii] =
+		    (gdouble *) malloc (sizeof (gdouble) * p->npnt[ii]);
+		if (list_to_double (pp->zcoord[ii], p->z[ii], p->npnt[ii])
+		    != p->npnt[ii]) {
+			fprintf (stderr,
+				 "zcoord should have %i elements for interface %i.\n",
+				 p->npnt[ii], ii + 1);
+			return 1;
+		}
 
-                if (pp->iii[ii] == NULL){
-                        fprintf(stderr, "Missing iii for interface %i.\n", ii+1);
-                        return 1;
-                }                
-                p->iii[ii] = (gint *)  malloc (sizeof (gint)    * p->npnt[ii]);
-                if (strcmp(pp->iii[ii], "auto") == 0){
-                        gint jj;
-                        p->iii[ii][0] = -1;
-                        for (jj=1; jj<p->npnt[ii]-1; jj++)
-                                p->iii[ii][jj] = 0;
-                        p->iii[ii][p->npnt[ii]-1] = -1;
-                }
-                else{
-                        if (list_to_int (pp->iii[ii], p->iii[ii], p->npnt[ii])!= p->npnt[ii]){
-                                fprintf (stderr, "iii should have %i elements for interface %i or be set to \"auto\".\n", p->npnt[ii], ii+1);
-                                return 1;
-                        }
-                }
-        }
+		if (pp->iii[ii] == NULL) {
+			fprintf (stderr, "Missing iii for interface %i.\n",
+				 ii + 1);
+			return 1;
+		}
+		p->iii[ii] = (gint *) malloc (sizeof (gint) * p->npnt[ii]);
+		if (strcmp (pp->iii[ii], "auto") == 0) {
+			gint jj;
+			p->iii[ii][0] = -1;
+			for (jj = 1; jj < p->npnt[ii] - 1; jj++)
+				p->iii[ii][jj] = 0;
+			p->iii[ii][p->npnt[ii] - 1] = -1;
+		} else {
+			if (list_to_int
+			    (pp->iii[ii], p->iii[ii],
+			     p->npnt[ii]) != p->npnt[ii]) {
+				fprintf (stderr,
+					 "iii should have %i elements for interface %i or be set to \"auto\".\n",
+					 p->npnt[ii], ii + 1);
+				return 1;
+			}
+		}
+	}
 
-        /* Compute bounding box of the model */
-        p->xmin = p->x[0][0];
-        p->xmax = p->x[0][0];
-        p->zmin = p->z[0][0];
-        p->zmax = p->z[0][0];
+	/* Compute bounding box of the model */
+	p->xmin = p->x[0][0];
+	p->xmax = p->x[0][0];
+	p->zmin = p->z[0][0];
+	p->zmax = p->z[0][0];
 
-        for (ii = 0; ii<p->nint; ii++){
-                int k;
-                
-                for (k=0; k<p->npnt[ii]; k++){
-                        p->xmin = min(p->xmin, p->x[ii][k]);
-                        p->xmax = max(p->xmax, p->x[ii][k]);
-                        p->zmin = min(p->zmin, p->z[ii][k]);
-                        p->zmax = max(p->zmax, p->z[ii][k]);
-                }
-        }
+	for (ii = 0; ii < p->nint; ii++) {
+		int k;
 
-        /* Velocities */        
-        p->v1 = (gdouble *) malloc (sizeof (gdouble) * (p->nint-1));
-        p->v2 = (gdouble *) malloc (sizeof (gdouble) * (p->nint-1));
-        convert_double (pp->v1, p->v1, (p->nint-1), "v1");
-        convert_double (pp->v2, p->v2, (p->nint-1), "v2");
+		for (k = 0; k < p->npnt[ii]; k++) {
+			p->xmin = min (p->xmin, p->x[ii][k]);
+			p->xmax = max (p->xmax, p->x[ii][k]);
+			p->zmin = min (p->zmin, p->z[ii][k]);
+			p->zmax = max (p->zmax, p->z[ii][k]);
+		}
+	}
 
-        /* Densities */
-        if ((pp->rho1 != NULL) && (pp->rho2 != NULL)){
-                p->nro = TRUE;
-                p->rho1 = (gdouble *) malloc (sizeof (gdouble) * (p->nint-1));
-                p->rho2 = (gdouble *) malloc (sizeof (gdouble) * (p->nint-1));
+	/* Velocities */
+	p->v1 = (gdouble *) malloc (sizeof (gdouble) * (p->nint - 1));
+	p->v2 = (gdouble *) malloc (sizeof (gdouble) * (p->nint - 1));
+	convert_double (pp->v1, p->v1, (p->nint - 1), "v1");
+	convert_double (pp->v2, p->v2, (p->nint - 1), "v2");
 
-                convert_double (pp->rho1, p->rho1, p->nint-1, "rho1");
-                convert_double (pp->rho2, p->rho2, p->nint-1, "rho2");
-        }
-        else{
-                p->nro = FALSE;
-        }
-        
-        /* Quality factors */
-        if (pp->qps != NULL){
-                p->nabs = TRUE;
+	/* Densities */
+	if ((pp->rho1 != NULL) && (pp->rho2 != NULL)) {
+		p->nro = TRUE;
+		p->rho1 =
+		    (gdouble *) malloc (sizeof (gdouble) * (p->nint - 1));
+		p->rho2 =
+		    (gdouble *) malloc (sizeof (gdouble) * (p->nint - 1));
 
-                p->nqp = (gdouble *) malloc (sizeof (gdouble) * (p->nint-1));
-                p->nqs = (gdouble *) malloc (sizeof (gdouble) * (p->nint-1));
-                p->qps = (gdouble **) malloc (sizeof (gdouble*) * (p->nint-1));
+		convert_double (pp->rho1, p->rho1, p->nint - 1, "rho1");
+		convert_double (pp->rho2, p->rho2, p->nint - 1, "rho2");
+	} else {
+		p->nro = FALSE;
+	}
 
-                for (ii=0; ii < p->nint-1; ii++){
+	/* Quality factors */
+	if (pp->qps != NULL) {
+		p->nabs = TRUE;
 
-                        p->qps[ii]  = (gdouble *) malloc (sizeof (gdouble*) * 6);
+		p->nqp =
+		    (gdouble *) malloc (sizeof (gdouble) * (p->nint - 1));
+		p->nqs =
+		    (gdouble *) malloc (sizeof (gdouble) * (p->nint - 1));
+		p->qps =
+		    (gdouble **) malloc (sizeof (gdouble *) *
+					 (p->nint - 1));
 
-                        convert_double(pp->nqp[ii], &(p->nqp[ii]), 1, "nqp");
-                        convert_double(pp->nqs[ii], &(p->nqs[ii]), 1, "nqs");
-                        convert_double(pp->qps[ii], p->qps[ii], 6, "qps");
-                }
-        }
-        else{
-                p->nabs = FALSE;
-        }
+		for (ii = 0; ii < p->nint - 1; ii++) {
 
-        p->ptos = (gdouble *) malloc (sizeof (gdouble) * (p->nint-1));
-        if (pp->ptos == NULL){
-                gint jj;
-                for (jj=0; jj<p->nint-1; jj++)
-                        p->ptos[jj] = 1.732; /* default vp/vs = sqrt(3) */
-        }
-        else{
-                convert_double (pp->ptos, p->ptos, p->nint-1, "ptos");
-        }
+			p->qps[ii] =
+			    (gdouble *) malloc (sizeof (gdouble *) * 6);
 
-        return 0;
+			convert_double (pp->nqp[ii], &(p->nqp[ii]), 1,
+					"nqp");
+			convert_double (pp->nqs[ii], &(p->nqs[ii]), 1,
+					"nqs");
+			convert_double (pp->qps[ii], p->qps[ii], 6, "qps");
+		}
+	} else {
+		p->nabs = FALSE;
+	}
+
+	p->ptos = (gdouble *) malloc (sizeof (gdouble) * (p->nint - 1));
+	if (pp->ptos == NULL) {
+		gint jj;
+		for (jj = 0; jj < p->nint - 1; jj++)
+			p->ptos[jj] = 1.732;	/* default vp/vs = sqrt(3) */
+	} else {
+		convert_double (pp->ptos, p->ptos, p->nint - 1, "ptos");
+	}
+
+	return 0;
 
 }

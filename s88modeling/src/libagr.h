@@ -30,20 +30,20 @@
 /******************************************************************/
 /* HEADER Variables */
 
-static int   AGR_plotindex=0;
-static int   AGR_graphindex=-1;
+static int AGR_plotindex = 0;
+static int AGR_graphindex = -1;
 
-           int   AGR_numberofcolors;
+int AGR_numberofcolors;
 unsigned short **AGR_palette;
-          char **AGR_colorname;
+char **AGR_colorname;
 
 /* Defaults */
 float AGR_defaultlinewidth;
 short AGR_defaultlinestyle;
-int   AGR_defaultcolor;
+int AGR_defaultcolor;
 short AGR_defaultpattern;
 short AGR_defaultfont;
-int   AGR_defaultbackgroundcolor;
+int AGR_defaultbackgroundcolor;
 
 /* Variaveis de inicializacao dos eixos */
 
@@ -77,37 +77,37 @@ short AGR_framepattern;
 short AGR_framebackgroundcolor;
 short AGR_framebackgroundpattern;
 
-char  AGR_title[100];
+char AGR_title[100];
 short AGR_titlefont;
 float AGR_titlesize;
-int   AGR_titlecolor;
+int AGR_titlecolor;
 
-char  AGR_subtitle[100];
+char AGR_subtitle[100];
 short AGR_subtitlefont;
 float AGR_subtitlesize;
-int   AGR_subtitlecolor;
+int AGR_subtitlecolor;
 
 /* X Axis */
-int   AGR_xaxislinecolor;
+int AGR_xaxislinecolor;
 short AGR_xaxislinestyle;
 float AGR_xaxislinewidth;
 
-char  AGR_xaxislabel[100];
+char AGR_xaxislabel[100];
 float AGR_xaxislabelcharsize;
 short AGR_xaxislabelfont;
-int   AGR_xaxislabelcolor;
+int AGR_xaxislabelcolor;
 
 float AGR_xaxistickmajor;
 
 /* Y Axis */
-int   AGR_yaxislinecolor;
+int AGR_yaxislinecolor;
 short AGR_yaxislinestyle;
 float AGR_yaxislinewidth;
-	  
-char  AGR_yaxislabel[100];
+
+char AGR_yaxislabel[100];
 float AGR_yaxislabelcharsize;
 short AGR_yaxislabelfont;
-int   AGR_yaxislabelcolor;
+int AGR_yaxislabelcolor;
 
 float AGR_yaxistickmajor;
 
@@ -115,54 +115,54 @@ float AGR_yaxistickmajor;
 
 short AGR_symbol;
 float AGR_symbolsize;
-int   AGR_symbolcolor;
+int AGR_symbolcolor;
 short AGR_symbolpattern;
-int   AGR_symbolfillcolor;
+int AGR_symbolfillcolor;
 short AGR_symbolfillpattern;
 float AGR_symbollinewidth;
 short AGR_symbollinestyle;
 short AGR_symbolchar;
 short AGR_symbolcharfont;
-int   AGR_symbolskip;
+int AGR_symbolskip;
 
 short AGR_linetype;
 short AGR_linestyle;
-float AGR_linewidth ;
-int   AGR_linecolor;
+float AGR_linewidth;
+int AGR_linecolor;
 short AGR_linepattern;
 
 short AGR_baselinetype;
-char  AGR_baseline[4];
-char  AGR_dropline[4];
+char AGR_baseline[4];
+char AGR_dropline[4];
 
 short AGR_filltype;
 short AGR_fillrule;
-int   AGR_fillcolor;
+int AGR_fillcolor;
 short AGR_fillpattern;
 
-char  AGR_comment[200];
+char AGR_comment[200];
 
 
 /******************************************************************/
-void InitAGR();
+void InitAGR ();
 
-void WriteAGRHeader (FILE *fp);
+void WriteAGRHeader (FILE * fp);
 
-void WriteAGRGraph(FILE *fp, float xmin, float xmax,
-		   float ymin, float ymax);
+void WriteAGRGraph (FILE * fp, float xmin, float xmax,
+		    float ymin, float ymax);
 
-void WriteAGRDataXY (FILE *fp, float *x, float *y, long int n);
+void WriteAGRDataXY (FILE * fp, float *x, float *y, long int n);
 
-void WriteAGRDataXYCOLOR (FILE *fp, float *x, float *y,
+void WriteAGRDataXYCOLOR (FILE * fp, float *x, float *y,
 			  int *color, long int n);
 
-void WriteAGRPalette (FILE *fp);
+void WriteAGRPalette (FILE * fp);
 
-void SetAGRDefaultPalette();
+void SetAGRDefaultPalette ();
 
-void ImportAGRPalette(char *palette_file);
+void ImportAGRPalette (char *palette_file);
 
-void FreeAGRPalette();
+void FreeAGRPalette ();
 /******************************************************************/
 
-#endif /* ifndef _LIBAGR_H */
+#endif				/* ifndef _LIBAGR_H */
