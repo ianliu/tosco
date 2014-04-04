@@ -153,7 +153,6 @@ void s88_run(struct s88 *p)
                 p->xsour = p->sxmin + p->sxstep * ishot;
                 p->rmin = p->xsour + p->rxmin;
                 slayer = which_layer(p->xsour, p->zsour, &lu);
-                fprintf(stderr, "tiro na camada %i\n", slayer);
 
                 if (p->verbose)
                         fprintf(stderr, "Modeling for source at %f: ", p->xsour);

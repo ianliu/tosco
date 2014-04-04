@@ -250,9 +250,9 @@ int agr_write(gchar * agrfilename, lu_t * lu, struct s88 *p)
         FILE *agrfp;
 
         const int cor[] = { 1, 36, 9, 41, 28, 8, 14, 5, 4,
-                31, 6, 29, 7, 9, 10, 11, 12, 13,
-                16, 17, 18, 19, 20, 21, 22, 23, 24,
-                25, 26, 27, 28, 32, 33, 34, 35, 0
+                            31, 6, 29, 7, 9, 10, 11, 12, 13,
+                            16, 17, 18, 19, 20, 21, 22, 23, 24,
+                            25, 26, 27, 28, 32, 33, 34, 35, 0
         };
 
         /*--------------------------------------------------------------*
@@ -297,7 +297,6 @@ int agr_write(gchar * agrfilename, lu_t * lu, struct s88 *p)
                 for (ni = lu->nwavecode - 1; ni >= 0; ni--) {
 
                         AGR_linecolor = (p->allblack ? 1 : cor[ni]);
-
                         for (nr = 0; nr < lu->ns[ni]; nr++, naux++) {
 
                                 WriteAGRDataXY(agrfp,
