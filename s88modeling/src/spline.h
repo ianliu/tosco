@@ -15,9 +15,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-int spline(int *n, float *x, float *y, float *b, float *c, float *d);
+int spline (int *n, float *x, float *y, float *b, float *c, float *d);
 
-double seval(int *n, float *u, float *x, float *y, float *b, float *c, float *d);
+double seval (int *n, float *u, float *x, float *y, float *b, float *c, float *d);
 
-int sgheval(int *n, float *u, float *x, float *y,
-            float *b, float *c, float *d, float *s, float *g, float *h);
+int sgheval (int *n, float *u, float *x, float *y,
+             float *b, float *c, float *d, float *s, float *g, float *h);

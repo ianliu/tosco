@@ -35,6 +35,6 @@ struct parse_params {
 };
 
 
-struct s88 *parse_command_line(int argc, char **argv);
+struct s88 *parse_command_line (int argc, char **argv);
 
 #endif                          /* _PARSER_H */

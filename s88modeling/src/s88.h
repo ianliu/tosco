@@ -112,6 +112,6 @@ struct s88 {
 };
 
 
-void s88_run(struct s88 *p);
+void s88_run (struct s88 *p);
 
 #endif                          /* _S88_H */
