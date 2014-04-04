@@ -181,9 +181,9 @@ int lu_parse (gchar * lufilename, lu_t * lu)
                 namp = abs (namp);
 
                 /*
-                  fprintf(stderr,"%3i rays corresponding to wave code %2i (%5i)\n",
-                  lu->ns[lu->nwavecode], lu->nwavecode+1, lu->nrays);
-                */
+                   fprintf(stderr,"%3i rays corresponding to wave code %2i (%5i)\n",
+                   lu->ns[lu->nwavecode], lu->nwavecode+1, lu->nrays);
+                 */
 
                 /** BLOCK 8
 
@@ -278,40 +278,40 @@ int agr_write (gchar * agrfilename, lu_t * lu, struct s88 *p, gboolean vel)
         AGR_xaxislabelcharsize = 1.4;
         AGR_yaxislabelcharsize = 1.4;
 
-        if (vel){
+        if (vel) {
                 gchar vstr[40];
                 gint ilayer;
-                
-                for (ilayer = 1; ilayer <= lu->nint-1; ilayer++){
+
+                for (ilayer = 1; ilayer <= lu->nint - 1; ilayer++) {
                         gint ix;
                         gfloat xx, zz, dzmax;
-                        
+
                         dzmax = -1;
                         xx = p->xmin;
-                        
-                        for (ix = 0; ix < 21; ix++){
+
+                        for (ix = 0; ix < 21; ix++) {
                                 gfloat x, z1, z2;
                                 gfloat dz;
-                                
+
                                 x = p->xmin + ix * (p->xmax - p->xmin) / 20;
-                                z1 = interf(&(lu->interf[ilayer-1]), x);
-                                z2 = interf(&(lu->interf[ilayer]), x);
+                                z1 = interf (&(lu->interf[ilayer - 1]), x);
+                                z2 = interf (&(lu->interf[ilayer]), x);
                                 dz = z2 - z1;
-                                if (dz > dzmax){
+                                if (dz > dzmax) {
                                         dzmax = dz;
                                         xx = x;
-                                        zz = (z2 + z1)/2;
+                                        zz = (z2 + z1) / 2;
                                 }
                         }
-                        if (p->v1[ilayer-1] != p->v2[ilayer-1]) {
-                                sprintf(vstr, "%.2f ~ %.2f km/s", p->v1[ilayer-1], p->v2[ilayer-1]);
+                        if (p->v1[ilayer - 1] != p->v2[ilayer - 1]) {
+                                sprintf (vstr, "%.2f ~ %.2f km/s", p->v1[ilayer - 1],
+                                         p->v2[ilayer - 1]);
                         } else {
-                                sprintf(vstr, "%.2f km/s", p->v1[ilayer-1]);
+                                sprintf (vstr, "%.2f km/s", p->v1[ilayer - 1]);
                         }
-                        WriteAGRString (agrfp, p->xmin, p->xmax, p->zmin, p->zmax, 
-                                        xx, zz, vstr);
+                        WriteAGRString (agrfp, p->xmin, p->xmax, p->zmin, p->zmax, xx, zz, vstr);
                 }
-                
+
         }
         WriteAGRGraph (agrfp, p->xmin, p->xmax, p->zmin, p->zmax);
 
@@ -565,49 +565,47 @@ void strip (FILE * agrfp, float xmin, float xmax, interface_t * s1, interface_t 
         x = (float *) malloc (n * sizeof (float));
         z = (float *) malloc (n * sizeof (float));
 
-        if (s1->n > 1){
-          
-          for (i = 0; i < NSAMPLEX; i++) {
-            lambda = (i * 1.0 / (NSAMPLEX - 1));
-            
-            xx = lambda * xmax + (1 - lambda) * xmin;
-            x[i] = xx;
-            z[i] = interf (s1, xx);
-          }
-          nefetive = NSAMPLEX;
+        if (s1->n > 1) {
+
+                for (i = 0; i < NSAMPLEX; i++) {
+                        lambda = (i * 1.0 / (NSAMPLEX - 1));
+
+                        xx = lambda * xmax + (1 - lambda) * xmin;
+                        x[i] = xx;
+                        z[i] = interf (s1, xx);
+                }
+                nefetive = NSAMPLEX;
+        } else {
+                x[0] = xmin;
+                z[0] = interf (s1, xmin);
+
+                x[1] = xmax;
+                z[1] = interf (s1, xmax);
+                nefetive = 2;
         }
-        else {
-          x[0] = xmin;
-          z[0] = interf (s1, xmin);
 
-          x[1] = xmax;
-          z[1] = interf (s1, xmax);
-          nefetive = 2;
+        if (s2->n > 1) {
+
+                for (i = 0; i < NSAMPLEX; i++) {
+
+                        lambda = (i * 1.0 / (NSAMPLEX - 1));
+
+                        xx = lambda * xmin + (1 - lambda) * xmax;
+                        x[nefetive + i] = xx;
+                        z[nefetive + i] = interf (s2, xx);
+                }
+                nefetive += NSAMPLEX;
+        } else {
+
+                x[nefetive] = xmax;
+                z[nefetive] = interf (s2, xmax);
+                nefetive++;
+
+                x[nefetive] = xmin;
+                z[nefetive] = interf (s2, xmin);
+                nefetive++;
         }
 
-        if (s2->n > 1){
-
-          for (i = 0; i < NSAMPLEX; i++) {
-
-            lambda = (i * 1.0 / (NSAMPLEX - 1));
-
-            xx = lambda * xmin + (1 - lambda) * xmax;
-            x[nefetive + i] = xx;
-            z[nefetive + i] = interf (s2, xx);
-          }
-          nefetive += NSAMPLEX;
-        }
-        else {
-          
-          x[nefetive] = xmax;
-          z[nefetive] = interf (s2, xmax);
-          nefetive++;
-          
-          x[nefetive] = xmin;
-          z[nefetive] = interf (s2, xmin);
-          nefetive++;
-        }
-          
         x[nefetive] = xmin;
         z[nefetive] = interf (s1, xmin);
         nefetive++;
