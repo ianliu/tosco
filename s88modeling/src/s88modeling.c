@@ -24,17 +24,17 @@
 #include "s88.h"
 #include "parser.h"
 
-int main (int argc, char **argv)
+int main(int argc, char **argv)
 {
 
-	struct s88 *p;
+        struct s88 *p;
 
-	p = parse_command_line (argc, argv);
-	if (p == NULL)
-		return EXIT_FAILURE;
+        p = parse_command_line(argc, argv);
+        if (p == NULL)
+                return EXIT_FAILURE;
 
-	g_chdir (p->workdir);
-	s88_run (p);
+        g_chdir(p->workdir);
+        s88_run(p);
 
-	return EXIT_SUCCESS;
+        return EXIT_SUCCESS;
 }

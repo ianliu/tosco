@@ -20,21 +20,21 @@
 
 struct parse_params {
 
-	gchar *npnt;
-	gchar **xcoord;
-	gchar **zcoord;
-	gchar **iii;
-	gchar *v1;
-	gchar *v2;
-	gchar *rho1;
-	gchar *rho2;
-	gchar *ptos;
-	gchar **nqp;
-	gchar **nqs;
-	gchar **qps;
+        gchar *npnt;
+        gchar **xcoord;
+        gchar **zcoord;
+        gchar **iii;
+        gchar *v1;
+        gchar *v2;
+        gchar *rho1;
+        gchar *rho2;
+        gchar *ptos;
+        gchar **nqp;
+        gchar **nqs;
+        gchar **qps;
 };
 
 
-struct s88 *parse_command_line (int argc, char **argv);
+struct s88 *parse_command_line(int argc, char **argv);
 
-#endif				/* _PARSER_H */
+#endif                          /* _PARSER_H */

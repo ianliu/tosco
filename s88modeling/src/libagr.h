@@ -144,25 +144,23 @@ char AGR_comment[200];
 
 
 /******************************************************************/
-void InitAGR ();
+void InitAGR();
 
-void WriteAGRHeader (FILE * fp);
+void WriteAGRHeader(FILE * fp);
 
-void WriteAGRGraph (FILE * fp, float xmin, float xmax,
-		    float ymin, float ymax);
+void WriteAGRGraph(FILE * fp, float xmin, float xmax, float ymin, float ymax);
 
-void WriteAGRDataXY (FILE * fp, float *x, float *y, long int n);
+void WriteAGRDataXY(FILE * fp, float *x, float *y, long int n);
 
-void WriteAGRDataXYCOLOR (FILE * fp, float *x, float *y,
-			  int *color, long int n);
+void WriteAGRDataXYCOLOR(FILE * fp, float *x, float *y, int *color, long int n);
 
-void WriteAGRPalette (FILE * fp);
+void WriteAGRPalette(FILE * fp);
 
-void SetAGRDefaultPalette ();
+void SetAGRDefaultPalette();
 
-void ImportAGRPalette (char *palette_file);
+void ImportAGRPalette(char *palette_file);
 
-void FreeAGRPalette ();
+void FreeAGRPalette();
 /******************************************************************/
 
-#endif				/* ifndef _LIBAGR_H */
+#endif                          /* ifndef _LIBAGR_H */
