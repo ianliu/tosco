@@ -76,6 +76,6 @@ int export_interf (lu_t * lu, struct s88 *p);
 int export_velocity (lu_t * lu, struct s88 *p);
 int which_layer (float x, float z, lu_t * lu);
 float interf (interface_t * s, float x);
-int agr_write (gchar * agrfilename, lu_t * lu, struct s88 *p);
+int agr_write (gchar * agrfilename, lu_t * lu, struct s88 *p, gboolean vel);
 
 #endif

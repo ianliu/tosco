@@ -44,6 +44,7 @@ int AGR_defaultcolor;
 short AGR_defaultpattern;
 short AGR_defaultfont;
 int AGR_defaultbackgroundcolor;
+int AGR_timestamp;
 
 /* Variaveis de inicializacao dos eixos */
 
@@ -142,13 +143,14 @@ short AGR_fillpattern;
 
 char AGR_comment[200];
 
-
 /******************************************************************/
 void InitAGR ();
 
 void WriteAGRHeader (FILE * fp);
 
 void WriteAGRGraph (FILE * fp, float xmin, float xmax, float ymin, float ymax);
+
+void WriteAGRString (FILE * fp, float xmin, float xmax, float ymin, float ymax, float x, float y, char *str);
 
 void WriteAGRDataXY (FILE * fp, float *x, float *y, long int n);
 

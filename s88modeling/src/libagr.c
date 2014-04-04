@@ -32,7 +32,8 @@ void InitAGR ()
         AGR_defaultpattern = 1;
         AGR_defaultfont = 4;    /* Helvetica */
         AGR_defaultbackgroundcolor = 0;
-
+        AGR_timestamp = 0;
+   
         /* Variaveis de inicilizacao dos eixos */
 
         AGR_viewxmin = 0.15;
@@ -149,7 +150,7 @@ void WriteAGRHeader (FILE * fp)
         fprintf (fp,
                  "\n# Grace project file"
                  "\n#"
-                 "\n@version 50122"
+                 "\n@version 50123"
                  "\n@page size 792, 612"
                  "\n@page scroll 5%%"
                  "\n@page inout 5%%"
@@ -185,13 +186,16 @@ void WriteAGRHeader (FILE * fp)
 
         fprintf (fp,
                  "\n@page background fill on"
-                 "\n@timestamp off"
+                 "\n@timestamp %s"
                  "\n@timestamp 0.03, 0.03"
                  "\n@timestamp color 1"
                  "\n@timestamp rot 0"
                  "\n@timestamp font 4"
                  "\n@timestamp char size 1.000000"
-                 "\n@timestamp def \"*** *** -- --:--:-- ----\""
+                 "\n@timestamp def \"*** *** -- --:--:-- ----\"", 
+                 (AGR_timestamp ? "on" : "off"));
+
+        fprintf (fp,
                  "\n@r0 off"
                  "\n@link r0 to g0"
                  "\n@r0 type above"
@@ -401,7 +405,47 @@ void WriteAGRGraph (FILE * fp, float xmin, float xmax, float ymin, float ymax)
 /****************************************************************/
 
 /*
-  Escreve um bloco de dados typo (x,y)
+  Escreve um texto dentro do gráfico
+
+  Dados de entrada:
+  FILE *     fp   : file descriptor
+  float    xmin   : coordenada x minima do grafico
+  float    xmax   : coordenada x maxima do grafico
+  float    ymin   : coordenada y minima do grafico
+  float    ymax   : coordenada y maxima do grafico
+  float       x   : coordenada x
+  float       y   : coordenada y
+  gchar *   str   : texto 
+
+*/
+void WriteAGRString (FILE * fp, float xmin, float xmax, float ymin, float ymax, float x, float y, char *str)
+{
+        float posx, posy;
+        float lambda;
+
+        lambda = (x - xmin) / (xmax - xmin);
+        posx = 0.3 + lambda * (1 - 0.3);
+
+        lambda = (y - ymin) / (ymax - ymin);
+        posy = 0.85 + lambda * (0.15 - 0.85);
+        
+        fprintf (fp,"\n@with string"
+                 "\n@    string on"
+                 "\n@    string loctype view"
+                 "\n@    string g0"
+                 "\n@    string %.6f, %.6f"
+                 "\n@    string color 1"
+                 "\n@    string rot 0"
+                 "\n@    string font 4"
+                 "\n@    string just 14"
+                 "\n@    string char size 1.000000"
+                 "\n@    string def \"%s\"", posx, posy, str);
+}
+
+/****************************************************************/
+
+/*
+  Escreve um bloco de dados tipo (x,y)
 
   Dados de entrada:
   FILE *     fp   : file descriptor

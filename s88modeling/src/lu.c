@@ -243,7 +243,7 @@ void lu_free (lu_t * lu)
 }
 
 /*-----------------------------------------------------------------------------*/
-int agr_write (gchar * agrfilename, lu_t * lu, struct s88 *p)
+int agr_write (gchar * agrfilename, lu_t * lu, struct s88 *p, gboolean vel)
 {
 
         int i;
@@ -278,6 +278,43 @@ int agr_write (gchar * agrfilename, lu_t * lu, struct s88 *p)
         AGR_xaxislabelcharsize = 1.4;
         AGR_yaxislabelcharsize = 1.4;
 
+        if (vel){
+                gchar vstr[40];
+                gint ilayer;
+                
+                fprintf(stderr, "nint = %i\n", lu->nint);
+                
+                for (ilayer = 1; ilayer <= lu->nint-1; ilayer++){
+                        gint ix;
+                        gfloat xx, zz, dzmax;
+                        
+                        dzmax = -1;
+                        xx = p->xmin;
+                        
+                        for (ix = 0; ix < 21; ix++){
+                                gfloat x, z1, z2;
+                                gfloat dz;
+                                
+                                x = p->xmin + ix * (p->xmax - p->xmin) / 20;
+                                z1 = interf(&(lu->interf[ilayer-1]), x);
+                                z2 = interf(&(lu->interf[ilayer]), x);
+                                dz = z2 - z1;
+                                if (dz > dzmax){
+                                        dzmax = dz;
+                                        xx = x;
+                                        zz = (z2 + z1)/2;
+                                }
+                        }
+                        if (p->v1[ilayer-1] != p->v2[ilayer-1]) {
+                                sprintf(vstr, "%.2f ~ %.2f km/s", p->v1[ilayer-1], p->v2[ilayer-1]);
+                        } else {
+                                sprintf(vstr, "%.2f km/s", p->v1[ilayer-1]);
+                        }
+                        WriteAGRString (agrfp, p->xmin, p->xmax, p->zmin, p->zmax, 
+                                        xx, zz, vstr);
+                }
+                
+        }
         WriteAGRGraph (agrfp, p->xmin, p->xmax, p->zmin, p->zmax);
 
         /**** Writing Layers ****/

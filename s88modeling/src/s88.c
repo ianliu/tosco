@@ -33,8 +33,6 @@
 #define CONVERTED -1
 #define UNCONVERTED 1
 
-extern char AGR_title[100];
-
 void write_s88_config (FILE * fp, struct s88 *p, int sourcelayer);
 void write_synt_config (FILE * fp, struct s88 *p);
 void synt2bin (struct s88 *p);
@@ -44,6 +42,7 @@ void write_int_vector (FILE * fp, gint * vec, gint N, gchar * format, gint auxin
 GString *make_unique_filename (const gchar * template);
 void writecode (FILE * fp, gint updown, gint mult, gint srclayer, gint rlayer, gint ps,
                 gint convert);
+gchar *gebr_iso_date(void);
 
 void s88_run (struct s88 *p)
 {
@@ -122,7 +121,7 @@ void s88_run (struct s88 *p)
                         p->norays = TRUE;
                         InitAGR ();
                         sprintf (AGR_title, "Model");
-                        agr_write ("model.agr", &lu, p);
+                        agr_write ("model.agr", &lu, p, TRUE);
 
                         p->norays = norays;
                 }
@@ -131,14 +130,14 @@ void s88_run (struct s88 *p)
         /* Export interfaces */
         if (p->interf != NULL) {
                 if (p->verbose)
-                        fprintf (stderr, "Interfaces saved to %s\n", p->interf);
+                        fprintf (stderr, "  Interfaces saved to.......: %s\n", p->interf);
                 export_interf (&lu, p);
         }
 
         /* Export the velocity model */
         if (p->vel != NULL) {
                 if (p->verbose)
-                        fprintf (stderr, "Velocity model saved to %s\n", p->vel);
+                        fprintf (stderr, "  Velocity model saved to...: %s\n\n", p->vel);
                 export_velocity (&lu, p);
         }
 
@@ -199,7 +198,7 @@ void s88_run (struct s88 *p)
                                 InitAGR ();
                                 sprintf (AGR_title, "Shot %i at (%.4f, %.4f)", ishot + 1, p->xsour,
                                          p->zsour);
-                                agr_write (newname->str, &lu, p);
+                                agr_write (newname->str, &lu, p, FALSE);
                         }
 
                 }
