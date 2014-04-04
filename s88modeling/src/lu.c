@@ -181,9 +181,9 @@ int lu_parse (gchar * lufilename, lu_t * lu)
                 namp = abs (namp);
 
                 /*
-                   fprintf(stderr,"%3i rays corresponding to wave code %2i (%5i)\n",
-                   lu->ns[lu->nwavecode], lu->nwavecode+1, lu->nrays);
-                 */
+                  fprintf(stderr,"%3i rays corresponding to wave code %2i (%5i)\n",
+                  lu->ns[lu->nwavecode], lu->nwavecode+1, lu->nrays);
+                */
 
                 /** BLOCK 8
 
@@ -294,7 +294,7 @@ int agr_write (gchar * agrfilename, lu_t * lu, struct s88 *p)
 
                 naux = 0;
                 AGR_filltype = 0;
-                for (ni = lu->nwavecode - 1; ni >= 0; ni--) {
+                for (ni = lu->nwavecode; ni >= 0; ni--) {
 
                         AGR_linecolor = (p->allblack ? 1 : cor[ni]);
                         for (nr = 0; nr < lu->ns[ni]; nr++, naux++) {
