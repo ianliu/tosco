@@ -170,9 +170,11 @@ struct s88 *parse_command_line (int argc, char **argv)
         /* Summary */
         g_option_context_set_summary (parser,
                                       "This modeling tool is designed to generate synthetic seismograms\n"
-                                      "from a 2D aquisition line, through ray tracing."
+                                      "from a 2D aquisition line, through ray tracing. For convenience\n"
+                                      "Grace project files (AGR) can be generated to display the model\n"
+                                      "and traced rays for each shot."
                                       );
-        
+       
         /* Description */
         g_option_context_set_description (parser,
                                           "This tool models a 2D acquisition. Receivers are regularly distributed along the\n"
@@ -207,8 +209,9 @@ struct s88 *parse_command_line (int argc, char **argv)
                                           "source) and 3 (point source).\n\n" 
                                           "Primaries for PP and PS waves are able to be computed. Also some simple\n"
                                           "multiple are eligible. By simple multiples, we mean a wave that propagates directly\n"
-                                          "from the surface to the reflector, back straight to the surface, once more down to\n"
-                                          "the reflector, and then up to surface, where it will be recorded.\n\n"
+                                          "from the source to the reflector, back straight to the surface, once more down to\n"
+                                          "the reflector, and then up to surface, where it will be recorded. Besides\n"
+                                          "sources ghost can also be generated.\n\n"
                                           "The wavelet is given by:\n\n"
                                           "     f(t) = exp { -(omega * t / gamma)^2 } * cos {omega * t + psi},\n\n"
                                           "where omega = 2 * PI * freq.\n\n"
