@@ -282,8 +282,6 @@ int agr_write (gchar * agrfilename, lu_t * lu, struct s88 *p, gboolean vel)
                 gchar vstr[40];
                 gint ilayer;
                 
-                fprintf(stderr, "nint = %i\n", lu->nint);
-                
                 for (ilayer = 1; ilayer <= lu->nint-1; ilayer++){
                         gint ix;
                         gfloat xx, zz, dzmax;
@@ -559,7 +557,7 @@ int which_layer (float x, float z, lu_t * lu)
 void strip (FILE * agrfp, float xmin, float xmax, interface_t * s1, interface_t * s2,
             unsigned int cor)
 {
-        int n, i;
+        int n, nefetive, i;
         float *x, *z, lambda, xx;
 
         n = 2 * NSAMPLEX + 1;
@@ -567,24 +565,55 @@ void strip (FILE * agrfp, float xmin, float xmax, interface_t * s1, interface_t 
         x = (float *) malloc (n * sizeof (float));
         z = (float *) malloc (n * sizeof (float));
 
-        for (i = 0; i < NSAMPLEX; i++) {
-                lambda = (i * 1.0 / (NSAMPLEX - 1));
+        if (s1->n > 1){
+          
+          for (i = 0; i < NSAMPLEX; i++) {
+            lambda = (i * 1.0 / (NSAMPLEX - 1));
+            
+            xx = lambda * xmax + (1 - lambda) * xmin;
+            x[i] = xx;
+            z[i] = interf (s1, xx);
+          }
+          nefetive = NSAMPLEX;
+        }
+        else {
+          x[0] = xmin;
+          z[0] = interf (s1, xmin);
 
-                xx = lambda * xmax + (1 - lambda) * xmin;
-                x[i] = xx;
-                z[i] = interf (s1, xx);
-
-                xx = lambda * xmin + (1 - lambda) * xmax;
-                x[NSAMPLEX + i] = xx;
-                z[NSAMPLEX + i] = interf (s2, xx);
+          x[1] = xmax;
+          z[1] = interf (s1, xmax);
+          nefetive = 2;
         }
 
-        xx = xmin;
-        x[n - 1] = xmin;
-        z[n - 1] = interf (s1, xx);
+        if (s2->n > 1){
+
+          for (i = 0; i < NSAMPLEX; i++) {
+
+            lambda = (i * 1.0 / (NSAMPLEX - 1));
+
+            xx = lambda * xmin + (1 - lambda) * xmax;
+            x[nefetive + i] = xx;
+            z[nefetive + i] = interf (s2, xx);
+          }
+          nefetive += NSAMPLEX;
+        }
+        else {
+          
+          x[nefetive] = xmax;
+          z[nefetive] = interf (s2, xmax);
+          nefetive++;
+          
+          x[nefetive] = xmin;
+          z[nefetive] = interf (s2, xmin);
+          nefetive++;
+        }
+          
+        x[nefetive] = xmin;
+        z[nefetive] = interf (s1, xmin);
+        nefetive++;
 
         AGR_fillcolor = cor;
-        WriteAGRDataXY (agrfp, x, z, n);
+        WriteAGRDataXY (agrfp, x, z, nefetive);
 
         free (x);
         free (z);
