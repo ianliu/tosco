@@ -147,15 +147,17 @@ void s88_run(struct s88 *p)
         for (ishot = 0; ishot < p->nshots; ishot++) {
                 int slayer;
 
-
                 newname = g_string_new(NULL);
 
                 p->xsour = p->sxmin + p->sxstep * ishot;
+                if (p->szrel){
+                  p->zsour = interf(&(lu.interf[0]), p->xsour) + p->sz;
+                }
                 p->rmin = p->xsour + p->rxmin;
                 slayer = which_layer(p->xsour, p->zsour, &lu);
 
                 if (p->verbose)
-                        fprintf(stderr, "Modeling for source at %f: ", p->xsour);
+                  fprintf(stderr, "Modeling for source at (%.4f, %.4f): ", p->xsour, p->zsour);
                 if (p->debug) {
                         fprintf(stderr, "\nSeis config:\n");
                         write_s88_config(stderr, p, slayer);
@@ -193,7 +195,7 @@ void s88_run(struct s88 *p)
                                 g_string_printf(newname, "shot-%04i.agr", ishot + 1);
 
                                 InitAGR();
-                                sprintf(AGR_title, "Shot %i at %f", ishot + 1, p->xsour);
+                                sprintf(AGR_title, "Shot %i at (%.4f, %.4f)", ishot + 1, p->xsour, p->zsour);
                                 agr_write(newname->str, &lu, p);
                         }
 

@@ -81,6 +81,7 @@ struct s88 *parse_command_line (int argc, char **argv)
                 { "sxmin", 0, 0, G_OPTION_ARG_DOUBLE,  &p.sxmin, "Initial x coordinate of sources", "" },
                 { "sxstep",0, 0, G_OPTION_ARG_DOUBLE,  &p.sxstep,"Step in source positions", "" },
                 { "sz",    0, 0, G_OPTION_ARG_DOUBLE,  &p.sz,    "Source depth", "0.0" },
+                { "szrel", 0, 0, G_OPTION_ARG_NONE,    &p.szrel, "Depth relative to the surface", NULL },
                 { "nshots",0, 0, G_OPTION_ARG_INT,     &p.nshots,"Number of shots", "1"},
                 { "nrec",   0, 0, G_OPTION_ARG_INT,    &p.mep,   "Number of receivers", "10" },
                 { "rxmin",  0, 0, G_OPTION_ARG_DOUBLE, &p.rxmin, "Initial relative receiver position", "" },
@@ -293,6 +294,7 @@ struct s88 *parse_command_line (int argc, char **argv)
 	p.mep = 10;
 	p.method = 0;
 	p.itmax = 20;
+  p.szrel = FALSE;
 	p.tsour = 0;
 	p.reps = 0.0005;
 	p.reps1 = 0.00002;

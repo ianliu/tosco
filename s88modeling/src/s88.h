@@ -60,6 +60,7 @@ struct s88 {
         gdouble sxmin;
         gdouble sxstep;
         gdouble sz;
+        gboolean szrel;
         gint nshots;
         gdouble xsour;
         gdouble zsour;
