@@ -12,7 +12,7 @@
   <parent/>
   <date>
     <created/>
-    <modified>2014-04-04T12:56:37.229499Z</modified>
+    <modified>2014-04-24T16:14:37.208845Z</modified>
     <lastrun/>
   </date>
   <category>Simulation and Model Building</category>
@@ -98,8 +98,12 @@
 					<span class="label">Z coordinates (km)</span> of spline knots.</li>
 				<li>
 					<span class="label">Point types</span><br />
-					A sequence os flags or <u>auto</u> for smooth interfaces. See Seis88 documentation for details. Briefly, it is a list of integers (one per knot), describing how that knot should be used in the spline interpolation: -1 represents a corner, 0 for smooth knot, and a positive number indicates that the knot should be collapsed with the knot of interface below with the prescribed index. For smooth interfaces, it is easier to set it as <u>auto</u>.<br />
-					&nbsp;</li>
+					A sequence os flags or <u>auto</u> for smooth interfaces. See Seis88 documentation for details. Briefly, it is a list of integers (one per knot), describing how that knot should be used in the spline interpolation:<br />
+					&nbsp;0 for smooth knot (the interface has first and second derivative at the knot),<br />
+					-1 for a corner point (discontinuous first derivative at the knot),<br />
+					-2 for a corner point, just like -1, and the interface to the right side of the point is fictitious,<br />
+					&nbsp;a positive number indicates that the knot should be collapsed with the knot of upper interface with the prescribed index (starting from 1).<br />
+					For smooth interfaces, it is easier to set it as <u>auto</u>.</li>
 			</ul>
 		</li>
 		<li class="group">
