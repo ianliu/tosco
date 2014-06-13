@@ -3,109 +3,7 @@
 <flow version="0.4.0">
   <title>Optimal Spline</title>
   <description>Optimally adjust a cubic spline to a given data set</description>
-  <help><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="content-type" content=
-  "text/html; charset=utf-8" />
-  <link rel="stylesheet" type="text/css" href="gebr.css" />
-
-  <!-- begin ttl -->
-  <title>G&ecirc;BR - Optimal Spline</title>
-  <!-- end ttl -->
-</head>
-
-<body>
-  <div class="outer-container">
-    <div class="inner-container">
-      <div class="header">
-        <div class="title">
-	  <!-- begin tt2 -->
-         <span class="flowtitle">Optimal Spline</span>
-         <!-- end tt2 -->
-
-          <div class="description">
-	    <!-- begin des -->
-            Optimally adjust a cubic spline to a given data set
-            <!-- end des -->
-          </div>
-        </div>
-      </div>
-
-      <div class="category">
-	<!-- begin cat -->
-       Filtering, Transforms and Attributes | Utilities | GGC - UNICAMP | INCT - GP | ToSCo
-       <!-- end cat -->
-      </div>
-
-      <div class="main">
-        <div class="content">
-
-          <a name="intro" id="intro"></a>
-          <h2>Introduction</h2>
-
-          <p>Optimally adjust a cubic spline to a given data set.</p>
-
-	  <!-- begin par --><!-- end par -->
-	    
-          <!--
-	  <a name="details" id="details"></a>
-          <h2>Description</h2>
-
-	  <a name="notes" id="notes"></a>
-          <h2>Notes</h2>
-
-	  <a name="ref" id="ref"></a>
-          <h2>References</h2>
-          -->
-
-	  <a name="credits" id="credits"></a>
-          <h2>Credits</h2>
-
-	  <!-- begin cpy -->
-	  
-          <p>Dec 06, 2009: written by Luis A. D'Afonseca &lt;luis.dafonseca@gebrproject.com&gt;</p>
-          
-          <!-- end cpy -->
-	  
-        </div>
-
-        <div class="navigation">
-          <h2>Index</h2>
-
-          <ul>
-            <li><a href="#intro">Introduction</a></li>
-
-	    <!-- begin mpr --><!-- end mpr -->
-
-            <!--
-            <li><a href="#details">Description</a></li>
-
-            <li><a href="#notes">Notes</a></li>
-
-            <li><a href="#ref">References</a></li>
-            -->
-
-            <li><a href="#credits">Credits</a></li>
-          </ul>
-        </div>
-
-        <div class="clearer"></div>
-      </div>
-
-      <div class="footer">
-        <span class="left">G&ecirc;BR 0.9.14 (<!-- begin dtd -->0.3.1<!--end dtd -->) | Dec 06, 2009
-        </span>
-
-        <div class="clearer"></div>
-      </div>
-    </div>
-  </div>
-</body>
-</html>
-]]></help>
+  <help>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;&lt;head&gt;  &lt;meta http-equiv="content-type" content=  "text/html; charset=utf-8" /&gt;  &lt;link rel="stylesheet" type="text/css" href="gebr.css" /&gt;  &lt;title&gt;    &lt;!-- begin ttl --&gt;Optimal Spline&lt;!-- end ttl --&gt;  &lt;/title&gt;&lt;/head&gt;&lt;body&gt;  &lt;div class="outer-container"&gt;    &lt;div class="inner-container"&gt;      &lt;div class="header"&gt;        &lt;div class="title"&gt;          &lt;span class="flowtitle"&gt;            &lt;!-- begin tt2 --&gt;Optimal Spline&lt;!-- end tt2 --&gt;          &lt;/span&gt;          &lt;div class="description"&gt;            &lt;!-- begin des --&gt;Optimally adjust a cubic spline to a given data set&lt;!-- end des --&gt;          &lt;/div&gt;        &lt;/div&gt;      &lt;/div&gt;      &lt;div class="category"&gt;        &lt;!-- begin cat --&gt;Filtering, Transforms and Attributes | Utilities | GGC - UNICAMP | INCT - GP | ToSCo&lt;!-- end cat --&gt;      &lt;/div&gt;      &lt;div class="main"&gt;        &lt;div class="content"&gt;          &lt;!-- begin cnt --&gt;&lt;p&gt;	&lt;a id="intro" name="intro"&gt;&lt;/a&gt;&lt;/p&gt;&lt;h2&gt;	Introduction&lt;/h2&gt;&lt;p&gt;	This tool fits a cubic spline to a given data set in a least-square sense. It is designed to smooth noisy data, suppressing outliers but preserving real discontinuities.&lt;/p&gt;&lt;!-- begin par --&gt;&lt;!-- end par --&gt;&lt;!--	  &lt;a name="details" id="details"&gt;&lt;/a&gt;          &lt;h2&gt;Description&lt;/h2&gt;	  &lt;a name="notes" id="notes"&gt;&lt;/a&gt;          &lt;h2&gt;Notes&lt;/h2&gt;	  &lt;a name="ref" id="ref"&gt;&lt;/a&gt;          &lt;h2&gt;References&lt;/h2&gt;          --&gt;&lt;p&gt;	&lt;a id="credits" name="credits"&gt;&lt;/a&gt;&lt;/p&gt;&lt;h2&gt;	Credits&lt;/h2&gt;&lt;!-- begin cpy --&gt;&lt;p&gt;	Jun 13, 2014: revised by Ricardo Biloti &amp;lt;biloti@gebrproject.com&amp;gt;&lt;/p&gt;&lt;p&gt;	Dec 06, 2009: written by Luis A. D&amp;#39;Afonseca &amp;lt;luis.dafonseca@gebrproject.com&amp;gt;&lt;/p&gt;&lt;!-- end cpy --&gt;&lt;!-- end cnt --&gt;        &lt;/div&gt;        &lt;div class="navigation"&gt;          &lt;h2&gt;Index&lt;/h2&gt;          &lt;ul&gt;            &lt;li&gt;&lt;a href="#intro"&gt;Introduction&lt;/a&gt;&lt;/li&gt;	    &lt;!-- begin mpr --&gt;            &lt;li&gt;&lt;a href="#par"&gt;Parameters&lt;/a&gt;&lt;/li&gt;	    &lt;!-- end mpr --&gt;            &lt;li&gt;&lt;a href="#details"&gt;Description&lt;/a&gt;&lt;/li&gt;            &lt;li&gt;&lt;a href="#notes"&gt;Notes&lt;/a&gt;&lt;/li&gt;            &lt;li&gt;&lt;a href="#ref"&gt;References&lt;/a&gt;&lt;/li&gt;            &lt;li&gt;&lt;a href="#credits"&gt;Credits&lt;/a&gt;&lt;/li&gt;          &lt;/ul&gt;        &lt;/div&gt;        &lt;div class="clearer"&gt;&lt;/div&gt;      &lt;/div&gt;      &lt;div class="footer"&gt;        &lt;span class="left"&gt;G&amp;ecirc;BR 0.21.1 (&lt;!-- begin dtd --&gt;0.4.0&lt;!-- end dtd --&gt;) |		&lt;!-- begin ver --&gt;Jun 13, 2014&lt;!-- end ver --&gt;&lt;/span&gt;        &lt;div class="clearer"&gt;&lt;/div&gt;      &lt;/div&gt;    &lt;/div&gt;  &lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</help>
   <author>Luis A. D'Afonseca</author>
   <email>luis.dafonseca@gebrproject.com</email>
   <dict>
@@ -114,7 +12,7 @@
   <parent/>
   <date>
     <created>2009-12-03T16:26:07.451674Z</created>
-    <modified>2009-12-07T18:21:59.963446Z</modified>
+    <modified>2014-06-13T18:25:17.294608Z</modified>
     <lastrun/>
   </date>
   <category>Filtering, Transforms and Attributes</category>
@@ -130,11 +28,11 @@
     </io>
     <lastrun/>
   </server>
-  <program stdin="yes" stdout="yes" stderr="yes" status="unconfigured">
+  <program stdin="yes" stdout="yes" stderr="yes" status="unconfigured" mpi="" version="1.2">
     
     <title>Optimal Spline</title>
     <binary>optsp</binary>
-    <description>Optimally adjust a cubic spline to a given data set</description>
+    <description>Fit a cubic spline to a given data set in a least-square sense</description>
     <help><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
@@ -143,10 +41,9 @@
   <meta http-equiv="content-type" content=
   "text/html; charset=utf-8" />
   <link rel="stylesheet" type="text/css" href="gebr.css" />
-
-  <!-- begin ttl -->
-  <title>G&ecirc;BR - Optimal Spline</title>
-  <!-- end ttl -->
+  <title>
+    <!-- begin ttl -->Optimal Spline<!-- end ttl -->
+  </title>
 </head>
 
 <body>
@@ -154,83 +51,69 @@
     <div class="inner-container">
       <div class="header">
         <div class="title">
-	  <!-- begin tt2 -->
-         <span class="flowtitle">Optimal Spline</span>
-         <!-- end tt2 -->
-
+          <span class="flowtitle">
+            <!-- begin tt2 -->Optimal Spline<!-- end tt2 -->
+          </span>
           <div class="description">
-	    <!-- begin des -->
-            Optimally adjust a cubic spline to a given data set
-            <!-- end des -->
+            <!-- begin des -->Fit a cubic spline to a given data set in a least-square sense<!-- end des -->
           </div>
         </div>
       </div>
 
       <div class="category">
-	<!-- begin cat -->
-       Filtering, Transforms and Attributes | Utilities | GGC - UNICAMP | INCT - GP | ToSCo
-       <!-- end cat -->
+        <!-- begin cat -->Filtering, Transforms and Attributes | Utilities | GGC - UNICAMP | INCT - GP | ToSCo<!-- end cat -->
       </div>
 
       <div class="main">
         <div class="content">
-
-          <a name="intro" id="intro"></a>
-          <h2>Introduction</h2>
-
-          <p>Optimally adjust a cubic spline to a given data set.</p>
-
-	  <!-- begin par -->
-          <div class="parameters">
-
-            <a name="par" id="par"></a>
-            <h2>Parameters</h2>
-
-	    <!-- begin lst --><ul>
-              <li class="req"><span class="reqlabel">ASCII data file containing the pairs (xi, yi) 
-                to be fitted</span></li>
-
-              <li class="req"><span class="reqlabel">Number of knots defining the spline</span>
-              The default value is 10.</li>
-
-              <li class="req"><span class="reqlabel">File to store the obtained knots</span></li>
-
-              <li><span class="label">Maximum iteration number</span>
-              The default value is 500.</li>
-
-              <li><span class="label">Refine given knots</span></li>
-
-              <li><span class="label">More verbose output</span></li>
-
-            </ul>
-            <!-- end lst -->
-            
-          </div>
-	  <!-- end par -->
-	    
-          <!--
+          <!-- begin cnt --><p>
+	<a id="intro" name="intro"></a></p>
+<h2>
+	Introduction</h2>
+<p>
+	Fit a cubic spline to a given data set in a least square sense.</p>
+<!-- begin par --><div class="parameters">
+	<a id="par" name="par"></a>
+	<h2>
+		Parameters</h2>
+<!-- begin lst -->	<ul>
+		<li class="req">
+			<span class="reqlabel">ASCII data file containing the pairs (xi, yi) to be fitted</span></li>
+		<li class="req">
+			<span class="reqlabel">Number of knots defining the spline</span> The default value is 10.</li>
+		<li class="req">
+			<span class="reqlabel">File to store the obtained knots</span></li>
+		<li>
+			<span class="label">Maximum iteration number</span> The default value is 500.</li>
+		<li>
+			<span class="label">Refine given knots</span></li>
+		<li>
+			<span class="label">Relative decrease in misfit function to declare convergence</span></li>
+		<li>
+			<span class="label">More verbose output</span></li>
+	</ul>
+<!-- end lst --></div>
+<!-- end par --><!--
 	  <a name="details" id="details"></a>
           <h2>Description</h2>
 
 	  <a name="notes" id="notes"></a>
           <h2>Notes</h2>
-
-	  <a name="ref" id="ref"></a>
-          <h2>References</h2>
-          -->
-
-	  <a name="credits" id="credits"></a>
-          <h2>Credits</h2>
-
-          <p>This program was developed by Ricardo Biloti &lt;biloti@ime.unicamp.br&gt;
-          Department of Applied Mathematics, 
-          Institute of Mathematics, Statistics and Scientific Computing,
-          State University of Campinas, Brazil.
-          </p>
-
-	  <!-- begin cpy -->
-	  <!-- end cpy -->
-	  
+--><p>
+	<a id="ref" name="ref"></a></p>
+<h2>
+	References</h2>
+<p>
+	R. Biloti, L. T. Santos and M. Tygel. <i>Automatic smoothing by optimal splines</i>, Revista Brasileira da Geof&iacute;sica, 21(2), pp. 173-178, 2005.</p>
+<p>
+	J. Schleicher and R. Biloti. <i>A frequency criterion for optimal node selection in smoothing with cubic splines</i>, Geophysical Prospecting, 56, pp.229-237, 2008.</p>
+<p>
+	<a id="credits" name="credits"></a></p>
+<h2>
+	Credits</h2>
+<p>
+	This program was developed by Ricardo Biloti &lt;biloti@ime.unicamp.br&gt; Department of Applied Mathematics, Institute of Mathematics, Statistics and Scientific Computing, University of Campinas, Brazil.</p>
+<!-- begin cpy --><!-- end cpy --><!-- end cnt -->
         </div>
 
         <div class="navigation">
@@ -257,8 +140,8 @@
       </div>
 
       <div class="footer">
-        <span class="left">G&ecirc;BR 0.9.14 (<!-- begin dtd -->0.3.1<!--end dtd -->) |
-        1.1.0</span>
+        <span class="left">G&ecirc;BR 0.21.1 (<!-- begin dtd -->0.4.0<!-- end dtd -->) |
+		<!-- begin ver -->1.2<!-- end ver --></span>
 
         <div class="clearer"></div>
       </div>
@@ -268,6 +151,6 @@
 </html>
 ]]></help>
     <url>http://code.google.com/p/tosco/</url>
-    <parameters default-selection="0" selection=""><parameter><label>ASCII data file containing the pairs (xi, yi) to be fitted</label><file directory="no"><property required="yes"><keyword>--data=</keyword><value/><default/></property></file></parameter><parameter><label>Number of knots defining the spline</label><int min="1"><property required="yes"><keyword>--nknots=</keyword><value/><default>10</default></property></int></parameter><parameter><label>File to store the obtained knots</label><file directory="no"><property required="yes"><keyword>--knots=</keyword><value/><default/></property></file></parameter><parameter><label>Maximum iteration number</label><int min="1"><property required="no"><keyword>--maxitr=</keyword><value/><default>500</default></property></int></parameter><parameter><label>Refine given knots</label><flag><property required="no"><keyword>--refine</keyword><value>off</value><default>off</default></property></flag></parameter><parameter><label>More verbose output</label><flag><property required="no"><keyword>--verbose</keyword><value>off</value><default>off</default></property></flag></parameter></parameters>
+    <parameters default-selection="0" selection=""><parameter><label>ASCII data file containing the pairs (xi, yi) to be fitted</label><file directory="no"><property required="yes"><keyword>--data=</keyword><value/><default/></property></file></parameter><parameter><label>Number of knots defining the spline</label><int min="1"><property required="yes"><keyword>--nknots=</keyword><value/><default>10</default></property></int></parameter><parameter><label>File to store the obtained knots</label><file directory="no"><property required="yes"><keyword>--knots=</keyword><value/><default/></property></file></parameter><parameter><label>Maximum iteration number</label><int min="1"><property required="no"><keyword>--maxitr=</keyword><value/><default>500</default></property></int></parameter><parameter><label>Refine given knots</label><flag><property required="no"><keyword>--refine</keyword><value>off</value><default>off</default></property></flag></parameter><parameter><label>Relative decrease in misfit function to declare convergence</label><float min="0.00000000001"><property required="no"><keyword>--tolrel=</keyword><value/><default></default></property></float></parameter><parameter><label>More verbose output</label><flag><property required="no"><keyword>--verbose</keyword><value>off</value><default>off</default></property></flag></parameter></parameters>
   </program>
 </flow>
