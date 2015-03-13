@@ -14,12 +14,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-dnl Process this file with autoconf to produce a configure script.
-
-AC_INIT(src/suktmig2d-offset.c)
-
-dnl Every other copy of the package version number gets its value from here
-AM_INIT_AUTOMAKE(suktmig2d-offset,0.1.0)
+AC_INIT([suktmig2d-offset],[0.1.0])
+AC_CONFIG_SRCDIR([src/suktmig2d-offset.c])
+AM_INIT_AUTOMAKE
 
 AC_SUBST(VERSION)
 

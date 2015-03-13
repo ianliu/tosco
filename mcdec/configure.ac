@@ -14,12 +14,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-dnl Process this file with autoconf to produce a configure script.
-
-AC_INIT(src/mcdec.f90)
-
-dnl Every other copy of the package version number gets its value from here
-AM_INIT_AUTOMAKE(mcdec,0.1.0)
+AC_INIT([mcde],[0.1.0])
+AC_CONFIG_SRCDIR([src/mcdec.f90])
+AM_INIT_AUTOMAKE
 
 AC_SUBST(VERSION)
 

@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_INIT(s88modeling)
 
 PACKAGE=tosco
 VERSION=0.5.0
@@ -22,7 +21,13 @@ AC_SUBST(PACKAGE)
 AC_SUBST(VERSION)
 AC_SUBST(TODAY)
 
-AM_INIT_AUTOMAKE($PACKAGE,$VERSION)
+#AC_INIT(s88modeling)
+#AM_INIT_AUTOMAKE($PACKAGE,$VERSION)
+
+AC_INIT([tosco], [0.5.0])
+AC_CONFIG_SRCDIR([s88modeling])
+AM_INIT_AUTOMAKE
+
 PACKAGE_NAME=$PACKAGE
 PACKAGE_VERSION=$VERSION
 TOSCO_MENU_DIR='$(datadir)/gebr/menus/tosco'
